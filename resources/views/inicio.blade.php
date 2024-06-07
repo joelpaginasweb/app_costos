@@ -15,6 +15,8 @@
     <h1>Presupuesto Precio unitario</h1>   
     <p>Se considerará como precio unitario el importe de la remuneración o pago total que debe cubrirse al contratista por unidad de concepto terminado y ejecutado conforme al proyecto, especificaciones de construcción y normas de calidad.
     </p>   
+      <p>Se considerará como precio unitario el importe de la remuneración o pago total que debe cubrirse al contratista por unidad de concepto terminado y ejecutado conforme al proyecto, especificaciones de construcción y normas de calidad.
+    </p>
   </nav>  
 
   <main class="middle">  
@@ -23,7 +25,9 @@
     </p>
 
     <h3>LA APLICACION WEB ESTA EN CONSTRUCCION</h3>
-    
+    <br>
+    <br>
+    <h3> cambios para git 1</h3>
   </main> 
     
   <aside class="right">  
