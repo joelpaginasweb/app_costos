@@ -1,0 +1,84 @@
+* {
+  margin: 0px;
+  /* outline: 0.01px solid rgba(146, 75, 75, 0.068);     */
+}
+
+
+#oculto {
+  top: 0px;
+  width: 100%;
+  height: 60px;
+  background-color: brown;
+}
+
+
+/*--------The grid container----------*/
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'left middle middle middle right right'
+    'left middle middle middle right right'
+    'left middle middle middle right right'
+    'piepag piepag piepag piepag piepag piepag'
+}
+
+/*------ definicion de elementos del grid------*/
+.left {
+  grid-area: left;
+}
+
+.middle {
+  grid-area: middle;
+}
+
+.right {
+  grid-area: right;
+}
+
+.piepag {
+  grid-area: piepag;
+}
+
+/*----------Responsive layout ---------- */
+@media (max-width: 700px) {
+  .grid-container {
+    grid-template-areas:
+      'left left left left left left'
+      'middle middle middle middle middle middle'
+      'right right right right right right'
+      'piepag piepag piepag piepag piepag piepag'
+  }
+}
+
+/*---- estilos de los elementos-----*/
+.left,
+.middle,
+.right {
+  padding: 10px;
+  height: auto;
+  min-height: 500px;
+}
+
+.left {
+  background: rgb(138, 136, 133);
+
+}
+
+.middle {
+  background: rgb(166, 161, 170);
+
+}
+
+.right {
+  background: rgb(167, 177, 194);
+
+}
+
+.piepag {
+  padding: 10px;
+  height: auto;
+  min-height: 100px;
+  background: rgba(29, 38, 53, 1);
+  color: #fcf8f8;
+  text-align: center;
+}

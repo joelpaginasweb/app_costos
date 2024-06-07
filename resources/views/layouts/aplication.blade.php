@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!----------Estilos provisional para desarrollo----------->
+  <!--<script src="https://cdn.tailwindcss.com"></script>-->
+
+  <!----------------Enlaces css----------->
+  <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
+  <link rel="stylesheet" href="{{ asset ('css/footer.css') }}">
+  <link rel="stylesheet" href="{{ asset ('css/inicio_grid.css') }}">
+
+  <!--------------titulo documento------------>
+  <title>App Costos - @yield('title')</title>
+</head>
+<!--------- Esto es un comentario -------------->
+
+
+<body>
+  <header>
+    <div class="caja">
+      <div id="divlogo" class="logoContain">
+        <a href=" {{route('landing')}} " class="logo">
+          <img src="{{asset ('img/lgo-bco-3.png') }}" alt="appcostos" class="logo__img">
+        </a>
+      </div>
+
+      @include(' layouts.partials.nav_aplication')
+
+      <div  class="userContain">
+        <a class="user" href="{{route('dashbos.index')}}">
+          Nombre de Usuario
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    @yield('content')
+  </main>
+
+  <footer>
+    @include(' layouts.partials.footer')
+  </footer>
+
+  @yield('scripts')
+
+</body>
+
+</html>
