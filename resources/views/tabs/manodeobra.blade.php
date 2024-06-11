@@ -9,6 +9,7 @@
 <section class="section section--up">
   <div>
     <h1>CATEGORIAS DE MANO DE OBRA</h1>
+    <h4>APLICACION EN CONSTRUCCION</h4>
   </div>
 </section>
 

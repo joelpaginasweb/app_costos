@@ -9,6 +9,7 @@
 <section class="section section--up">
   <div>
     <h1>MATERIALES E INSUMOS</h1>
+    <h4>APLICACION EN CONSTRUCCION</h4>
   </div>
 </section>
 
@@ -29,7 +30,7 @@
     </div>
   </form>
 
-  <div class=" section ">
+  <div class="section">
     @if (Session::get('success'))
     <div class="alert alert--success ">
       <strong>{{Session::get('success')}} <br>

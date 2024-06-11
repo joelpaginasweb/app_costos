@@ -12,6 +12,7 @@
 <section class="section section--up">
   <div>
     <h1>HERRAMIENTA EQUIPO Y MAQUINARIA</h1>
+    <h4>APLICACION EN CONSTRUCCION</h4>
   </div>
 </section>
 

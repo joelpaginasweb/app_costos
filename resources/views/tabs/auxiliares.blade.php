@@ -12,6 +12,7 @@
 <section class="section section--up">
   <div>
     <h1> TARJETAS AUXILIARES DE COSTOS </h1>
+    <h4>APLICACION EN CONSTRUCCION</h4>
   </div>
 </section>
 

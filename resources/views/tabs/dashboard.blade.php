@@ -10,10 +10,11 @@
 
 <section class="section">
   <div>
-    <h1> dashboard , esta en construccion... coming soon</h1>
-    <p>aqui debera contener un listado de todos los presupuestos que se esten trabajando, para que el usuario acceda a
-      cada uno de ellos</p>
-    <p>se podra ver estadisticas, promedios, porcentajes, etc.</p>
+    <h1> DASHBOARD</h1>
+    <br>
+    <br> 
+    <h4>APLICACION EN CONSTRUCCION</h4>
+
   </div>
 </section>
 

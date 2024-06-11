@@ -7,38 +7,18 @@
   <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
 </head>
 
-
-{{--------- seccion cargar presupuesto por id --------}}
-{{-- <section class="section section--up">
-  <div>
-    <h2 class="section__h">PRESUPUESTO</h2>
-  </div>
-  <form action="{{route('presus.edit', $presu->id)}}" method="GET">
-    <div class="contain">
-      <h5 class="section__h">CARGAR PRESUPUESTO</h5>
-      <div class="">
-        <label for="id_presupuesto" class="form__label">Id Presupuesto</label>
-        <input type="number" name="id_presupuesto" class="form__input" placeholder="000">
-        <button type="submit" class="form__boton">Cargar Presupuesto</button>
-      </div>
-    </div>
-  </form>
-</section> --}}
-
-
 <section class="section section--up">
   <div>
-    <h1>PRESUPUESTO</h1>
-  </div>
+    <h1>PRESUPUESTO</h1>   
+    <h4>APLICACION EN CONSTRUCCION</h4>
+  </div>  
 </section>
-
 
 <section class="section__form">
   <div class="form__titulo">
     <h4>REGISTRAR NUEVO PRESUPUESTO</h4>
   </div>
   <form action="{{route('presus.store')}}" method="POST" class="form">
-
     @csrf
 
     <div class="contenedorFlex">
@@ -68,8 +48,6 @@
       </div>
       <button type="submit" class="form__boton">Crear</button>
     </div>
-
-
   </form>
 
   <div class="section">
@@ -79,6 +57,7 @@
     </div>
     @endif
   </div>
+
   <div class="section">
     @if ($errors->any())
     <div class="alert alert-danger mt-3">
@@ -92,8 +71,8 @@
     </div>
     @endif
   </div>
+  
 </section>
-
 
 <section class="sectionTabla">
   <div class="tabla__nombre">
