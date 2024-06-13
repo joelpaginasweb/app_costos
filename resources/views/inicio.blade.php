@@ -27,7 +27,7 @@
     <h3>LA APLICACION WEB ESTA EN CONSTRUCCION</h3>
     <br>
     <br>
-    <h3> cambios para git 1</h3>
+    <h3> APLICACION EN CONSTRUCCION</h3>
   </main> 
     
   <aside class="right">  
