@@ -37,11 +37,9 @@
       <h3> APLICACION EN CONSTRUCCION</h3>
     </div>
     <br>
+
     <div>
-      <h3> PRUEBA GIT 19 JUN</h3>
-    </div>
-    <div>
-      <h3> nueva PRUEBA GIT 19 JUN para checar controllers</h3>
+      <h3> CAMBIOS 24 JUN Se agrego auxiliares a tarjetas de costos</h3>
     </div>
   </main>
   <aside class="right">
