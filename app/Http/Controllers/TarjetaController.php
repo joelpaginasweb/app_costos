@@ -5,6 +5,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Auxi;
 use App\Models\Tarjeta;
 use App\Models\Materiales;
 use App\Models\Manodeobra;
@@ -16,13 +17,14 @@ use App\Models\ConceptosEquipos;
 
 class TarjetaController extends Controller
 { 
+
     /**      * Display a listing of the resource.      */
     public function index(): View
     {
       $tarjetas = Tarjeta::all();
-      return view('tabs/tarjetas',['tarjetas'=>$tarjetas]);
-              
+      return view('tabs/tarjetas',['tarjetas'=>$tarjetas]);              
     }
+
 
     /**  * Store a newly created resource in storage. */
     public function store(Request $request): RedirectResponse
@@ -34,101 +36,112 @@ class TarjetaController extends Controller
         'id_presupuesto' => 'required'         
       ]);
 
-    DB::transaction(function () use ($request, $dataRequest) {
+      $tipoMaterial = $request->input('tipo_material');
       
-      $costoMaterial = $this->calcularConceptos(
-        null,
-        $request->input('id_material'), 
-        $request->input('cantidad_mater'),
-        [], [], 
-        [], []
-      );
 
-      $costoManoObra = $this->calcularConceptos(
-        null,
-        [], [],
-        $request->input('id_mano_obra'),
-        $request->input('cant_mano_obra'),
-        [], []
-      );
+      DB::transaction(function () use ($request, $dataRequest) {      
+        $costoMaterial = $this->calcularConceptos(
+          null,
+          $request->input('tipo_material'), 
+          $request->input('id_material'), 
+          $request->input('cantidad_mater'),
+          [], [], 
+          [], []
+        );
 
-      $costoEquipo = $this->calcularConceptos(
-        null,
-        [], [], 
-        [], [],
-        $request->input('id_equipo'),
-        $request->input('cant_equipo'),
-      ); 
+        $costoManoObra = $this->calcularConceptos(
+          null, [],
+          [], [],
+          $request->input('id_mano_obra'),
+          $request->input('cant_mano_obra'),
+          [], []
+        );
+
+        $costoEquipo = $this->calcularConceptos(
+          null, [], 
+          [], [],
+          [], [],
+          $request->input('id_equipo'),
+          $request->input('cant_equipo'),
+        ); 
       
-      $costoDirecto = $this->calcularTarjeta ($costoMaterial, $costoManoObra, $costoEquipo, $request); 
-      $indirecto = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
-      $financiam = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
-      $utilidad = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
-      $cargosAdicion = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
-      $costoIndirecto = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
-      $precioUnitario = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
+        $costoDirecto = $this->calcularTarjeta ($costoMaterial, $costoManoObra, $costoEquipo, $request); 
+        $indirecto = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
+        $financiam = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
+        $utilidad = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
+        $cargosAdicion = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
+        $costoIndirecto = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
+        $precioUnitario = $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request);
 
-      $newTarjeta = Tarjeta::create ([
-        'partida' => $dataRequest['partida'],
-        'concepto' => $dataRequest['concepto'],     
-        'unidad' => $dataRequest['unidad'],
+        $newTarjeta = Tarjeta::create ([
+          'partida' => $dataRequest['partida'],
+          'concepto' => $dataRequest['concepto'],     
+          'unidad' => $dataRequest['unidad'],
 
-        'costo_material' => $costoMaterial[0],
-        'costo_mano_obra' => $costoManoObra[1],
-        'costo_equipo' => $costoEquipo [2],
+          'costo_material' => $costoMaterial[0],
+          'costo_mano_obra' => $costoManoObra[1],
+          'costo_equipo' => $costoEquipo [2],
 
-        'costo_directo' => $costoDirecto[0],
-        'indirectos' => $indirecto[1],
-        'financiam' => $financiam[2],
-        'utilidad' => $utilidad[3],
-        'cargos_adicion' => $cargosAdicion[4],
-        'costo_indirecto' => $costoIndirecto[5],
-        'precio_unitario' => $precioUnitario[6],
-        'id_presup' => $dataRequest['id_presupuesto']
-      ]);
+          'costo_directo' => $costoDirecto[0],
+          'indirectos' => $indirecto[1],
+          'financiam' => $financiam[2],
+          'utilidad' => $utilidad[3],
+          'cargos_adicion' => $cargosAdicion[4],
+          'costo_indirecto' => $costoIndirecto[5],
+          'precio_unitario' => $precioUnitario[6],
+          'id_presup' => $dataRequest['id_presupuesto']
+        ]);
     
-      $idTarjeta = $newTarjeta->id;
+        $idTarjeta = $newTarjeta->id;
 
-      $costoMaterial = $this->calcularConceptos(
-        $idTarjeta,
-        $request->input('id_material'), 
-        $request->input('cantidad_mater'),
-        [], [], 
-        [], []
-      );   
+        $costoMaterial = $this->calcularConceptos(
+          $idTarjeta,
+          $request->input('tipo_material'), 
+          $request->input('id_material'),
+          $request->input('cantidad_mater'),
+          [], [], 
+          [], []
+        );   
 
-      $costoManoObra = $this->calcularConceptos(
-        $idTarjeta,
-        [], [],
-        $request->input('id_mano_obra'),
-        $request->input('cant_mano_obra'),
-        [], []
-      );
+        $costoManoObra = $this->calcularConceptos(
+          $idTarjeta, [], 
+          [], [],
+          $request->input('id_mano_obra'),
+          $request->input('cant_mano_obra'),
+          [], []
+        );
 
-      $costoEquipo = $this->calcularConceptos(
-        $idTarjeta,
-        [], [], 
-        [], [],
-        $request->input('id_equipo'),
-        $request->input('cant_equipo'),
-      );  
+        $costoEquipo = $this->calcularConceptos(
+          $idTarjeta,  [], 
+          [],  [],
+          [], [],
+          $request->input('id_equipo'),
+          $request->input('cant_equipo'),
+        );  
       
-    });
+      });
       
       return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Creada con Exito');    
     }
 
-    private function calcularConceptos( $idTarjeta, 
+    private function calcularConceptos( $idTarjeta, $tipoMateriales,
       $idMateriales, $cantidadesMateriales,
       $idManoObras, $cantidadesManoObras,
-      $idEquipos,  $cantidadesEquipos  )
-    {       
+      $idEquipos,  $cantidadesEquipos  )      
+    {     
       $costoMaterial = 0;
       foreach ($idMateriales as $key => $idMaterial) {
-        $registroMaterial = Materiales::find($idMaterial);//ok
+        $tipoMaterial = $tipoMateriales[$key];
+
+         if ($tipoMaterial == "auxiliar") {          
+           $registroMaterial = Auxi::find($idMaterial);           
+          } else  {
+            $registroMaterial = Materiales::find($idMaterial);
+          } 
+          
         $cantidadMaterial = $cantidadesMateriales[$key];
-        $PUMaterial = $registroMaterial->precio_unitario; //ok
-        $importeMaterial =  $cantidadMaterial * $PUMaterial;//ok
+        $PUMaterial = $registroMaterial->precio_unitario; 
+        $importeMaterial =  $cantidadMaterial * $PUMaterial;
         
         if ($idTarjeta !== null) { 
           $this->guardarConceptosMateriales($registroMaterial, $PUMaterial, $cantidadMaterial, $importeMaterial, $idMaterial, $idTarjeta);
@@ -161,7 +174,7 @@ class TarjetaController extends Controller
         }
         $costoEquipo += $importeEquipo;
       }
-      return [$costoMaterial, $costoManoObra, $costoEquipo];//ok
+      return [$costoMaterial, $costoManoObra, $costoEquipo];
     }
     
     private function calcularTarjeta ($costoMaterial, $costoManoObra, $costoEquipo, $request){    

@@ -26,7 +26,7 @@
     <div class=" contain">
       <div class="containerFlex ">
         <input type="text" name="grupo" class="form__input" placeholder="grupo">
-        <textarea name="concepto" class=" form__textarea" placeholder="concepto nuevo auxiliar"></textarea>
+        <textarea name="material_auxiliar" class=" form__textarea" placeholder="concepto nuevo auxiliar"></textarea>
         <input type="text" name="unidad" class="form__input" placeholder="unidad">
       </div>
     </div>
@@ -39,7 +39,7 @@
           <label for="cantidad_mater" class="form__label">cantidad material</label>
           <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
             placeholder="cantidad material">
-        </div>        
+        </div>
         <div class="container ">
           <label for="id_material" class="form__label">Id material</label>
           <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
@@ -309,9 +309,9 @@
         <tr class="tablaTarjetas__head">
           <td>CLAVE ID</td>
           <td>GRUPO</td>
-          <td>CONCEPTO</td>
+          <td>MATERIAL AUXILIAR</td>
           <td>UNID</td>
-          <td>COSTO DIRECTO</td>
+          <td>PRECIO UNITARIO</td>
           <td>FECHA</td>
           <td>ACCION</td>
         </tr>
@@ -319,9 +319,12 @@
         <tr onclick="abrir()" class="tablaTarjetas__body">
           <td>{{$auxi->id}}</td>
           <td>{{$auxi->grupo}}</td>
-          <td>{{$auxi->concepto}}</td>
+          <td>{{$auxi->material}}</td>
           <td>{{$auxi->unidad}}</td>
-          <td>{{$auxi->costodirecto}}</td>
+          <td>
+            {{-- {{$auxi->precio_unitario}} --}}
+            {{number_format($auxi->precio_unitario, 2)}}
+          </td>
           <td>{{$auxi->updated_at}}</td>
           <td>
             <div class="contain">
