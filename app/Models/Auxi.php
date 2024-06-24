@@ -10,5 +10,8 @@ class Auxi extends Model
 {
   use HasFactory;
   protected $table = 'auxis';
-  protected $fillable = ['grupo', 'concepto', 'unidad', 'costodirecto'];
+  // protected $fillable = ['grupo', 'concepto', 'unidad', 'costodirecto'];
+  protected $fillable = ['grupo', 'material', 'unidad', 'precio_unitario'];
+
+  
 }

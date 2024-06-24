@@ -24,7 +24,7 @@
     <div class="contain">
       <div class="containerFlex ">
         <input type="text" name="grupo" class="form__input" value="{{$auxi->grupo}}">
-        <textarea name="concepto" class=" form__textarea">{{$auxi->concepto}}</textarea>
+        <textarea name="material_auxiliar" class=" form__textarea">{{$auxi->material}}</textarea>
         <input type="text" name="unidad" class="form__input" value="{{$auxi->unidad}}">
 
       </div>

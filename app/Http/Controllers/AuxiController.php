@@ -28,11 +28,11 @@ class AuxiController extends Controller
 { 
     $dataRequest = $request->validate([
         'grupo' => 'required',
-        'concepto' => 'required',
+        'material_auxiliar' => 'required', 
         'unidad' => 'required'         
     ]);
 
-    $costoDirecto = $this->guardarConcepto( //declara variable llamando al metodo
+    $costoDirectoAux = $this->guardarConcepto( //declara variable llamando al metodo
       null,
       $request->input('id_material'), 
       $request->input('cantidad_mater')
@@ -40,14 +40,14 @@ class AuxiController extends Controller
 
     $newAuxiliar = Auxi::create([ 
         'grupo' => $dataRequest['grupo'],
-        'concepto' => $dataRequest['concepto'],     
+        'material' => $dataRequest['material_auxiliar'], //--------    
         'unidad' => $dataRequest['unidad'], 
-        'costodirecto' => $costoDirecto    
+        'precio_unitario' => $costoDirectoAux   //-------- 
     ]);
 
     $idAuxiliar = $newAuxiliar->id;
 
-    $costoDirecto = $this->guardarConcepto( //vuelve a declarar variable llamando al metodo
+    $costoDirectoAux = $this->guardarConcepto( //vuelve a declarar variable llamando al metodo
       $idAuxiliar, 
       $request->input('id_material'),
       $request->input('cantidad_mater')
@@ -59,28 +59,28 @@ class AuxiController extends Controller
   //---------------metodo guardarConcepto-------------//
   private function guardarConcepto ($idAuxiliar, $idMateriales, $cantidades)
   {
-    $costoDirecto = 0; 
+    $costoDirectoAux = 0; 
     foreach ($idMateriales as $key => $idMaterial){ 
 
-      $registroMaterial = Materiales::find($idMaterial); 
+      $registroMaterial = Materiales::find($idMaterial);       
       $cantidad = $cantidades[$key]; 
       $precioUnitario = $registroMaterial->precio_unitario;
       $importe = $precioUnitario * $cantidad;  
 
       if (  $idAuxiliar !== null) {        
         ConceptosAuxiliares::create([            
-          'concepto' => $registroMaterial->material, 
+          'concepto' => $registroMaterial->material, //-------- 
           'unidad' => $registroMaterial->unidad, 
-          'precio_unitario' => $precioUnitario,     
           'cantidad' => $cantidad, 
+          'precio_unitario' => $precioUnitario,     
           'importe' => $importe,  
           'id_material' => $idMaterial,      
           'id_auxiliar' => $idAuxiliar 
         ]);                          
       }  
-      $costoDirecto += $importe; 
+      $costoDirectoAux += $importe; 
     }    
-    return $costoDirecto; 
+    return $costoDirectoAux; 
   }  
   
   /**     * Show the form for editing the specified resource.     */
@@ -97,29 +97,31 @@ class AuxiController extends Controller
   {
       $dataRequest = $request->validate([
         'grupo' => 'required',
-        'concepto' => 'required',
+        'material_auxiliar' => 'required', 
         'unidad' => 'required'         
-       ]);         
-    
-    $costoDirecto = $this->editarConcepto( 
+       ]);   
+
+    $costoDirectoAux = $this->editarConcepto( 
       null,    
       $request->input('id_material'),
       $request->input('cantidad_mater')               
     );
 
-    $concepto = $request->input('concepto');   
+      
+    $materialAuxiliar = $request->input('material_auxiliar'); 
 
     $updateAuxiliar = $auxi->update ([ 
       'grupo' => $dataRequest['grupo'],
-      'concepto' => $dataRequest['concepto'],     
+      'material' => $dataRequest['material_auxiliar'],  //--------   
       'unidad' => $dataRequest['unidad'], 
-      'costodirecto' => $costoDirecto    
+      'precio_unitario' => $costoDirectoAux   //-------- 
     ]);   
 
-    $updateAuxiliar = Auxi::where('concepto',$concepto)->first();
+    
+    $updateAuxiliar = Auxi::where('material',$materialAuxiliar)->first();
     $idAuxiliar = $updateAuxiliar->id;
 
-    $costoDirecto = $this->editarConcepto(
+    $costoDirectoAux = $this->editarConcepto(
       $idAuxiliar,
       $request->input('id_material'),
       $request->input('cantidad_mater') 
@@ -127,13 +129,11 @@ class AuxiController extends Controller
     
     return redirect()->route('auxis.index')->with('success', 'Auxiliar actualizado!');
   }
-
   
   //------------Editar Concepto por ID---------//
   private function editarConcepto($idAuxiliar, $idMateriales, $cantidades)
   {
-      $costoDirecto = 0;   
-  
+      $costoDirectoAux = 0;   
       foreach ($idMateriales as $key => $idMaterial) {
           $registroMaterial = Materiales::find($idMaterial);
           $cantidad = $cantidades[$key];
@@ -142,6 +142,7 @@ class AuxiController extends Controller
   
           // Actualizar cada registro individualmente con su respectivo Id
           $idConcepto = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->pluck('id')->get($key);
+
           ConceptosAuxiliares::where('id', $idConcepto)->update([
               'concepto' => $registroMaterial->material, 
               'unidad' => $registroMaterial->unidad, 
@@ -151,28 +152,22 @@ class AuxiController extends Controller
               'id_material' => $idMaterial
           ]);             
   
-          $costoDirecto += $importe;
+          $costoDirectoAux += $importe;
       }    
-      return $costoDirecto;
-  }
-  
+      return $costoDirectoAux;
+  }  
   
   /**     * Remove the specified resource from storage.     */
   public function destroy(Auxi $auxi): RedirectResponse
-  {
-    //dd($auxi);
+  {    
     $auxi->delete();
     return redirect()->route('auxis.index')->with('success', 'Auxiliar eliminado!');
-
   }
-
 
   /**      * Display the specified resource.     */
   public function show(Auxi $auxi)
   {
       //
   }
-
-
 
 }

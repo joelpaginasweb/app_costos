@@ -21,7 +21,6 @@
       calidad.
     </p>
   </nav>
-
   <main class="middle">
     <h2>APLICACION WEB PARA PRESUPUESTOS PU</h2>
     <p>En la ingeniería de software se denomina aplicación web o software web a aquella herramienta que los usuarios
@@ -29,26 +28,22 @@
       otras palabras, es un programa que se codifica en un lenguaje interpretable por los navegadores web en la que se
       confía la ejecución al navegador.
     </p>
-
     <div>
       <h3>LA APLICACION WEB ESTA EN CONSTRUCCION</h3>
     </div>
-
     <br>
     <br>
-
     <div>
       <h3> APLICACION EN CONSTRUCCION</h3>
     </div>
-
     <br>
-
     <div>
       <h3> PRUEBA GIT 19 JUN</h3>
     </div>
-
+    <div>
+      <h3> nueva PRUEBA GIT 19 JUN para checar controllers</h3>
+    </div>
   </main>
-
   <aside class="right">
     <h2>Bases de Datos</h2>
     <p>Se encarga de almacenar datos, también de conectarlos entre sí en una unidad lógica. En términos generales, es un
@@ -56,13 +51,11 @@
       administrar de forma electrónica grandes cantidades de información.
     </p>
   </aside>
-
   <section class="piepag">
     <h2>pie de pagina</h2>
     <p>In this example, we have created a header, three equal columns and a footer. On smaller screens, the columns will
       stack on top of each other.</p>
   </section>
-
 </div>
 
 @endsection

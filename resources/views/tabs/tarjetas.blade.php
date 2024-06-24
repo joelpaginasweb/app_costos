@@ -1,7 +1,8 @@
 @extends('layouts.aplication')
 @section('title', 'Tarjetas')
 @section('scripts')
-{{-- <script src="{{ asset('js/ventana_popup.js') }}"></script> --}}
+{{--
+<script src="{{ asset('js/ventana_popup.js') }}"></script> --}}
 @endsection
 @section('content')
 
@@ -27,8 +28,9 @@
     <div class=" contain">
       <div class="containerFlex ">
         <input type="text" name="partida" class="form__input" placeholder="partida">
-        <textarea name="concepto" class=" form__textarea" placeholder="concepto nueva tarjeta de precio unitario"></textarea>
-        <input type="text" name="unidad" class="form__input" placeholder="unidad">       
+        <textarea name="concepto" class=" form__textarea"
+          placeholder="concepto nueva tarjeta de precio unitario"></textarea>
+        <input type="text" name="unidad" class="form__input" placeholder="unidad">
         <input type="text" name="id_presupuesto" class="form__input" placeholder="id Presupuesto">
       </div>
     </div>
@@ -36,17 +38,33 @@
       <div class="containerFlex ">
         <h5>MATERIALES</h5>
         <hr>
-        <div class="container ">          
-          <label for="id_material" class="form__label">Id material</label>         
+        <div class="container">
+
+          <label for="select" class="form__label">Tipo</label>
+
+          <select name="tipo_material[]">
+            <option value="material" selected>material</option>
+            <option value="auxiliar">auxiliar</option>
+          </select>
+
+          <label for="id_material" class="form__label">Id material</label>
           <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
           <label for="cantidad_mater" class="form__label">cantidad material</label>
           <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
             placeholder="cantidad material">
-        </div>  
-        <div class="container ">
+        </div>
+
+        <div class="container">
+
+          <label for="select" class="form__label">Tipo</label>
+
+          <select name="tipo_material[]">
+            <option value="material" selected>material</option>
+            <option value="auxiliar">auxiliar</option>
+          </select>
+
           <label for="id_material" class="form__label">Id material</label>
           <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
-
           <label for="cantidad_mater" class="form__label">cantidad material</label>
           <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
             placeholder="cantidad material">
@@ -54,25 +72,22 @@
         {{------------------------}}
         <br>
         <h5>MANO DE OBRA</h5>
-        <hr>      
+        <hr>
         <div class="container ">
           <label for="id_mano_obra" class="form__label">Id mano de obra</label>
           <input type="number" step="0" name="id_mano_obra[]" class="form__input" placeholder="Id mano de obra">
 
           <label for="cant_mano_obra" class="form__label">cantidad MO</label>
-          <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input"
-            placeholder="cantidad MO">
-        </div>        
+          <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input" placeholder="cantidad MO">
+        </div>
         <div class="container ">
           <label for="id_mano_obra" class="form__label">Id mano de obra</label>
           <input type="number" step="0" name="id_mano_obra[]" class="form__input" placeholder="Id mano de obra">
 
           <label for="cant_mano_obra" class="form__label">cantidad MO</label>
-          <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input"
-            placeholder="cantidad MO">
+          <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input" placeholder="cantidad MO">
         </div>
         {{-- ---------- --}}
-
         <br>
         <h5>HERRAMIENTA Y EQUIPO</h5>
         <hr>
@@ -81,25 +96,23 @@
           <input type="number" step="0" name="id_equipo[]" class="form__input" placeholder="Id equipo">
 
           <label for="cant_equipo" class="form__label">cantidad equipo</label>
-          <input type="number" step="0.00001" name="cant_equipo[]" class="form__input"
-            placeholder="cantidad equipo">
-        </div>   
+          <input type="number" step="0.00001" name="cant_equipo[]" class="form__input" placeholder="cantidad equipo">
+        </div>
         <div class="container ">
           <label for="id_equipo" class="form__label">Id equipo</label>
           <input type="number" step="0" name="id_equipo[]" class="form__input" placeholder="Id equipo">
 
           <label for="cant_equipo" class="form__label">cantidad equipo</label>
-          <input type="number" step="0.00001" name="cant_equipo[]" class="form__input"
-            placeholder="cantidad equipo">
-        </div> 
-        {{-- ----------------  --}}
+          <input type="number" step="0.00001" name="cant_equipo[]" class="form__input" placeholder="cantidad equipo">
+        </div>
+        {{-- ---------------- --}}
 
         <div class="container ">
           <label for="formBoton" class="form__label"> Calcular y crear Tarjeta</label>
           <button type="submit" id="formBoton" class="form__boton">Crear Tarjeta</button>
         </div>
-      </div>     
-      
+      </div>
+
     </div>
   </form>
 
@@ -136,7 +149,7 @@
         <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img">
       </a>
     </div>
-  </div>  
+  </div>
   <div class="containDatosTarj">
     <div class="containConceptoTarj">
       <h4>CONCEPTO:</h4>
@@ -323,7 +336,7 @@
     </table>
   </div>
   <div class="contain__tablaindir">
-    <table class="tablaindir tablemergent" >
+    <table class="tablaindir tablemergent">
       <thead class="tablemergent__thead">
         <tr>
           <th>GASTOS INDIRECTOS</th>
@@ -396,27 +409,27 @@
           <td>{{$tarjeta->concepto}}</td>
           <td>{{$tarjeta->unidad}}</td>
           <td>
-              {{-- {{$tarjeta->costo_material}} --}}
-               {{number_format($tarjeta->costo_material, 2)}}   
+            {{-- {{$tarjeta->costo_material}} --}}
+            {{number_format($tarjeta->costo_material, 2)}}
           </td>
           <td>
-          {{-- {{$tarjeta->costo_mano_obra}} --}}
-          {{number_format($tarjeta->costo_mano_obra, 2)}} 
+            {{-- {{$tarjeta->costo_mano_obra}} --}}
+            {{number_format($tarjeta->costo_mano_obra, 2)}}
           </td>
           <td>
-              {{-- {{$tarjeta->costo_equipo}} --}}
-              {{number_format($tarjeta->costo_equipo, 2)}} 
+            {{-- {{$tarjeta->costo_equipo}} --}}
+            {{number_format($tarjeta->costo_equipo, 2)}}
           </td>
           <td>
-              {{-- {{$tarjeta->costo_directo}} --}}
-              {{number_format($tarjeta->costo_directo, 2)}} 
+            {{-- {{$tarjeta->costo_directo}} --}}
+            {{number_format($tarjeta->costo_directo, 2)}}
           </td>
           <td>
-              {{-- {{$tarjeta->costo_indirecto}}</td> --}}
-              {{number_format($tarjeta->costo_indirecto, 2)}} 
+            {{-- {{$tarjeta->costo_indirecto}}</td> --}}
+          {{number_format($tarjeta->costo_indirecto, 2)}}
           <td>
-              {{-- {{$tarjeta->precio_unitario}} --}}
-              {{number_format($tarjeta->precio_unitario, 2)}} 
+            {{-- {{$tarjeta->precio_unitario}} --}}
+            {{number_format($tarjeta->precio_unitario, 2)}}
           </td>
           <td>{{$tarjeta->id_presup}}</td>
           <td>
