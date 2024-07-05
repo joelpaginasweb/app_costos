@@ -39,7 +39,9 @@
     <br>
 
     <div>
-      <h3> CAMBIOS 24 JUN Se agrego auxiliares a tarjetas de costos</h3>
+      <h3> ESTADO 5 JUL </h3>
+      <h3> PROCESO </h3>
+
     </div>
   </main>
   <aside class="right">
