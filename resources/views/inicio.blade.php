@@ -39,8 +39,8 @@
     <br>
 
     <div>
-      <h3> ESTADO 5 JUL </h3>
-      <h3> PROCESO </h3>
+      <h3> ESTADO 8 JUL </h3>
+      <h3> Se agregan filas en aux y tarjetas por click </h3>
 
     </div>
   </main>

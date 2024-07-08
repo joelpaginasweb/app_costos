@@ -1,8 +1,11 @@
 @extends('layouts.aplication')
 @section('title', 'Auxiliares')
 @section('scripts')
-<script src="{{ asset('js/ventana_aux.js') }}"></script>
+<script src="{{ asset('js/ventana_popup.js') }}"></script>
+<script src="{{ asset('js/crear_fila_aux.js') }}"></script>
+
 @endsection
+
 @section('content')
 
 <head>
@@ -28,34 +31,23 @@
         <input type="text" name="grupo" class="form__input" placeholder="grupo">
         <textarea name="material_auxiliar" class=" form__textarea" placeholder="concepto nuevo auxiliar"></textarea>
         <input type="text" name="unidad" class="form__input" placeholder="unidad">
+        <input type="button" class="form__boton" id="boton_crear_aux" value="Agregar Material">
       </div>
     </div>
+
     <div class="container contain">
-      <div class="containerFlex ">
-        <div class="container ">
-          <label for="id_material" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
 
-          <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
+      <div class="containerFlex" id="container_aux">
+
+        <div class="container" id="contain_element">
+          <label for="id_material_aux" class="form__label">Id material</label>
+          <input type="number" step="0" name="id_material_aux[]" class="form__input" placeholder="id material">
+
+          <label for="cantidad_mat_aux" class="form__label">cantidad material</label>
+          <input type="number" step="0.00001" name="cantidad_mat_aux[]" class="form__input"
             placeholder="cantidad material">
         </div>
-        <div class="container ">
-          <label for="id_material" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
 
-          <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
-            placeholder="cantidad material">
-        </div>
-        <div class="container ">
-          <label for="id_material" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
-
-          <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
-            placeholder="cantidad material">
-        </div>
       </div>
 
       <div class="container ">
@@ -92,7 +84,7 @@
 </section>
 
 <!----------- ventana emergente  ---------------->
-<div class="emergente__contain" id="emergente_ax">
+<div class="emergente__contain" id="emergente">
   <div class="emergente__header ">
     <h3 class="emergente__titulo">TARJETA AUXILIARES</h3>
     <div class="emergente__close">

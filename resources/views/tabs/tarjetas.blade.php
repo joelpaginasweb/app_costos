@@ -1,9 +1,13 @@
 @extends('layouts.aplication')
 @section('title', 'Tarjetas')
 @section('scripts')
-{{--
-<script src="{{ asset('js/ventana_popup.js') }}"></script> --}}
+<script src="{{ asset('js/ventana_popup.js') }}"></script>
+<script src="{{ asset('js/crear_fila_material.js') }}"></script>
+<script src="{{ asset('js/crear_fila_MO.js') }}"></script>
+<script src="{{ asset('js/crear_fila_equipo.js') }}"></script>
+ {{-- <script type="module" src="{{ asset('js/main.js') }}"></script>  --}}
 @endsection
+
 @section('content')
 
 <head>
@@ -36,74 +40,67 @@
     </div>
     <div class="container contain">
       <div class="containerFlex ">
-        <h5>MATERIALES</h5>
-        <hr>
-        <div class="container">
-
-          <label for="select" class="form__label">Tipo</label>
-
-          <select name="tipo_material[]">
-            <option value="material" selected>material</option>
-            <option value="auxiliar">auxiliar</option>
-          </select>
-
-          <label for="id_material" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
-          <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
-            placeholder="cantidad material">
+        <div class=" contain ">
+          <h5>MATERIALES</h5>
+          <input type="button" class="form__boton" id="boton_crear_mat" value="Agregar Material">
         </div>
 
-        <div class="container">
-
-          <label for="select" class="form__label">Tipo</label>
-
-          <select name="tipo_material[]">
-            <option value="material" selected>material</option>
-            <option value="auxiliar">auxiliar</option>
-          </select>
-
-          <label for="id_material" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
-          <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
-            placeholder="cantidad material">
+        <hr>
+        {{------------------------}}
+        <div class="containerFlex" id="container_mater">
+          <div class="container">
+            <label for="select" class="form__label">Tipo</label>
+            <select name="tipo_material[]">
+              <option value="material" selected>material</option>
+              <option value="auxiliar">auxiliar</option>
+            </select>
+            <label for="id_material" class="form__label">Id material</label>
+            <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
+            <label for="cantidad_mater" class="form__label">cantidad material</label>
+            <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
+              placeholder="cantidad material">
+          </div>
         </div>
         {{------------------------}}
+
+
         <br>
-        <h5>MANO DE OBRA</h5>
+        <div class="contain">
+          <h5>MANO DE OBRA</h5>
+          <input type="button" class="form__boton" id="boton_crear_mo" value="Agregar MO">
+        </div>
         <hr>
-        <div class="container ">
-          <label for="id_mano_obra" class="form__label">Id mano de obra</label>
-          <input type="number" step="0" name="id_mano_obra[]" class="form__input" placeholder="Id mano de obra">
 
-          <label for="cant_mano_obra" class="form__label">cantidad MO</label>
-          <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input" placeholder="cantidad MO">
-        </div>
-        <div class="container ">
-          <label for="id_mano_obra" class="form__label">Id mano de obra</label>
-          <input type="number" step="0" name="id_mano_obra[]" class="form__input" placeholder="Id mano de obra">
+        {{------------------------}}
+        <div class="containerFlex" id="container_mo">
 
-          <label for="cant_mano_obra" class="form__label">cantidad MO</label>
-          <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input" placeholder="cantidad MO">
+          <div class="container ">
+            <label for="id_mano_obra" class="form__label">Id mano de obra</label>
+            <input type="number" step="0" name="id_mano_obra[]" class="form__input" placeholder="Id mano de obra">
+
+            <label for="cant_mano_obra" class="form__label">cantidad M.O.</label>
+            <input type="number" step="0.00001" name="cant_mano_obra[]" class="form__input" placeholder="cantidad MO">
+          </div>
         </div>
-        {{-- ---------- --}}
+        {{-- ---------------- --}}
         <br>
-        <h5>HERRAMIENTA Y EQUIPO</h5>
-        <hr>
-        <div class="container ">
-          <label for="id_equipo" class="form__label">Id equipo</label>
-          <input type="number" step="0" name="id_equipo[]" class="form__input" placeholder="Id equipo">
-
-          <label for="cant_equipo" class="form__label">cantidad equipo</label>
-          <input type="number" step="0.00001" name="cant_equipo[]" class="form__input" placeholder="cantidad equipo">
+        <div class="contain">
+          <h5>HERRAMIENTA Y EQUIPO</h5>
+          <input type="button" class="form__boton" id="boton_crear_equipo" value="Agregar HyE">
         </div>
-        <div class="container ">
-          <label for="id_equipo" class="form__label">Id equipo</label>
-          <input type="number" step="0" name="id_equipo[]" class="form__input" placeholder="Id equipo">
+        <hr>
+        {{-- ---------------- --}}
 
-          <label for="cant_equipo" class="form__label">cantidad equipo</label>
-          <input type="number" step="0.00001" name="cant_equipo[]" class="form__input" placeholder="cantidad equipo">
+        <div class="containerFlex" id="container_equipo">
+
+          <div class="container ">
+            <label for="id_equipo" class="form__label">Id equipo</label>
+            <input type="number" step="0" name="id_equipo[]" class="form__input" placeholder="Id equipo">
+
+            <label for="cant_equipo" class="form__label">cantidad equipo</label>
+            <input type="number" step="0.00001" name="cant_equipo[]" class="form__input" placeholder="cantidad equipo">
+          </div>
+
         </div>
         {{-- ---------------- --}}
 
