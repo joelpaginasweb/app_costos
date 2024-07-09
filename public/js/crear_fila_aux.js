@@ -5,26 +5,26 @@ function crearFilaAux (){
   container.setAttribute('class', 'container');
 
   var labelMaterialAux = document.createElement('label');
-  labelMaterialAux.setAttribute('for', 'id_material_aux');
+  labelMaterialAux.setAttribute('for', 'id_material');
   labelMaterialAux.setAttribute('class', 'form__label');
   labelMaterialAux.innerText = 'Id material';
 
   var inputMaterialAux = document.createElement('input');
   inputMaterialAux.setAttribute('type', 'number');
   inputMaterialAux.setAttribute('step', '0');
-  inputMaterialAux.setAttribute('name', 'id_material_aux[]');
+  inputMaterialAux.setAttribute('name', 'id_material[]');
   inputMaterialAux.setAttribute('class', 'form__input');
   inputMaterialAux.setAttribute('placeholder', 'id material');
 
   var labelCantidadAux = document.createElement('label');
-  labelCantidadAux.setAttribute('for', 'cantidad_mat_aux');
+  labelCantidadAux.setAttribute('for', 'cantidad_mater');
   labelCantidadAux.setAttribute('class', 'form__label');
   labelCantidadAux.innerText = 'cantidad material';
 
   var inputCantidadAux = document.createElement('input');
   inputCantidadAux.setAttribute('type', 'number');
   inputCantidadAux.setAttribute('step', '0.0001');
-  inputCantidadAux.setAttribute('name', 'cantidad_mat_aux[]');
+  inputCantidadAux.setAttribute('name', 'cantidad_mater[]');
   inputCantidadAux.setAttribute('class', 'form__input');
   inputCantidadAux.setAttribute('placeholder', 'cantidad material'); 
   

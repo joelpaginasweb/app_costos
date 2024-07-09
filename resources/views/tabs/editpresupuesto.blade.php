@@ -1,7 +1,11 @@
 @extends('layouts.aplication')
 @section('title', 'Editar Presupuesto')
-@section('content')
 
+@section('scripts')
+<script src="{{ asset('js/input_dblclick.js') }}"></script>
+@endsection
+
+@section('content')
 <head>
   <link rel="stylesheet" href="{{ asset ('css/edit_presupuesto.css') }}">
   <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
@@ -12,14 +16,6 @@
     <h3 class="section__h">EDITAR PRESUPUESTO CATALOGO DE CONCEPTOS</h3>
   </div>
 </section>
-
-<!-------------- para llenar dato como celda de excel ------------>
-{{-- <div id="excel-cell">
-  <span id="cell-value" ondblclick="activateInput()"></span>
-  <input id="input-cell" type="text" onkeydown="handleKeyDown(event)" style="display: none;">
-</div> --}}
-
-
 
 <section class="section">
   <div class="contain__datosobra">
@@ -93,14 +89,11 @@
 </section>
 
 <section id="secatalog" class="sectionTabla">
-
   <div class="row__presupMonto">
     <div class="presupMonto__titulo">
       <h5>PRESUPUESTO TOTAL</h5>
     </div>
-
-    <div class="presupMonto__monto">       
-    {{-- <h5>{{number_format($presu->costo_total, 6)}}</h5>  --}}
+    <div class="presupMonto__monto">           
       <h5>{{number_format($presu->costo_total, 2)}}</h5>    
     </div>
   </div>
@@ -143,7 +136,15 @@
           <td>
             <form action="{{ route('updateConceptoCantidad', $concepto->id) }}" method="POST">            
               @csrf
-              <input type="number" name="cantidad_concepto" class="form__input-short" value="{{$concepto->cantidad}}"  step="0.01">
+                
+                {{-- <input type="text" id="excel-input" class="form__input-short"> --}}
+
+              <input id="excel-input" type="number" name="cantidad_concepto" class="form__input-short" value="{{$concepto->cantidad}}"  step="0.01">
+
+
+              {{-- <input type="number" name="cantidad_concepto" class="form__input-short" value="{{$concepto->cantidad}}"  step="0.01"> --}}
+
+
               <button type="submit" class="form__boton-short">enviar</button>
             </form>
           </td>
@@ -159,6 +160,11 @@
         @endforeach
       </tbody>
     </table>
+    <!-------------- para llenar dato como celda de excel ------------>
+<div id="excel-cell">
+  <span id="cell-value" ondblclick="activateInput()"></span>
+  <input id="input-cell" type="text" onkeydown="handleKeyDown(event)" style="display: none;">
+</div>
 
 
     {{---------------------------}}

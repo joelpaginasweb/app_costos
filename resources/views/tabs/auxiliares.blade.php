@@ -40,14 +40,17 @@
       <div class="containerFlex" id="container_aux">
 
         <div class="container" id="contain_element">
-          <label for="id_material_aux" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material_aux[]" class="form__input" placeholder="id material">
+          <label for="id_material" class="form__label">Id material</label>
+          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
 
-          <label for="cantidad_mat_aux" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mat_aux[]" class="form__input"
+          <label for="cantidad_mater" class="form__label">cantidad material</label>
+          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
             placeholder="cantidad material">
         </div>
 
+
+
+        
       </div>
 
       <div class="container ">

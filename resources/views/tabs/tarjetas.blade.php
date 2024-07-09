@@ -5,7 +5,7 @@
 <script src="{{ asset('js/crear_fila_material.js') }}"></script>
 <script src="{{ asset('js/crear_fila_MO.js') }}"></script>
 <script src="{{ asset('js/crear_fila_equipo.js') }}"></script>
- {{-- <script type="module" src="{{ asset('js/main.js') }}"></script>  --}}
+
 @endsection
 
 @section('content')
