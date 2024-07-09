@@ -16,7 +16,7 @@
   <div class="form__titulo">
     <h4>EDITAR MATERIAL AUXILIAR </h4>
   </div>
-{{-- eeeeeeeeee --}}
+
   <form action="{{route('auxis.update', $auxi)}}" method="POST" class="form">
     @csrf
     @method('PUT')
@@ -26,10 +26,11 @@
         <input type="text" name="grupo" class="form__input" value="{{$auxi->grupo}}">
         <textarea name="material_auxiliar" class=" form__textarea">{{$auxi->material}}</textarea>
         <input type="text" name="unidad" class="form__input" value="{{$auxi->unidad}}">
-
       </div>
     </div>
+
     <div class="container contain">
+
       <div class="containerFlex ">
 
         @foreach ($conceptos as $concepto)
@@ -43,7 +44,7 @@
 
           </div>
           <label for="cantidad_mater" class="form__label">cantidadmat</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input" value="{{$concepto->cantidad}}">
+          <input type="number" step="0.0001" name="cantidad_mater[]" class="form__input" value="{{$concepto->cantidad}}">
         </div>        
         @endforeach
 
@@ -55,9 +56,13 @@
           <button type="submit" id="formBoton" class="form__boton">Editar Auxiliar</button>
         </div>
       </div>
+
     </div>
+
+
+
+
   </form>
-  {{-- eeeeeeeeeee --}}
 
   <div class=" section ">
     @if ($errors->any())
