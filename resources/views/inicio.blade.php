@@ -41,6 +41,7 @@
     <div>
       <h3> ESTADO 8 JUL </h3>
       <h3> Se agregan filas en aux y tarjetas por click </h3>
+      <h5> 9 julio error no guarda filas en auxiliares en hostinger </h5>
 
     </div>
   </main>
