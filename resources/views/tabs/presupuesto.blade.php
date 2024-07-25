@@ -2,10 +2,10 @@
 @section('title', 'Presupuesto')
 @section('content')
 
-<head>
+{{-- <head>
   <link rel="stylesheet" href="{{ asset ('css/presupuesto.css') }}">
   <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
-</head>
+</head> --}}
 
 <section class="section section--up">
   <div>

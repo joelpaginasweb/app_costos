@@ -6,20 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!----------Estilos provisional para desarrollo----------->
-  <!--<script src="https://cdn.tailwindcss.com"></script>-->
-
-  <!----------------Enlaces css----------->
-  <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
-  <link rel="stylesheet" href="{{ asset ('css/footer.css') }}">
-  <link rel="stylesheet" href="{{ asset ('css/inicio_grid.css') }}">
+  <!----------------Enlaces css y js----------->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  {{-- <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}"> --}}
+  {{-- <link rel="stylesheet" href="{{ asset ('css/footer.css') }}"> --}}
+  {{-- <link rel="stylesheet" href="{{ asset ('css/inicio_grid.css') }}"> --}}
 
   <!--------------titulo documento------------>
   <title>App Costos - @yield('title')</title>
 </head>
 <!--------- Esto es un comentario -------------->
-
-
 <body>
   <header>
     <div class="caja">

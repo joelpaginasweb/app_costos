@@ -1,10 +1,10 @@
 @extends('layouts.aplication')
 @section('title', 'Auxiliares')
-@section('scripts')
+
+{{-- @section('scripts')
 <script src="{{ asset('js/ventana_popup.js') }}"></script>
 <script src="{{ asset('js/crear_fila_aux.js') }}"></script>
-
-@endsection
+@endsection --}}
 
 @section('content')
 

@@ -2,9 +2,9 @@
 @section('title', 'Editar Materiales')
 @section('content')
 
-<head>
+{{-- <head>
   <link rel="stylesheet" href="{{ asset ('css/materiales.css') }}">
-</head>
+</head> --}}
 
 <section class="section section--up">
   <div>

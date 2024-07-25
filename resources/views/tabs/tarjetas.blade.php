@@ -1,19 +1,19 @@
 @extends('layouts.aplication')
 @section('title', 'Tarjetas')
-@section('scripts')
+
+{{-- @section('scripts')
 <script src="{{ asset('js/ventana_popup.js') }}"></script>
 <script src="{{ asset('js/crear_fila_material.js') }}"></script>
 <script src="{{ asset('js/crear_fila_MO.js') }}"></script>
 <script src="{{ asset('js/crear_fila_equipo.js') }}"></script>
-
-@endsection
+@endsection --}}
 
 @section('content')
 
-<head>
+{{-- <head>
   <link rel="stylesheet" href="{{ asset ('css/tarjetas.css') }}">
   <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
-</head>
+</head> --}}
 
 <section class="section section--up">
   <div>

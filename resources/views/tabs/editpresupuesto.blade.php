@@ -1,16 +1,16 @@
 @extends('layouts.aplication')
 @section('title', 'Editar Presupuesto')
 
-@section('scripts')
+{{-- @section('scripts')
 <script src="{{ asset('js/select_one_click.js') }}"></script>
-@endsection
+@endsection --}}
 
 @section('content')
 
-<head>
+{{-- <head>
   <link rel="stylesheet" href="{{ asset ('css/edit_presupuesto.css') }}">
   <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
-</head>
+</head> --}}
 
 <section class="section section--up">
   <div>
