@@ -43,9 +43,15 @@
         <li>se instalo Lit y Vite</li>
         <li>Se reubicaron archivos css y js para Vite</li>
       </ul>
-
+    </div>
+    <br>
+    <div>
+      <h4>PRUEBA WEB COMPONENTS</h4>
+      <hola-mundo name="nuevo" surname="web component"></hola-mundo>
+      <eit-box-info></eit-box-info>
     </div>
   </main>
+
   <aside class="right">
     <h2>Bases de Datos</h2>
     <p>Se encarga de almacenar datos, también de conectarlos entre sí en una unidad lógica. En términos generales, es un

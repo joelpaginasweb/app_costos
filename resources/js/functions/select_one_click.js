@@ -7,6 +7,15 @@ inputs.forEach(input => {
   });
 });
 
+
+
+
+
+
+
+
+
+
 /*--------------------------*/
 
 // const inputs = document.getElementById('select_auto');

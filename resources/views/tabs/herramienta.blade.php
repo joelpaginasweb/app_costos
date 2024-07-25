@@ -4,10 +4,7 @@
 
 @section('content')
 
-{{-- <head>
-  <link rel="stylesheet" href="{{ asset ('css/herramienta.css') }}">
-  <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
-</head> --}}
+
 
 <section class="section section--up">
   <div>

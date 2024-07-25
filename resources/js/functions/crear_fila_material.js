@@ -1,63 +1,65 @@
-function crearFilaMaterial(){
-  const containerMater = document.querySelector('#container_mater');
 
-  var container = document.createElement('div');
-  container.setAttribute('class', 'container');
+const botonCrearMat = document.getElementById('boton_crear_mat');
 
-  var labelSelect = document.createElement('label');
-  labelSelect.setAttribute('for', 'select');
-  labelSelect.setAttribute('class', 'form__label');
-  labelSelect.innerText = 'Tipo';
+if(botonCrearMat) {
 
-  var selectMat = document.createElement('select');
-  selectMat.setAttribute('name', 'tipo_material[]');
+  botonCrearMat.addEventListener('click', function() { 
 
+    const containerMater = document.querySelector('#container_mater');
 
-  var optionMat = document.createElement('option');
-  optionMat.setAttribute('value', 'material');
-  optionMat.innerText = 'material';
+    var container = document.createElement('div');
+    container.setAttribute('class', 'container');
 
-  var optionAux = document.createElement('option');
-  optionAux.setAttribute('value', 'auxiliar');
-  optionAux.innerText = 'auxiliar';
+    var labelSelect = document.createElement('label');
+    labelSelect.setAttribute('for', 'select');
+    labelSelect.setAttribute('class', 'form__label');
+    labelSelect.innerText = 'Tipo';
 
-  var labelMaterial = document.createElement('label');
-  labelMaterial.setAttribute('for', 'id_material');
-  labelMaterial.setAttribute('class', 'form__label');
-  labelMaterial.innerText = 'Id material';
+    var selectMat = document.createElement('select');
+    selectMat.setAttribute('name', 'tipo_material[]');
 
-  var inputMaterial = document.createElement('input');
-  inputMaterial.setAttribute('type', 'number');
-  inputMaterial.setAttribute('step', '0');
-  inputMaterial.setAttribute('name', 'id_material[]');
-  inputMaterial.setAttribute('class', 'form__input');
-  inputMaterial.setAttribute('placeholder', 'id material');
+    var optionMat = document.createElement('option');
+    optionMat.setAttribute('value', 'material');
+    optionMat.innerText = 'material';
 
-  var labelCantidad = document.createElement('label');
-  labelCantidad.setAttribute('for', 'cantidad_mater');
-  labelCantidad.setAttribute('class', 'form__label');
-  labelCantidad.innerText = 'cantidad material';
+    var optionAux = document.createElement('option');
+    optionAux.setAttribute('value', 'auxiliar');
+    optionAux.innerText = 'auxiliar';
 
-  var inputCantidad = document.createElement('input');
-  inputCantidad.setAttribute('type', 'number');
-  inputCantidad.setAttribute('step', '0.00001');
-  inputCantidad.setAttribute('name', 'cantidad_mater[]');
-  inputCantidad.setAttribute('class', 'form__input');
-  inputCantidad.setAttribute('placeholder', 'cantidad material');
+    var labelMaterial = document.createElement('label');
+    labelMaterial.setAttribute('for', 'id_material');
+    labelMaterial.setAttribute('class', 'form__label');
+    labelMaterial.innerText = 'Id material';
 
-  selectMat.appendChild(optionMat);
-  selectMat.appendChild(optionAux);
+    var inputMaterial = document.createElement('input');
+    inputMaterial.setAttribute('type', 'number');
+    inputMaterial.setAttribute('step', '0');
+    inputMaterial.setAttribute('name', 'id_material[]');
+    inputMaterial.setAttribute('class', 'form__input');
+    inputMaterial.setAttribute('placeholder', 'id material');
 
-  container.appendChild(labelSelect);
-  container.appendChild(selectMat);
-  container.appendChild(labelMaterial);
-  container.appendChild(inputMaterial);
-  container.appendChild(labelCantidad);
-  container.appendChild(inputCantidad);
+    var labelCantidad = document.createElement('label');
+    labelCantidad.setAttribute('for', 'cantidad_mater');
+    labelCantidad.setAttribute('class', 'form__label');
+    labelCantidad.innerText = 'cantidad material';
 
-  containerMater.appendChild(container);
+    var inputCantidad = document.createElement('input');
+    inputCantidad.setAttribute('type', 'number');
+    inputCantidad.setAttribute('step', '0.00001');
+    inputCantidad.setAttribute('name', 'cantidad_mater[]');
+    inputCantidad.setAttribute('class', 'form__input');
+    inputCantidad.setAttribute('placeholder', 'cantidad material');
+
+    selectMat.appendChild(optionMat);
+    selectMat.appendChild(optionAux);
+
+    container.appendChild(labelSelect);
+    container.appendChild(selectMat);
+    container.appendChild(labelMaterial);
+    container.appendChild(inputMaterial);
+    container.appendChild(labelCantidad);
+    container.appendChild(inputCantidad);
+
+    containerMater.appendChild(container);
+  });
 }
-
-document.getElementById('boton_crear_mat').addEventListener('click', function() { 
-  crearFilaMaterial();
-});

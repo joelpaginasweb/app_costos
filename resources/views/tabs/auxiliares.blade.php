@@ -1,16 +1,7 @@
 @extends('layouts.aplication')
 @section('title', 'Auxiliares')
 
-{{-- @section('scripts')
-<script src="{{ asset('js/ventana_popup.js') }}"></script>
-<script src="{{ asset('js/crear_fila_aux.js') }}"></script>
-@endsection --}}
-
 @section('content')
-
-<head>
-  <link rel="stylesheet" href="{{ asset ('css/auxiliares.css') }}">
-</head>
 
 <section class="section section--up">
   <div>
@@ -44,13 +35,9 @@
           <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
 
           <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
-            placeholder="cantidad material">
-        </div>
+          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"             placeholder="cantidad material">
+        </div>        
 
-
-
-        
       </div>
 
       <div class="container ">
@@ -69,7 +56,6 @@
     </div>
     @endif
   </div>
-
 
   <div class=" section ">
     @if ($errors->any())
@@ -91,8 +77,8 @@
   <div class="emergente__header ">
     <h3 class="emergente__titulo">TARJETA AUXILIARES</h3>
     <div class="emergente__close">
-      <a href="#" onclick="cerrar()">
-        <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img">
+      <a href="#">
+        <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img" id="close">
       </a>
     </div>
   </div>
@@ -311,7 +297,7 @@
           <td>ACCION</td>
         </tr>
         @foreach ($auxis as $auxi)
-        <tr onclick="abrir()" class="tablaTarjetas__body">
+        <tr  class="tablaTarjetas__body" id="open">
           <td>{{$auxi->id}}</td>
           <td>{{$auxi->grupo}}</td>
           <td>{{$auxi->material}}</td>

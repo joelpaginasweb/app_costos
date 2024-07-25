@@ -3,9 +3,7 @@
 
 @section('content')
 
-{{-- <head>
-  <link rel="stylesheet" href="{{ asset ('css/materiales.css') }}">
-</head> --}}
+
 
 <section class="section section--up">
   <div>

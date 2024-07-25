@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
 
-
 class EitBoxInfo  extends LitElement {
 
   static get styles() {
@@ -8,8 +7,8 @@ class EitBoxInfo  extends LitElement {
       :host {
         display: block;
       }
-      p{
-        font-size: 1.7rem;
+      span{
+        font-size: 1.2rem;
         color: blue;
       }
     `;
@@ -18,20 +17,20 @@ class EitBoxInfo  extends LitElement {
   static get properties() {
     return {
     message: {type: String},
-
     };
   }
 
   constructor() {
     super();
-    this.message = "hola a todos"
+    this.message = "web component con Lit.dev"
   }
 
   render() {
     return html`
-      <p>Soy la info box</p>
-      <div>${this.message}</div>
-
+      <br>
+      <span>-Lit Component</span>
+      <br>
+      <span>${this.message}</span>
     `;
   }
 }
