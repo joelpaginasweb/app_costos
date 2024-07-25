@@ -4,9 +4,6 @@
 
 @section('content')
 
-<head>
-  <link rel="stylesheet" href="{{ asset ('css/dashboard.css') }}">
-</head>
 
 <section class="section">
   <div>

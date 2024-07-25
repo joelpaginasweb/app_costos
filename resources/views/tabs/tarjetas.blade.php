@@ -1,19 +1,13 @@
 @extends('layouts.aplication')
 @section('title', 'Tarjetas')
-@section('scripts')
-<script src="{{ asset('js/ventana_popup.js') }}"></script>
-<script src="{{ asset('js/crear_fila_material.js') }}"></script>
-<script src="{{ asset('js/crear_fila_MO.js') }}"></script>
-<script src="{{ asset('js/crear_fila_equipo.js') }}"></script>
 
-@endsection
+ @section('scripts')
+{{-- <script src="{{ asset('js/crear_fila_material.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/crear_fila_MO.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/crear_fila_equipo.js') }}"></script> --}}
+@endsection 
 
 @section('content')
-
-<head>
-  <link rel="stylesheet" href="{{ asset ('css/tarjetas.css') }}">
-  <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
-</head>
 
 <section class="section section--up">
   <div>
@@ -142,8 +136,8 @@
   <div class="emergente__header ">
     <h3 class="emergente__titulo">TARJETA DE COSTOS</h3>
     <div class="emergente__close">
-      <a href="#" onclick="cerrar()">
-        <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img">
+      <a href="#" >
+        <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img" id="close">
       </a>
     </div>
   </div>
@@ -400,7 +394,7 @@
           <td>ACCION</td>
         </tr>
         @foreach ($tarjetas as $tarjeta)
-        <tr onclick="abrir()" class="tablaTarjetas__body">
+        <tr  class="tablaTarjetas__body"  id="open">
           <td>{{$tarjeta->id}}</td>
           <td>{{$tarjeta->partida}}</td>
           <td>{{$tarjeta->concepto}}</td>

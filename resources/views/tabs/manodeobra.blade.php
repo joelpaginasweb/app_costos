@@ -2,9 +2,7 @@
 @section('title', 'Mano de obra')
 @section('content')
 
-<head>
-  <link rel="stylesheet" href="{{ asset ('css/manodeo.css') }}">
-</head>
+
 
 <section class="section section--up">
   <div>
