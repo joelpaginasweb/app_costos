@@ -1,5 +1,4 @@
 @extends('layouts.landing')
-
 @section('title', 'Precios Unitarios')
 
 @section('content')
@@ -37,10 +36,13 @@
       <h3> APLICACION EN CONSTRUCCION</h3>
     </div>
     <br>
-
+    {{-- ----------actualizaciones---------- --}}
     <div>
-      <h3> ESTADO 8 JUL </h3>
-      <h3> Se agregan filas en aux y tarjetas por click </h3>
+      <h4> EDICION 25 JUL </h4>
+      <ul>
+        <li>se instalo Lit y Vite</li>
+        <li>Se reubicaron archivos css y js para Vite</li>
+      </ul>
 
     </div>
   </main>
