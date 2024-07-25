@@ -144,11 +144,11 @@
 
 
 .tablaTarjetas__body {
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .tablaTarjetas__body:hover {
-  background: rgba(145, 145, 145, 0.301);
+  /* background: rgba(145, 145, 145, 0.301); */
   border: 1px solid #3838389d;
 }
 

@@ -121,6 +121,28 @@
   border-radius: 3px;
 }
 
+.form__input-clear {
+  width: 95%;
+  border: none; 
+  cursor:pointer;
+  padding: 4% 0em;
+  text-align: center;
+  appearance: textfield; /* quitar flechitas de input en Firefox */
+}
+
+/* quitar flechitas de input en google chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form__input-clear:hover {
+  background: rgba(79, 83, 99, 0.13);
+}
+
+
+
 .form__input-noedit {
   color: #000000;
   pointer-events: none;

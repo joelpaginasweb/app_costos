@@ -2,10 +2,11 @@
 @section('title', 'Editar Presupuesto')
 
 @section('scripts')
-<script src="{{ asset('js/input_dblclick.js') }}"></script>
+<script src="{{ asset('js/select_one_click.js') }}"></script>
 @endsection
 
 @section('content')
+
 <head>
   <link rel="stylesheet" href="{{ asset ('css/edit_presupuesto.css') }}">
   <link rel="stylesheet" href="{{ asset ('css/estilobase.css') }}">
@@ -93,8 +94,8 @@
     <div class="presupMonto__titulo">
       <h5>PRESUPUESTO TOTAL</h5>
     </div>
-    <div class="presupMonto__monto">           
-      <h5>{{number_format($presu->costo_total, 2)}}</h5>    
+    <div class="presupMonto__monto">
+      <h5>{{number_format($presu->costo_total, 2)}}</h5>
     </div>
   </div>
 
@@ -134,37 +135,30 @@
           <td>{{$concepto->concepto}}</td>
           <td>{{$concepto->unidad}}</td>
           <td>
-            <form action="{{ route('updateConceptoCantidad', $concepto->id) }}" method="POST">            
+            <form action="{{ route('updateConceptoCantidad', $concepto->id) }}" method="POST">
               @csrf
-                
-                {{-- <input type="text" id="excel-input" class="form__input-short"> --}}
-
-              <input id="excel-input" type="number" name="cantidad_concepto" class="form__input-short" value="{{$concepto->cantidad}}"  step="0.01">
-
-
-              {{-- <input type="number" name="cantidad_concepto" class="form__input-short" value="{{$concepto->cantidad}}"  step="0.01"> --}}
-
-
-              <button type="submit" class="form__boton-short">enviar</button>
+            <input type="number" name="cantidad_concepto" id="select_auto" class="form__input-clear" value="{{$concepto->cantidad}}" step="0.01" onkeydown="handleKeyDown(event)">
             </form>
           </td>
           <td>
-              {{-- {{$concepto->precio_unitario}} --}}
-              {{number_format($concepto->precio_unitario, 2)}}
+            {{-- {{$concepto->precio_unitario}} --}}
+            {{number_format($concepto->precio_unitario, 2)}}
           </td>
           <td>
-              {{-- {{$concepto->importe}} --}}
-              {{number_format($concepto->importe, 2)}}
+            {{-- {{$concepto->importe}} --}}
+            {{number_format($concepto->importe, 2)}}
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
+
+
     <!-------------- para llenar dato como celda de excel ------------>
-<div id="excel-cell">
-  <span id="cell-value" ondblclick="activateInput()"></span>
-  <input id="input-cell" type="text" onkeydown="handleKeyDown(event)" style="display: none;">
-</div>
+    <div id="excel-cell">
+      <span id="cell-value" ondblclick="activateInput()"></span>
+      <input id="input-cell" type="text" onkeydown="handleKeyDown(event)" style="display: none;">
+    </div>
 
 
     {{---------------------------}}
