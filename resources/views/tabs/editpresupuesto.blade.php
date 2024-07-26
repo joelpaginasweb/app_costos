@@ -1,10 +1,6 @@
 @extends('layouts.aplication')
 @section('title', 'Editar Presupuesto')
 
-{{-- @section('scripts') --}}
-  {{-- <script src="{{ asset('js/select_one_click.js') }}"></script> --}}
-{{-- @endsection --}}
-
 @section('content')
 
 <section class="section section--up">
@@ -95,7 +91,7 @@
   </div>
 
   <div class="containerTabla">
-    <table class="tabla ">
+    <table class="tablaEdit">
       <thead class="tabla__head">
         <tr>
           <th>ID CLAVE</th>
@@ -107,7 +103,7 @@
         </tr>
       </thead>
     </table>
-    <table class="tabla">
+    <table class="tablaEdit">
       {{-- <thead class="tabla__subhead">
         <tr>
           <th></th>
