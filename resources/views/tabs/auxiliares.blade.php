@@ -7,7 +7,17 @@
   <div>
     <h1> TARJETAS AUXILIARES DE COSTOS </h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
-  </div>
+    <br>
+    <div>
+          <!----------- web components-------- -->
+          <h3>-test web componentes-</h3>
+          <hola-mundo name="test" surname="component nativo"></hola-mundo>       
+          <!-- lit components -->
+          <eit-box-info message="test component Lit" ></eit-box-info>         
+          <!----------- web components-------- -->
+        </div>
+    </div>
+
 </section>
 
 <section class="section__form"> <!-- estilo de form en estilobase.css -->
