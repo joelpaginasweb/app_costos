@@ -48,11 +48,11 @@
       <!----- Esto es un comentario ------>
 
       <div id="divnombre" class="userContain">
-        <a class="user" href="{{route('dashboard.index')}}">
+        {{-- <a class="user" href="{{route('dashboard.index')}}"> --}}
         {{-- <a class="user" href="{{route('dashboard')}}"> --}}
 
-          Ingresar Usuario
-        </a>
+          {{-- Ingresar Usuario --}}
+        {{-- </a> --}}
       </div>
     </div>
   </header>

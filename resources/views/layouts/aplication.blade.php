@@ -59,9 +59,9 @@
       </div>
 
       <div  class="userContain">
-        <a class="user" href="{{route('dashboard.index')}}">
-          Nombre de Usuario
-        </a>
+        {{-- <a class="user" href="{{route('dashboard.index')}}"> --}}
+          {{-- Nombre de Usuario --}}
+        {{-- </a> --}}
       </div>
     </div>
   </header>
