@@ -16,7 +16,7 @@ class DashboardController extends Controller
     {
         //
         $dashboard = Dashboard::all();       
-        return view('dashboard',['dashboard'=>$dashboard]);
+        return view('tabs/dashboard',['dashboard'=>$dashboard]);
         
         /* 
         $dashbos = Dashbo::all();       

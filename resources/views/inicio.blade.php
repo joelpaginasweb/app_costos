@@ -3,6 +3,8 @@
 
 @section('content')
 
+
+{{--  
 <div id=oculto>
 </div>
 
@@ -36,7 +38,7 @@
       <h3> APLICACION EN CONSTRUCCION</h3>
     </div>
     <br>
-    {{-- ----------actualizaciones---------- --}}
+    
     <div>
       <h4> EDICION 25 JUL </h4>
       <ul>
@@ -65,5 +67,7 @@
       stack on top of each other.</p>
   </section>
 </div>
+
+--}}
 
 @endsection

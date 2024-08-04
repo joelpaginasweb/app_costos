@@ -18,7 +18,7 @@
   <header>
     <div class="caja">
       <div id="divlogo" class="logoContain">
-        <a href=" {{route('inicio')}} " class="logo">
+          <a href=" {{route('welcome')}} " class="logo">
           <img src="{{asset ('img/lgo-bco-3.png') }}" alt="appcostos" class="logo__img">
         </a>
       </div>
@@ -47,13 +47,6 @@
       @endif
       <!----- Esto es un comentario ------>
 
-      <div id="divnombre" class="userContain">
-        {{-- <a class="user" href="{{route('dashboard.index')}}"> --}}
-        {{-- <a class="user" href="{{route('dashboard')}}"> --}}
-
-          {{-- Ingresar Usuario --}}
-        {{-- </a> --}}
-      </div>
     </div>
   </header>
   <main>
