@@ -1,38 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <!----------------Enlaces css y js----------->
-    @vite(['resources/css/app.css', 'resources/js/app.js']) 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!----------------Enlaces css y js----------->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <!--------------titulo documento------------>
-    <title>App Costos @yield('title')</title>              
+  <title>App Costos @yield('title')</title>
 </head>
-    <!----- Esto es un comentario ------>
+<!----- Esto es un comentario ------>
+
 <body>
-    <header>
-        <div class="caja">
-            <div id="divlogo" class="logoContain"> 
-                <a href=" {{route('landing')}} " class="logo">
-                    <img src="{{asset ('img/lgo-bco-3.png') }}" alt="appcostos" class="logo__img">
-                </a>             
-            </div>  
-            @include(' layouts.partials.nav_landing') 
-            <div id="divnombre" class="userContain">              
-                <a class="user" href="{{route('dashbos.index')}}">
-                   Ingresar Usuario
-                </a>    
-            </div>
-        </div>      
-    </header>
-    <main>
-        @yield('content')      
-    </main>
-    <footer> 
-        @include(' layouts.partials.footer')   
-    </footer>    
+  <header>
+    <div class="caja">
+      <div id="divlogo" class="logoContain">
+        <a href=" {{route('inicio')}} " class="logo">
+          <img src="{{asset ('img/lgo-bco-3.png') }}" alt="appcostos" class="logo__img">
+        </a>
+      </div>
+
+      <!----------------- login de breeze------------->
+      @include(' layouts.partials.nav_landing')
+      <div class="userContain">
+        @if (Route::has('login'))
+        <nav class="">
+          @auth
+          <a href="{{ url('/dashboard') }}" class="user">
+            Dashboard
+          </a>
+          @else
+          <a href="{{ route('login') }}" class="user">
+            Log in
+          </a>
+          @if (Route::has('register'))
+          <a href="{{ route('register') }}" class="user">
+            Register
+          </a>
+          @endif
+          @endauth
+        </nav>
+      </div>
+      @endif
+      <!----- Esto es un comentario ------>
+
+      <div id="divnombre" class="userContain">
+        <a class="user" href="{{route('dashboard.index')}}">
+        {{-- <a class="user" href="{{route('dashboard')}}"> --}}
+
+          Ingresar Usuario
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    @yield('content')
+  </main>
+  <footer>
+    @include(' layouts.partials.footer')
+  </footer>
 </body>
+
 </html>

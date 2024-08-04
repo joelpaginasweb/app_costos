@@ -3,7 +3,7 @@
   <ul class="header__menu">
 
     <li>
-      <a href="{{route('dashbos.index')}}" class="menu__item">Dashboard</a>
+      <a href="{{route('dashboard.index')}}" class="menu__item">Dashboard</a>
       <ul>
         <li><a class="menu__option" href="">funcion</a></i>
 
