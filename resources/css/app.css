@@ -2,6 +2,12 @@
 /* @tailwind components; */
 /* @tailwind utilities; */
 
+
+@import url('styles/reset.css');
+
+@import url('styles/login.css');
+
+
 @import url('styles/auxiliares.css');
 @import url('styles/dashboard.css');
 @import url('styles/edit_presupuesto.css');

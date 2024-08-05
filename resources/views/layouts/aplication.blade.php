@@ -71,7 +71,7 @@
   </main>
 
   <footer>
-    @include(' layouts.partials.footer')
+    @include(' layouts.partials.footer_app')
   </footer>
 
   @yield('scripts')

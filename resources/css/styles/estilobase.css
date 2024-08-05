@@ -1,7 +1,7 @@
 * {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
+  /* margin: 0px; */
+  /* padding: 0px; */
+  /* box-sizing: border-box; */
   font-family: Arial, sans-serif;
   /* outline: 1px solid rgb(209, 99, 99);  */
 }
@@ -188,6 +188,8 @@ input::-webkit-inner-spin-button {
   border: solid 1px rgb(179, 179, 179);
 }
 
+/*---------------botones--------------*/
+
 .form__boton {
   padding: 0.2em 1em; 
   border: solid 1px rgb(179, 179, 179);
@@ -209,7 +211,6 @@ input::-webkit-inner-spin-button {
 }
 
 
-/*---------------botones--------------*/
 .tabla__boton {
   width: 20px;
   font-size: small;
@@ -337,4 +338,18 @@ header {
 .header__nav li:hover ul {
   display: block;
   /*-------aparece sub menu------- */
+}
+
+
+/*----------footer landing--------*/
+.footer__landing {
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  padding: 10px;
+  height: auto;
+  min-height: 100px;
+  background: rgba(29, 38, 53, 1);
+  color: #fcf8f8;
+  text-align: center;
 }

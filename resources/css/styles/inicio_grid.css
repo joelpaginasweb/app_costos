@@ -1,7 +1,7 @@
-* {
-  margin: 0px;
+/* * { */
+  /* margin: 0px; */
   /* outline: 0.01px solid rgba(146, 75, 75, 0.068);     */
-}
+/* } */
 
 
 #oculto {
@@ -19,7 +19,7 @@
     'left middle middle middle right right'
     'left middle middle middle right right'
     'left middle middle middle right right'
-    'piepag piepag piepag piepag piepag piepag'
+    'footerGrid footerGrid footerGrid footerGrid footerGrid footerGrid'
 }
 
 /*------ definicion de elementos del grid------*/
@@ -35,8 +35,8 @@
   grid-area: right;
 }
 
-.piepag {
-  grid-area: piepag;
+.footerGrid {
+  grid-area: footerGrid;
 }
 
 /*----------Responsive layout ---------- */
@@ -46,7 +46,7 @@
       'left left left left left left'
       'middle middle middle middle middle middle'
       'right right right right right right'
-      'piepag piepag piepag piepag piepag piepag'
+      'footerGrid footerGrid footerGrid footerGrid footerGrid footerGrid'
   }
 }
 
@@ -74,11 +74,4 @@
 
 }
 
-.piepag {
-  padding: 10px;
-  height: auto;
-  min-height: 100px;
-  background: rgba(29, 38, 53, 1);
-  color: #fcf8f8;
-  text-align: center;
-}
+/* ---estilo del footerGrid en estilobase.css--- */

@@ -12,7 +12,6 @@
   <!--------------titulo documento------------>
   <title>App Costos @yield('title')</title>
 </head>
-<!----- Esto es un comentario ------>
 
 <body>
   <header>
@@ -45,16 +44,21 @@
         </nav>
       </div>
       @endif
-      <!----- Esto es un comentario ------>
-
-    </div>
+      <!----- ------------------------->
+    </div>    
   </header>
+
+
   <main>
     @yield('content')
   </main>
+
+
   <footer>
-    @include(' layouts.partials.footer')
+    @include(' layouts.partials.footer_landing')
   </footer>
+
+
 </body>
 
 </html>

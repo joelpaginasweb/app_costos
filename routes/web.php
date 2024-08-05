@@ -25,20 +25,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+  require __DIR__.'/auth.php';
 
   // ---------------rutas de vistas con CRUDS y controller------------
 Route::middleware('auth')->group(function () {
   Route::resource('dashboard', DashboardController::class)->name('dashboard.index', 'dashboard');
+
   Route::resource('presus', PresuController::class);
+  Route::get('/editPresupuesto/{id}', [PresuController::class, 'edit'])->name('editPresupuesto');
+  Route::post('/updateConceptoCantidad/{id}', [PresuController::class, 'updateConceptoCantidad'])->name('updateConceptoCantidad');
+  
   Route::resource('tarjetas', TarjetaController::class);
   Route::resource('materiales', MaterialesController::class);
   Route::resource('manodeobra', ManodeobraController::class);
   Route::resource('herramientas', HerramientaController::class);
   Route::resource('auxis', AuxiController::class);
   
-  Route::get('/editPresupuesto/{id}', [PresuController::class, 'edit'])->name('editPresupuesto');
-  Route::post('/updateConceptoCantidad/{id}', [PresuController::class, 'updateConceptoCantidad'])->name('updateConceptoCantidad');
 });
 
 
@@ -46,20 +48,6 @@ Route::middleware('auth')->group(function () {
 //GET -- visible por URL - para recuperar datos en vista
 //POST -- ocultos en el cuerpo - para almacenar datos en la BD
 
-/*------------------*/
-
-// Route::resource('dashboard', function () {
-//   return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-  // Route::resource('dashboard', DashboardController::class)->name('dashboard', 'dashboard');
 
-
-// Route::get('dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::get('/dashboard', function(){
-//   return view('dashboard');
-// })->name('dashboard');
