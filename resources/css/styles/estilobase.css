@@ -3,7 +3,8 @@
   /* padding: 0px; */
   /* box-sizing: border-box; */
   font-family: Arial, sans-serif;
-  /* outline: 1px solid rgb(209, 99, 99);  */
+  /* outline: 1px solid rgba(173, 97, 97, 0.2);  */
+
 }
 
 /*------------- contenedores ------------------*/
@@ -42,7 +43,6 @@
   display: flex;
   width: auto;
   margin: 0px 3px 0px 3px;
-  border: solid 1px rgba(255, 255, 255, 0);
   align-items: center;
   justify-content: center
 }
@@ -75,7 +75,7 @@
 
 /*-----------form formularios--------------------*/
 
-.section__form {  
+.section__form {
   min-height: auto;
   background: #ffffff;
   width: 95%;
@@ -95,7 +95,7 @@
 
 .form {
   width: 100%;
-  
+
 }
 
 .form__label {
@@ -110,7 +110,7 @@
 
 .form__input {
   border: none;
-  border-bottom: 1px solid rgb(95, 95, 95); 
+  border-bottom: 1px solid rgb(95, 95, 95);
   font-size: small;
   justify-content: center;
   text-align: start;
@@ -118,16 +118,17 @@
   margin: 0.1em 0em;
   padding: 0.3em 0.5em;
   background: rgb(247, 247, 247);
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }
 
 .form__input-clear {
   width: 95%;
-  border: none; 
-  cursor:pointer;
+  border: none;
+  cursor: pointer;
   padding: 4% 0em;
   text-align: center;
-  appearance: textfield; /* quitar flechitas de input en Firefox */
+  appearance: textfield;
+  /* quitar flechitas de input en Firefox */
 }
 
 /* quitar flechitas de input en google chrome */
@@ -141,20 +142,18 @@ input::-webkit-inner-spin-button {
   background: rgba(79, 83, 99, 0.13);
 }
 
-
-
 .form__input-noedit {
   color: #000000;
   pointer-events: none;
-  border-bottom: none; 
+  border-bottom: none;
   background: rgb(255, 255, 255);
-  appearance : none;
+  appearance: none;
 }
 
 .form__input-short {
   width: 5em;
   border: none;
-  border-bottom: 1px solid rgb(95, 95, 95); 
+  border-bottom: 1px solid rgb(95, 95, 95);
   font-size: small;
   justify-content: center;
   text-align: start;
@@ -162,10 +161,10 @@ input::-webkit-inner-spin-button {
   margin: 0em 0em;
   padding: 0em 0em;
   background: rgb(247, 247, 247);
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }
 
-.form__textarea {     
+.form__textarea {
   font-size: small;
   text-align: start;
   width: 350px;
@@ -173,11 +172,11 @@ input::-webkit-inner-spin-button {
   min-width: 350px;
   height: 25px;
   border: none;
-  border-bottom: 1px solid rgb(95, 95, 95);  
+  border-bottom: 1px solid rgb(95, 95, 95);
   margin: 0.7em 0.3em;
   outline: none;
   background: rgb(247, 247, 247);
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }
 
 .form__textarea::placeholder {
@@ -191,17 +190,18 @@ input::-webkit-inner-spin-button {
 /*---------------botones--------------*/
 
 .form__boton {
-  padding: 0.2em 1em; 
+  padding: 0.2em 1em;
   border: solid 1px rgb(179, 179, 179);
   background: #e7e7e7;
   border-radius: 3px;
   height: 25px;
   margin: 0.7em 0.5em;
   font-weight: bold;
+  font-size: 0.8em;
 }
 
 .form__boton-short {
-  padding: 0em em; 
+  padding: 0em em;
   border: solid 1px rgb(179, 179, 179);
   background: #e7e7e7;
   border-radius: 3px;
@@ -340,9 +340,22 @@ header {
   /*-------aparece sub menu------- */
 }
 
+.bodyLanding {
+  background: rgb(166, 161, 170);
+
+}
+
+.mainLanding {
+  background: rgb(166, 161, 170);
+  /* min-height: 100vh; */
+}
+
+.mainAplication {
+  background: rgb(236, 236, 236);
+}
 
 /*----------footer landing--------*/
-.footer__landing {
+.footerLanding {
   position: fixed;
   bottom: 0%;
   width: 100%;
@@ -352,4 +365,18 @@ header {
   background: rgba(29, 38, 53, 1);
   color: #fcf8f8;
   text-align: center;
+}
+
+.footerApp {
+  /* position: relative; */
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+
+  padding: 5px;
+  color: #fcf8f8;
+  background: rgba(29, 38, 53, 1);
+  text-align: center;
+  /*font-weight: bold; 
+ font-size: smaller; */
 }

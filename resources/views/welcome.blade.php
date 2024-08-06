@@ -38,10 +38,10 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4> EDICION 25 JUL </h4>
+      <h4> EDICION 6 ago </h4>
       <ul>
-        <li>se instalo Lit y Vite</li>
-        <li>Se reubicaron archivos css y js para Vite</li>
+        <li>Se instalo breeze</li>
+        <li>Se edito estilo login y registro usuario</li>
       </ul>
     </div>
     <br>

@@ -13,7 +13,7 @@
   <title>App Costos @yield('title')</title>
 </head>
 
-<body>
+<body class="bodyLanding">
   <header>
     <div class="caja">
       <div id="divlogo" class="logoContain">
@@ -49,7 +49,7 @@
   </header>
 
 
-  <main>
+  <main class="mainLanding">
     @yield('content')
   </main>
 

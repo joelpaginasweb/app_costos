@@ -6,7 +6,7 @@
 * {  
   margin: 0;
   padding: 0;    
-  text-decoration: none; 
+  text-decoration: none;   
 }
 
 body {
@@ -18,7 +18,7 @@ body {
 
 html {  
   height: 100%;  /*-----define el 100% del html----*/  
-  font-size: 90%; /*-------font size movil layout-------*/
+  font-size: 95%; /*-------font size movil layout-------*/
 }
 
 img, picture, video, canvas, svg {

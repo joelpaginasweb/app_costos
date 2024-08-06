@@ -1,8 +1,8 @@
 
 
 
-    <div  class="footerContainer">
-        <h6>ESTE ES EL FOOTER DE LA PAGINA</h6>
+    <div  class="footerApp">
+        <h6>ESTE ES EL FOOTER DE LA APLICACION</h6>
     </div>
 
  

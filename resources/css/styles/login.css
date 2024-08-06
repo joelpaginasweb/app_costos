@@ -1,4 +1,80 @@
+.section__login {
+  margin: 13% 35%;
+  width: fit-content;
+  min-height: auto;
+  background: #ffffff;
+  border: solid 6px rgb(29, 38, 53);
+  padding: 5px 15px;
+}
 
-/* .loginMain{
-  height: 00px;
-} */
+.login {
+  width: 100%;
+}
+
+.login__div {
+  width: 60px;
+  text-align: right;
+  margin: 0em 4px;
+}
+
+.register__div {
+  width: 150px;
+  text-align: right;
+  margin: 0em 4px;
+}
+
+
+.login__div--long {
+  width: 16em;
+  text-align: left;
+  margin: 0em 8px;
+}
+
+.login__contain {
+  display: flex;
+  margin: 10px 0px;
+  align-items: center;
+}
+
+.login__label {
+  font-size: small;
+  justify-content: center;
+  text-align: start;
+  height: 20px;
+  margin: 0em 3px;
+  color: rgb(0, 0, 0);
+}
+
+.login__input {
+  width: 70%;
+  height: 25px;
+  border: none;
+  border-bottom: 1px solid rgb(54, 54, 54);
+  font-size: small;
+  outline: 0px;
+  margin: 5px 5px;
+  background: rgb(247, 247, 247);
+}
+
+
+.form__input-clear {
+  width: 95%;
+  border: none;
+  cursor: pointer;
+  padding: 4% 0em;
+  text-align: center;
+  appearance: textfield;
+  /* quitar flechitas de input en Firefox */
+}
+
+.login__boton {
+  padding: 0.2em 1em;
+  border: solid 1px rgb(179, 179, 179);
+  background: #e7e7e7;
+  border-radius: 3px;
+  height: 25px;
+  margin: 0.7em 0.5em;
+  font-weight: bold;
+  font-size: small;
+
+}
