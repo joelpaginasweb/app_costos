@@ -1,0 +1,23 @@
+
+.perfil__page {
+  width: 99%;
+  padding: 8px;
+  margin: 0 auto;
+}
+
+.perfil__section {
+  width: 99%;
+  padding: 7px 10px;
+  border: solid 1px rgb(105, 105, 105);
+  background: rgb(255, 255, 255);
+  margin: 0 auto;
+}
+
+.perfil__h4 {
+  margin:  7px 0;
+}
+
+.perfil__span {
+  margin:  39px 0px;
+  padding: 10px 0;
+}

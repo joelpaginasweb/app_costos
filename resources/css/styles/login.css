@@ -68,13 +68,20 @@
 }
 
 .login__boton {
+  width: 110px;
   padding: 0.2em 1em;
-  border: solid 1px rgb(179, 179, 179);
+  border: solid 1px rgb(126, 126, 126);
   background: #e7e7e7;
   border-radius: 3px;
   height: 25px;
   margin: 0.7em 0.5em;
   font-weight: bold;
   font-size: small;
+  
+}
 
+.login__boton:hover {
+  background: #c9c9c9;
+  border: solid 1px rgb(87, 87, 87);
+  cursor: pointer;
 }

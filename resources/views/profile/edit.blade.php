@@ -1,34 +1,56 @@
-<br>
-<br>
-<br>
-<br>
+@extends('layouts.aplication')
+@section('title', 'Perfil')
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@section('content')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+<br><br><br><br>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
+<section class=" perfil__page ">
+  <section class="perfil__section ">
+    <h3>
+      {{ __('Perfil de Usuario') }}
+    </h3>
+  </section>
+    <br>
+  <section class="perfil__section ">
+    <h4 class="perfil__h4">
+      Informacion del Perfil de Usuario
+    </h4>
+    <span class="perfil__span">
+      Actualiza tus datos de usuario y correo electronico.
+    </span>
+    <div class="">
+      @include('profile.partials.update-profile-information-form')
     </div>
-</x-app-layout>
+  </section>
+  <br>
+  <section class="perfil__section ">
+    <h4 class="perfil__h4">
+      Actualiza el Password
+    </h4>
+    <span class="perfil__span">
+      Proteje tu cuenta usando un password seguro de mas de 8 carecteres aleatorios.
+    </span>
+    <div class="">
+      @include('profile.partials.update-password-form')
+    </div>
+  </section>
+  <br>
+  <section class="perfil__section">
+    <h4 class="perfil__h4">
+      Eliminar cuenta
+    </h4>
+    <span class="perfil__span">
+      Al eliminar tu cuenta, toda la informacion y datos asociados seran permanentmente borrados. Antes de eliminarla
+      respalda la informacion que deses conservar.
+    </span>
+    <br>
+    <div class="">
+      @include('profile.partials.delete-user-form')
+    </div>
+    
+  </section>
+</section>
+<br><br>
+
+@endsection

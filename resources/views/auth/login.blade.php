@@ -3,9 +3,6 @@
 
 @section('content')
 
-
-
-
 <section class="section__login">
 
   <div class="login__contain">

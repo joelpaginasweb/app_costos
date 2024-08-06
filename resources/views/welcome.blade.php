@@ -59,11 +59,7 @@
       administrar de forma electrónica grandes cantidades de información.
     </p>
   </aside>
-
-
-
-
-
+  
 </div>
 
 @endsection

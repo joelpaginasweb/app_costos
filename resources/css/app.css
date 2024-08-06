@@ -2,12 +2,6 @@
 /* @tailwind components; */
 /* @tailwind utilities; */
 
-
-@import url('styles/reset.css');
-
-@import url('styles/login.css');
-
-
 @import url('styles/auxiliares.css');
 @import url('styles/dashboard.css');
 @import url('styles/edit_presupuesto.css');
@@ -15,8 +9,12 @@
 @import url('styles/footer.css');
 @import url('styles/herramienta.css');
 @import url('styles/inicio_grid.css');
+@import url('styles/login.css');
 @import url('styles/manodeo.css');
 @import url('styles/materiales.css');
+@import url('styles/perfil.css');
 @import url('styles/presupuesto.css');
+@import url('styles/reset.css');
 @import url('styles/tarjetaemerge.css');
 @import url('styles/tarjetas.css');
+

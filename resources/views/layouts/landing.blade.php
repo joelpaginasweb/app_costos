@@ -22,8 +22,9 @@
         </a>
       </div>
 
-      <!----------------- login de breeze------------->
       @include(' layouts.partials.nav_landing')
+      
+      <!----------------- login de breeze------------->
       <div class="userContain">
         @if (Route::has('login'))
         <nav class="">
@@ -33,11 +34,11 @@
           </a>
           @else
           <a href="{{ route('login') }}" class="user">
-            Log in
+            Iniciar Sesíon
           </a>
           @if (Route::has('register'))
           <a href="{{ route('register') }}" class="user">
-            Register
+            Registrarse
           </a>
           @endif
           @endauth
