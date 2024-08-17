@@ -38,10 +38,10 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4> EDICION 6 ago </h4>
+      <h4> EDICION 17 ago </h4>
       <ul>
-        <li>Se instalo breeze</li>
-        <li>Se edito estilo login y registro usuario</li>
+        <li>Se instalo simple-datatables por cdn</li>
+        <li>Se edito estilo de tablas</li>
       </ul>
     </div>
     <br>
