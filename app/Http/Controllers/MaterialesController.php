@@ -24,7 +24,7 @@ class MaterialesController extends Controller
      */
     public function create(): View
     {
-        //return view('tabs/materiales');
+       
     }
     
 

@@ -167,7 +167,7 @@ class PresuController extends Controller
       $idPresup = $concepto->id_presup;
       $costoTotal = $this->calcularConceptos($PUConcepto, $idPresup);        
 
-      return redirect()->route('editPresupuesto', $concepto->id_presup);
+      return redirect()->route('cantEdit', $concepto->id_presup);
     }
 
     //*--------------------------------------------------*/
@@ -214,8 +214,6 @@ class PresuController extends Controller
         }
 
         // dd($costoIndirectoTotal);
-
-
         $presu->indirectos = $indirectosTotal;
 
         $presu->costo_directo = $costoDirectoTotal;
@@ -227,8 +225,7 @@ class PresuController extends Controller
         $presu->utilidad = $utilidadTotal;
         $presu->cargos_adicion = $cargosAdicionTotal;
 
-        $presu->save();
-          
+        $presu->save();          
     }
 
     /**     * Update the specified resource in storage.     */

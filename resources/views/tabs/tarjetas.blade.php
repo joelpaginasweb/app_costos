@@ -1,14 +1,8 @@
 @extends('layouts.aplication')
 @section('title', 'Tarjetas')
 
- @section('scripts')
-{{-- <script src="{{ asset('js/crear_fila_material.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/crear_fila_MO.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/crear_fila_equipo.js') }}"></script> --}}
-@endsection 
 
 @section('content')
-
 <section class="section section--up">
   <div>
     <h1> TARJETAS DE COSTOS DE PRECIO UNITARIO </h1>
@@ -133,14 +127,18 @@
 
 <!----------- ventana emergente tarjeta de costos ---------------->
 <div class="emergente__contain" id="emergente">
+
   <div class="emergente__header ">
     <h3 class="emergente__titulo">TARJETA DE COSTOS</h3>
     <div class="emergente__close">
       <a href="#" >
-        <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img" id="close">
+      <h4 id="close" class="emergente__h4">cerrar</h4>
+    
+        <!-- <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img" id="close"> -->
       </a>
     </div>
   </div>
+
   <div class="containDatosTarj">
     <div class="containConceptoTarj">
       <h4>CONCEPTO:</h4>
@@ -364,37 +362,38 @@
       </tbody>
     </table>
   </div>
-  <div id="fotervent" class="footer__emergente"></div>
 </div>
 <!----------- fin ventana emergente tarjeta de costos -------------->
 
 
-<section class="sectionTabla">
-  <div id="presglobtit" class="tabla__nombre">
-    <div class="nombre">
+<section class="section__tablaBase section--down">
+  <div class="tablaBase__contain">
+    <div class="tablaBase__title">
       <h5>LISTADO DE TARJETAS DE COSTOS</h5>
     </div>
   </div>
 
-  <div class="containerTabla">
-    <table class="tablaTarjetas">
-      <tbody>
-        <tr class="tablaTarjetas__head">
-          <td>CLAVE ID</td>
-          <td>PARTIDA</td>
-          <td>CONCEPTO</td>
-          <td>UNID</td>
-          <td>COSTO MAT</td>
-          <td>COSTO MA</td>
-          <td>COSTO HyEQ</td>
-          <td>COSTO DIR</td>
-          <td>COSTO IND</td>
-          <td>PRECIO UN</td>
-          <td>ID PRES</td>
-          <td>ACCION</td>
+  <div class="tablaBase__container">
+    <table class="tablaBase tablaTarjeta " id="tabla_base">
+    <thead>
+        <tr class="">
+          <th>ID</th>
+          <th>PARTIDA</th>
+          <th>CONCEPTO</th>
+          <th>UNI</th>
+          <th>COSTO MAT</th>
+          <th>COSTO MA</th>
+          <th>COSTO EQ</th>
+          <th>COSTO DIR</th>
+          <th>COSTO IND</th>
+          <th>PRECIO UN</th>
+          <th>PRES</th>
+          <th>ACCION</th>
         </tr>
+      </thead>
+      <tbody class="tablaBase__tbody">      
         @foreach ($tarjetas as $tarjeta)
-        <tr  class="tablaTarjetas__body"  id="open">
+        <tr class="pointer" id="open">
           <td>{{$tarjeta->id}}</td>
           <td>{{$tarjeta->partida}}</td>
           <td>{{$tarjeta->concepto}}</td>
@@ -404,25 +403,25 @@
             {{number_format($tarjeta->costo_material, 2)}}
           </td>
           <td>
-            {{-- {{$tarjeta->costo_mano_obra}} --}}
             {{number_format($tarjeta->costo_mano_obra, 2)}}
           </td>
           <td>
-            {{-- {{$tarjeta->costo_equipo}} --}}
             {{number_format($tarjeta->costo_equipo, 2)}}
           </td>
           <td>
-            {{-- {{$tarjeta->costo_directo}} --}}
             {{number_format($tarjeta->costo_directo, 2)}}
           </td>
-          <td>
-            {{-- {{$tarjeta->costo_indirecto}}</td> --}}
+
+          <td>          
           {{number_format($tarjeta->costo_indirecto, 2)}}
+          </td>
+
           <td>
-            {{-- {{$tarjeta->precio_unitario}} --}}
             {{number_format($tarjeta->precio_unitario, 2)}}
           </td>
+
           <td>{{$tarjeta->id_presup}}</td>
+
           <td>
             <div class="contain">
               <div class="contain">
@@ -432,16 +431,25 @@
                 <form action=" {{route('tarjetas.destroy', $tarjeta)}} " method="POST">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="tabla__boton">X</button>
+                  <button type="submit" class="tablaBase__boton">X</button>
                 </form>
               </div>
             </div>
           </td>
+
         </tr>
         @endforeach
       </tbody>
     </table>
   </div>
 </section>
+
+
+
+{{-- esta funcion no se compila desde resources/js/functions/ --}}
+<script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
 
 @endsection

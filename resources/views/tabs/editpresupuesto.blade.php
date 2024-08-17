@@ -3,9 +3,9 @@
 
 @section('content')
 
-<section class="section section--up">
+<section class="section">
   <div>
-    <h3 class="section__h">EDITAR PRESUPUESTO CATALOGO DE CONCEPTOS</h3>
+    <h3 class="">EDITAR PRESUPUESTO CATALOGO DE CONCEPTOS</h3>
   </div>
 </section>
 
@@ -80,21 +80,20 @@
   </div>
 </section>
 
-<section id="secatalog" class="sectionTabla">
-  <div class="row__presupMonto">
-    <div class="presupMonto__titulo">
+<section class="section__tablaBase section--down">
+
+  <div class="tablaBase__contain">
+    <div class="presupMonto">
       <h5>PRESUPUESTO TOTAL</h5>
-    </div>
-    <div class="presupMonto__monto">
       <h5>{{number_format($presu->costo_total, 2)}}</h5>
     </div>
   </div>
 
-  <div class="containerTabla">
-    <table class="tablaEdit">
-      <thead class="tabla__head">
+  <div class="tablaBase__container">
+    <table class="tablaBase tablaEdit" id="tabla_base">
+      <thead class="">
         <tr>
-          <th>ID CLAVE</th>
+          <th>ID</th>
           <th>CONCEPTO</th>
           <th>UNIDAD</th>
           <th>CANTIDAD</th>
@@ -102,8 +101,6 @@
           <th>IMPORTE</th>
         </tr>
       </thead>
-    </table>
-    <table class="tablaEdit">
       {{-- <thead class="tabla__subhead">
         <tr>
           <th></th>
@@ -119,7 +116,8 @@
           <th>00.00</th>
         </tr>
       </thead> --}}
-      <tbody>
+
+      <tbody class="tablaBase__tbody">
         @foreach ($conceptos as $concepto)
         <tr>
           <td>{{$concepto->id}}</td>
@@ -128,7 +126,8 @@
           <td>
             <form action="{{ route('updateConceptoCantidad', $concepto->id) }}" method="POST">
               @csrf
-            <input type="number" name="cantidad_concepto" id="select_auto" class="form__input-clear" value="{{$concepto->cantidad}}" step="0.01" onkeydown="handleKeyDown(event)">
+              <input type="number" name="cantidad_concepto" id="select_auto" class="form__input--table"
+                value="{{$concepto->cantidad}}" step="0.01" onkeydown="handleKeyDown(event)">
             </form>
           </td>
           <td>
@@ -150,13 +149,11 @@
       <span id="cell-value" ondblclick="activateInput()"></span>
       <input id="input-cell" type="text" onkeydown="handleKeyDown(event)" style="display: none;">
     </div>
-
-
-    {{---------------------------}}
-
-
-
   </div>
 
+</section>
 
-  @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+@endsection

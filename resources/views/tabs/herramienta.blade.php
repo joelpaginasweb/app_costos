@@ -57,29 +57,31 @@
 
 
 
-<section class="sectionTabla">
-  <div class="tabla__nombre">
-    <div class="nombre">
+<section class="section__tablaBase section--down">
+  <div class="tablaBase__contain">
+    <div class="tablaBase__title">
       <h5>LISTADO DE HERRAMIENTAS EQUIPOS Y MAQUINARIA</h5>
     </div>
   </div>
-  <div class="containerTabla">
-    <table class="tabla">
-      <tbody>
+  <div class="tablaBase__container">
+    <table class="tablaBase tablaHerram" id="tabla_base">
+      <thead>
         <tr class="tabla__titulos">
-          <td>CLAVE ID</td>
-          <td>GRUPO</td>
-          <td>NOMBRE DE EQUIPO</td>
-          <td>MODELO</td>
-          <td>MARCA</td>
-          <td>PROVEEDOR</td>
-          <td>UNIDAD</td>
-          <td>PRECIO UN</td>
-          <td>FECHA</td>
-          <td>ACCION</td>
+          <th>ID</th>
+          <th>GRUPO</th>
+          <th>NOMBRE DE EQUIPO</th>
+          <th>MODELO</th>
+          <th>MARCA</th>
+          <th>PROVEEDOR</th>
+          <th>UNIDAD</th>
+          <th>PRECIO UN</th>
+          <th>FECHA</th>
+          <th>ACCION</th>
         </tr>
+      </thead>
+      <tbody class="tablaBase__tbody">
         @foreach ($herramientas as $herramienta )
-        <tr onclick="abrir()" class="tabla__body">
+        <tr class="">
           <td>{{$herramienta->id}}</td>
           <td>{{$herramienta->grupo}}</td>
           <td>{{$herramienta->equipo}}</td>
@@ -92,13 +94,13 @@
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('herramientas.edit', $herramienta->id)}}" class="tabla__boton">Ed</a>
+                <a href="{{route('herramientas.edit', $herramienta->id)}}" class="tablaBase__boton">Ed</a>
               </div>
               <div class="contain">
                 <form action="{{route('herramientas.destroy', $herramienta)}}" method="POST" class="">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="tabla__boton">X</button>
+                  <button type="submit" class="tablaBase__boton">X</button>
                 </form>
               </div>
             </div>
@@ -109,4 +111,6 @@
     </table>
   </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
 @endsection

@@ -23,7 +23,7 @@ class HerramientaController extends Controller
      */
     public function create(): View
     {
-        return view('tabs/herramienta');
+       
     }
 
     /**

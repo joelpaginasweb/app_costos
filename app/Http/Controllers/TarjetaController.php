@@ -25,6 +25,11 @@ class TarjetaController extends Controller
       return view('tabs/tarjetas',['tarjetas'=>$tarjetas]);              
     }
 
+    /**      * Show the form for creating a new resource. */
+    public function create(): View
+    {
+        // return view('tabs/tarjetas');
+    }  
 
     /**  * Store a newly created resource in storage. */
     public function store(Request $request): RedirectResponse
@@ -124,6 +129,13 @@ class TarjetaController extends Controller
       return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Creada con Exito');    
     }
 
+    /**      * Display the specified resource. */
+    public function show( $id)
+    {
+
+  
+    }
+
     private function calcularConceptos( $idTarjeta, $tipoMateriales,
       $idMateriales, $cantidadesMateriales,
       $idManoObras, $cantidadesManoObras,
@@ -199,6 +211,7 @@ class TarjetaController extends Controller
       return [$costoDirecto, $indirecto, $financiam, $utilidad, $cargosAdicion, $costoIndirecto, $precioUnitario ]; 
     }
 
+
     private function guardarConceptosMateriales ($registroMaterial, $PUMaterial, $cantidadMaterial, $importeMaterial, $idMaterial, $idTarjeta )
     {
       ConceptosMateriales::create([
@@ -211,6 +224,7 @@ class TarjetaController extends Controller
           'id_tarjeta' => $idTarjeta
       ]);
     }  
+
 
     private function guardarConceptosManoObras ($registroManoObra, $PUManoObra, $cantidadManoObra, $importeManoObra, $idManoObra, $idTarjeta )
     {           
@@ -258,17 +272,8 @@ class TarjetaController extends Controller
 
     }    
     
-    /**      * Show the form for creating a new resource. */
-    public function create(): View
-    {
-        // return view('tabs/tarjetas');
-    } 
+    
 
-    /**      * Display the specified resource. */
-    public function show( $id)
-    {
-      // $registro = Tarjeta::find($id);
-      // return view('vista', ['campo' => $registro->campo]);
-    }
+   
   }
   

@@ -1,6 +1,8 @@
-import './bootstrap';
+// importa axios
+// import './bootstrap';
 
 import './components';
+
 import './functions';
 
 import Alpine from 'alpinejs';

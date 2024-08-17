@@ -1,0 +1,73 @@
+
+/*--------- tabla -------------*/
+.tablaBase__contain {
+  width: auto;
+  height: 1.8em;
+  background: #a9cde0;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #7c7c7c;
+}
+
+.tablaBase__title {
+  margin: auto  0;
+  width: 100%;
+  text-align: center;
+}
+
+.tablaBase__container {
+  padding: 0px;
+  width: 100%;
+}
+
+.tablaBase {
+  font-size: 12px;
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.tablaBase thead {
+  background-color: #12577c;
+  color: #ffffff;
+
+}
+
+.tablaBase th {
+  padding: 4px 1px;
+  border: 1px solid #b6b6b6;  
+}
+
+.tablaBase__tbody {
+  width: auto;
+}
+
+.tablaBase tbody tr{
+  height: 23px;  
+}
+
+.tablaBase td {
+  padding: 0px 0px;
+  border: 1px solid #b6b6b6;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  height: 5%;
+}
+
+/* .tablaBase td:hover {
+  background: #dbdbdb;
+  border: 1px solid #949494;
+} */
+
+.tablaBase__boton {
+  min-width: 15px;
+  width: fit-content;
+  background: #e7e7e7;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #5c5c5c;
+}

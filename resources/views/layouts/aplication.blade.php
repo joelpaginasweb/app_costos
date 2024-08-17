@@ -7,13 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!----------------Enlaces css y js----------->
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/app.css'])
+  @vite(['resources/js/app.js'])
+
+
+  <!----------------datatables--------------------->
+  {{-- <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css"> --}}
+
+{{-- <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script> --}}
+
+
+  {{-- <link href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css" rel="stylesheet" type="text/css"> --}}
+
+  {{-- <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js" type="text/javascript"></script> --}}
 
   <!--------------titulo documento------------>
   <title>App Costos - @yield('title')</title>
 </head>
-<!--------- Esto es un comentario -------------->
-
 <body>
   <header>
     <div class="caja">
@@ -22,22 +32,15 @@
           <img src="{{asset ('img/lgo-bco-3.png') }}" alt="appcostos" class="logo__img">
         </a>
       </div>
-
       @include(' layouts.partials.nav_aplication')
-
-      <!----------------- login de breeze------------->
+      <!----------------- login by breeze------------->
       <div class="userContain">
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
-            <!-- <button class="user">
-              <div>{{ Auth::user()->name }}</div>
-            </button> -->
-
             <span class="user">
               {{ Auth::user()->name }}
             </span>
           </x-slot>
-
           <x-slot name="content">
             <div class="user__div">
               <x-dropdown-link :href="route('profile.edit')" class="user__menu">
@@ -61,6 +64,7 @@
 
   <main class="mainAplication">
     @yield('content')
+
   </main>
 
   <footer>
@@ -68,6 +72,7 @@
   </footer>
 
   @yield('scripts')
+
 
 </body>
 

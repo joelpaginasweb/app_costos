@@ -1,11 +1,8 @@
 @extends('layouts.aplication')
 @section('title', 'Materiales')
-
 @section('content')
 
-
-
-<section class="section section--up">
+<section class="section">
   <div>
     <h1>MATERIALES E INSUMOS</h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
@@ -53,28 +50,31 @@
 
 </section>
 
-<section class="sectionTabla">
-  <div class="tabla__nombre">
-    <div id="pressg">
+<section class="section__tablaBase section--down">
+  <div class="tablaBase__contain">
+      <div class="tablaBase__title">
       <h5>LISTADO DE MATERIALES E INSUMOS</h5>
     </div>
   </div>
 
-  <div class="containerTabla">
-    <table class="tabla">
-      <tbody>
+  <div class="tablaBase__container">
+    <table class="tablaBase tablaMateriales" id="tabla_base">
+       <thead>
         <tr class="tabla__titulos">
-          <td>ID</td>
-          <td>GRUPO</td>
-          <td>MATERIAL</td>
-          <td>UNID</td>
-          <td>PRECIO UNIT.</td>
-          <td>PROVEEDOR</td>
-          <td>FECHA</td>
-          <td>ACCION</td>
+          <th>ID</th>
+          <th>GRUPO</th>
+          <th>MATERIAL</th>
+          <th>UNID</th>
+          <th>PRECIO UNIT.</th>
+          <th>PROVEEDOR</th>
+          <th>FECHA</th>
+          <th>ACCION</th>
         </tr>
+      </thead>
+
+      <tbody class="tablaBase__tbody">
         @foreach ($materiales as $materiale)
-        <tr class="tabla__body">
+        <tr class="">
           <td>{{$materiale->id}}</td>
           <td>{{$materiale->grupo}}</td>
           <td>{{$materiale->material}}</td>
@@ -85,14 +85,14 @@
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('materiales.edit', $materiale->id)}}" class="tabla__boton">Ed</a>
+                <a href="{{route('materiales.edit', $materiale->id)}}" class="tablaBase__boton">Ed</a>
               </div>
 
               <div class="contain">
                 <form action="{{route('materiales.destroy', $materiale)}}" method="POST" >
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="tabla__boton">X</button>
+                  <button type="submit" class="tablaBase__boton">X</button>
                 </form>
               </div>
             </div>
@@ -104,4 +104,9 @@
     </table>
   </div>
 </section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+
 @endsection

@@ -2,14 +2,12 @@
 @section('title', 'Presupuesto')
 @section('content')
 
-
-<section class="section section--up">
+<section class="section">
   <div>
-    <h1>PRESUPUESTO</h1>   
+    <h1>PRESUPUESTO</h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
-  </div>  
+  </div>
 </section>
-
 
 <section class="section__form">
   <div class="form__titulo">
@@ -68,34 +66,38 @@
     </div>
     @endif
   </div>
-  
+
 </section>
 
-<section class="sectionTabla">
-  <div class="tabla__nombre">
-    <div class="nombre">
+<section class="section__tablaBase section--down">
+
+  <div class="tablaBase__contain">
+    <div class="tablaBase__title">
       <h5>LISTADO DE PRESUPUESTOS</h5>
     </div>
   </div>
 
-  <div class="containerTabla">
-    <table class="tablaTarjetas">
-      <tbody>
+  <div class="tablaBase__container">
+    <table class="tablaBase tablaPresus" id="tabla_base">
+      <thead>
         <tr class="tablaTarjetas__head">
-          <td>ID PRESUP</td>
-          <td>TITULO</td>
-          <td>CLIENTE</td>
-          <td>DIRECCION</td>
-          <td>CIUDAD</td>
-          <td>ESTATUS</td>
-          <td>COSTO DIR</td>
-          <td>COSTO IND</td>
-          <td>COSTO TOTAL</td>
-          <td>FECHA EDICION</td>
-          <td>EDICION</td>
+          <th>ID</th>
+          <th>TITULO</th>
+          <th>CLIENTE</th>
+          <th>DIRECCION</th>
+          <th>CIUDAD</th>
+          <th>ESTATUS</th>
+          <th>COSTO DIR</th>
+          <th>COSTO IND</th>
+          <th>COSTO TOTAL</th>
+          <th>FECHA EDICION</th>
+          <th>ACCION</th>
         </tr>
+      </thead>
+
+      <tbody class="tablaBase__tbody">
         @foreach ($presus as $presu)
-        <tr onclick="abrir()" class="tablaTarjetas__body">
+        <tr class="tablaBase__tr">
           <td>{{$presu->id}}</td>
           <td>{{$presu->obra}}</td>
           <td>{{$presu->cliente}}</td>
@@ -104,21 +106,22 @@
           <td>{{$presu->estatus}}</td>
           <td>
             {{-- {{$presu->costo_directo}} --}}
-               {{number_format($presu->costo_directo, 2)}}
+            {{number_format($presu->costo_directo, 2)}}
           </td>
           <td>
             {{-- {{$presu->costo_indirecto}} --}}
-               {{number_format($presu->costo_indirecto, 2)}}        
+            {{number_format($presu->costo_indirecto, 2)}}
           </td>
           <td>
             {{-- {{$presu->costo_total}} --}}
-               {{number_format($presu->costo_total, 2)}}        
+            {{number_format($presu->costo_total, 2)}}
           </td>
           <td>{{$presu->updated_at}}</td>
+          {{-- ------------------ --}}
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('presus.edit', $presu->id)}}" class="tabla__boton">Ed</a>
+                <a href="{{route('presus.edit', $presu->id)}}" class="tablaBase__boton">Ed</a>
               </div>
               {{-------metodo destroy---------}}
               {{-- <div class="contain">
@@ -131,12 +134,16 @@
 
             </div>
           </td>
+          {{-- ------------------ --}}
+
         </tr>
         @endforeach
       </tbody>
     </table>
   </div>
-
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
 
 @endsection

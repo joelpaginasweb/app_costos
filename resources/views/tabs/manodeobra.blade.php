@@ -4,7 +4,7 @@
 
 
 
-<section class="section section--up">
+<section class="section">
   <div>
     <h1>CATEGORIAS DE MANO DE OBRA</h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
@@ -21,12 +21,12 @@
       <input type="text" name="grupo" placeholder="grupo" class="form__input">
       <input type="text" name="categoria" placeholder="categoria" class="form__input">
       <input type="text" name="unidad" placeholder="unidad" class="form__input">
-      <input type="number" name="salario_base"  placeholder="salario base" class="form__input" step="0.01">
+      <input type="number" name="salario_base" placeholder="salario base" class="form__input " step="0.01">
       <input type="number" name="factor_sr" placeholder="factor SR" class="form__input" step="0.01">
       <button type="submit" class="form__boton">Crear</button>
     </div>
   </form>
-  
+
   <div class="section">
     @if (Session::get('success'))
     <div class="alert alert--success">
@@ -50,26 +50,29 @@
   </div>
 </section>
 
-<section class="sectionTabla">
-  <div class="tabla__nombre">
-    <div class="nombre">
+<section class="section__tablaBase section--down">
+  <div class="tablaBase__contain">
+    <div class="tablaBase__title">
       <h5>LISTADO DE CATEGORIAS DE MANO DE OBRA</h5>
     </div>
   </div>
 
-  <div class="containerTabla">
-    <table class="tabla">
-      <tbody>
-        <tr id="titabtar" class="tabla__titulos">
-          <td>ID</td>
-          <td>GRUPO</td>
-          <td>CATEGORIA</td>
-          <td>UNIDAD</td>
-          <td>SALARIO BASE</td>
-          <td>FAC SALARIO REAL</td>
-          <td>SALARIO REAL</td>
-          <td>ACCION</td>
+  <div class="tablaBase__container">
+    <table class="tablaBase tablaMO" id="tabla_base">
+      <thead>
+
+        <tr class="">
+          <th>ID</th>
+          <th>GRUPO</th>
+          <th>CATEGORIA</th>
+          <th>UNIDAD</th>
+          <th>SALARIO BASE</th>
+          <th>FAC SALARIO REAL</th>
+          <th>SALARIO REAL</th>
+          <th>ACCION</th>
         </tr>
+      </thead>
+      <tbody class="tablaBase__tbody">
         @foreach ($manodeobra as $manodeobra)
         <tr class="tabla__body">
           <td>{{$manodeobra->id}}</td>
@@ -79,20 +82,19 @@
           <td>{{$manodeobra->salario_base}}</td>
           <td>{{$manodeobra->factor_sr}}</td>
           <td>
-               {{-- {{$manodeobra->salario_real}} --}}
-              {{number_format($manodeobra->salario_real, 2)}}        
+            {{number_format($manodeobra->salario_real, 2)}}
           </td>
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('manodeobra.edit', $manodeobra->id)}}" class="tabla__boton">Ed</a>
+                <a href="{{route('manodeobra.edit', $manodeobra->id)}}" class="tablaBase__boton">Ed</a>
               </div>
 
               <div class="contain">
                 <form action="{{route('manodeobra.destroy', $manodeobra)}}" method="POST">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="tabla__boton">X</button>
+                  <button type="submit" class="tablaBase__boton">X</button>
                 </form>
               </div>
             </div>
@@ -103,5 +105,9 @@
     </table>
   </div>
 </section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
 
 @endsection

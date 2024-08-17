@@ -16,12 +16,7 @@ class DashboardController extends Controller
     {
         //
         $dashboard = Dashboard::all();       
-        return view('tabs/dashboard',['dashboard'=>$dashboard]);
-        
-        /* 
-        $dashbos = Dashbo::all();       
-        return view('tabs/dashboard',['dashbos'=>$dashbos]);
-        */
+        return view('tabs/dashboard',['dashboard'=>$dashboard]);      
 
     }
 
@@ -48,7 +43,7 @@ class DashboardController extends Controller
      */
     public function show(Dashboard $dashboard)
     {
-        //
+        //Muestra los detalles de un registro específico.
     }
 
     /**

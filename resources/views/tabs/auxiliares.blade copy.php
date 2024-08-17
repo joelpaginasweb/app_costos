@@ -1,18 +1,19 @@
 @extends('layouts.aplication')
 @section('title', 'Auxiliares')
+
 @section('content')
 
-<section class="section">
+<section class="section section--up">
   <div>
     <h1> TARJETAS AUXILIARES DE COSTOS </h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
     <br>
     <div>
       <!----------- web components-------- -->
-      {{-- <h3>-test web componentes-</h3> --}}
+      <h3>-test web componentes-</h3>
       <hola-mundo name="prueba de " surname="web componente nativo"></hola-mundo>
       <!-- lit components -->
-      {{-- <eit-box-info message="prueba de Lit web component"></eit-box-info> --}}
+      <eit-box-info message="prueba de Lit web component"></eit-box-info>
       <!----------- web components-------- -->
     </div>
   </div>
@@ -282,17 +283,18 @@
 </div>
 <!----------- fin ventana emergente  --------------->
 
-<section class="section__tablaBase section--down">
-  <div class="tablaBase__contain">
-    <div class="tablaBase__title">
+<section class="section__tablaAux section--down">
+  <div class="contain__tablaAux">
+    <div class="tablaAux__title">
       <h5>LISTADO DE TARJETAS DE COSTOS AUXILIARES</h5>
     </div>
   </div>
 
-  <div class="tablaBase__container">
-    <table class="tablaBase tablaAux" id="tabla_base">
+  <div class="container__tablaAux">
+    <table class="tablaAux" id="tabla_comun">
       <thead>
-        <tr class="">
+        {{-- <tr class="tablaAux__head"> --}}
+        <tr class="tablaBase__head">
           <th>ch</th>
           <th>ID</th>
           <th>GRUPO</th>
@@ -304,29 +306,30 @@
         </tr>
       </thead>
 
-      <tbody class="tablaBase__tbody">
+      <tbody class="tablaAux__tbody">
         @foreach ($auxis as $auxi)
-        <tr class="">
+        <tr class="tablaAux__tr">
           <td><input type="checkbox" name="" id=""></td>
           <td>{{$auxi->id}}</td>
           <td>{{$auxi->grupo}}</td>
-          <td id="open" class="pointer">{{$auxi->material}}</td>
+          <td id="open" class="tablaAux__td">{{$auxi->material}}</td>
           <td>{{$auxi->unidad}}</td>
           <td>{{number_format($auxi->precio_unitario, 2)}}</td>
           <td>{{$auxi->updated_at}}</td>
+          {{-- ----------- --}}
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('auxisCopy', $auxi->id)}}" class="tablaBase__boton">Cop</a>
+                <a href="{{route('auxisCopy', $auxi->id)}}" class="tablaAux__boton">Cop</a>
               </div>
               <div class="contain">
-                <a href="{{route('auxis.edit', $auxi->id)}}" class="tablaBase__boton">Ed</a>
+                <a href="{{route('auxis.edit', $auxi->id)}}" class="tablaAux__boton">Ed</a>
               </div>
               <div class="contain">
                 <form action="{{route('auxis.destroy', $auxi)}}" method="POST">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="tablaBase__boton">X</button>
+                  <button type="submit" class="tablaAux__boton">X</button>
                 </form>
               </div>
             </div>
@@ -343,6 +346,6 @@
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_comun");</script>
 
 @endsection

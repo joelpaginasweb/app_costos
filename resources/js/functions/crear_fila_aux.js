@@ -1,4 +1,5 @@
 
+
 const botonCrearAux = document.getElementById('boton_crear_aux');
 
 if(botonCrearAux) {
@@ -8,7 +9,16 @@ if(botonCrearAux) {
     const containerAux = document.querySelector('#container_aux');
 
     var container = document.createElement('div');
-    container.setAttribute('class', 'container');
+    // container.setAttribute('id', 'contain_element');
+    container.setAttribute('class', 'container contain_element');
+
+
+    var span = document.createElement('span');
+    span.setAttribute('class', 'form__span span_del');
+    span.setAttribute('onclick', 'eliminar(this)');
+
+    // span.setAttribute('id', 'span_del');
+    span.innerText = 'x';
 
     var labelMaterialAux = document.createElement('label');
     labelMaterialAux.setAttribute('for', 'id_material');
@@ -34,6 +44,7 @@ if(botonCrearAux) {
     inputCantidadAux.setAttribute('class', 'form__input');
     inputCantidadAux.setAttribute('placeholder', 'cantidad material'); 
     
+    container.appendChild(span);
     container.appendChild(labelMaterialAux);
     container.appendChild(inputMaterialAux);
     container.appendChild(labelCantidadAux);
@@ -42,3 +53,4 @@ if(botonCrearAux) {
     containerAux.appendChild(container);
   });
 }
+
