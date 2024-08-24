@@ -6,14 +6,15 @@
 
 
 
-<section class="section section--up">
+<section class="section">
   <div>
     <h1>HERRAMIENTA EQUIPO Y MAQUINARIA</h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
   </div>
 </section>
 
-<section class="section__form">
+
+ <section class="section__form">
   <div class="form__titulo">
     <h4>CREAR NUEVA HERRAMIENTA EQUIPO O MAQUINARIA</h4>
   </div>
@@ -53,7 +54,7 @@
     </div>
     @endif
   </div>
-</section>
+ </section> 
 
 
 
@@ -111,6 +112,9 @@
     </table>
   </div>
 </section>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+
+{{-- esta funcion no se compila desde resources/js/functions/ --}}
+{{-- <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script> --}}
+{{-- <script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script> --}}
 @endsection

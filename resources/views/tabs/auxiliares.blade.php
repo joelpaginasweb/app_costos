@@ -36,17 +36,14 @@
     </div>
 
     <div class="container contain">
-
-      <div class="containerFlex" id="container_aux">
+      <div id="container_aux" class="containerFlex">
         <div class="container contain_element">
           <span class="form__span" onclick="eliminar(this)">x</span>
           <label for="id_material" class="form__label">Id material</label>
           <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
           <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <br><br>
           <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
             placeholder="cantidad material">
-          <br><br>
         </div>
       </div>
 
@@ -55,7 +52,7 @@
 
       <div class="container ">
         <div class="container ">
-          <label for="formBoton" class="form__label"> Calcular Importe y crear auxiliar </label>
+          <label for="formBoton" class="form__label"> Crear Auxiliar </label>
           <button type="submit" id="formBoton" class="form__boton">Crear Auxiliar</button>
         </div>
       </div>

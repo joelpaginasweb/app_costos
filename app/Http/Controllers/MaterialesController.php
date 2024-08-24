@@ -89,7 +89,7 @@ class MaterialesController extends Controller
      */
     public function destroy(Materiales $materiale): RedirectResponse
     {
-        //dd($materiale);
+        dd($materiale);
         $materiale->delete();
         return redirect()->route('materiales.index')->with('success', 'Material eliminado!');
     }

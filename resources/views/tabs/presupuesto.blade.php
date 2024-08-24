@@ -9,6 +9,7 @@
   </div>
 </section>
 
+
 <section class="section__form">
   <div class="form__titulo">
     <h4>REGISTRAR NUEVO PRESUPUESTO</h4>

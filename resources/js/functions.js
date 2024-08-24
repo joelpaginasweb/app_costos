@@ -8,13 +8,16 @@ import './functions/crear_fila_material';
 import './functions/crear_fila_MO';
 import './functions/crear_fila_equipo';
 
-import './functions/crear_fila_aux';
-
-import './functions/delete_elements';
+// ------------------------------
 
 //tiene conflicto con la funcion desplegar user
-// import './functions/crea_element_aux';
+//se agrego <div id="boton_crear_aux"></div> en footer_app para evitar conflicto
+import './functions/crea_element_aux';
 
+//no se compila desde aqui
+import './functions/delete_elements';
 
+// ------------------------------
 
-
+//funcion deprecada
+// import './functions/crear_fila_aux'; 

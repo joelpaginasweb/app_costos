@@ -42,19 +42,17 @@ class AuxiController extends Controller
 
       $newAuxiliar = Auxi::create([ 
           'grupo' => $dataRequest['grupo'],
-          'material' => $dataRequest['material_auxiliar'], //--------    
+          'material' => $dataRequest['material_auxiliar'],  
           'unidad' => $dataRequest['unidad'], 
-          'precio_unitario' => $costoDirectoAux   //-------- 
+          'precio_unitario' => $costoDirectoAux  
       ]);
 
       $idAuxiliar = $newAuxiliar->id;
-
       $costoDirectoAux = $this->guardarConcepto( //vuelve a declarar variable llamando al metodo
         $idAuxiliar, 
         $request->input('id_material'),
         $request->input('cantidad_mater')
       );   
-
       return redirect()->route('auxis.index')->with('success', 'Auxiliar Creado');		
   }  
 
@@ -64,7 +62,7 @@ class AuxiController extends Controller
       //Muestra los detalles de un registro específico.
   }
 
-  //---------------metodo guardarConcepto-------------//
+  //----------crea y guarda conceptos del auxiliar-------------//
   private function guardarConcepto ($idAuxiliar, $idMateriales, $cantidades)
   {
     $costoDirectoAux = 0; 
@@ -77,7 +75,7 @@ class AuxiController extends Controller
 
       if (  $idAuxiliar !== null) {        
         ConceptosAuxiliares::create([            
-          'concepto' => $registroMaterial->material, //-------- 
+          'concepto' => $registroMaterial->material, 
           'unidad' => $registroMaterial->unidad, 
           'cantidad' => $cantidad, 
           'precio_unitario' => $precioUnitario,     
@@ -115,18 +113,16 @@ class AuxiController extends Controller
       $request->input('id_material'),
       $request->input('cantidad_mater')               
     );
-
       
     $materialAuxiliar = $request->input('material_auxiliar'); 
 
     $updateAuxiliar = $auxi->update ([ 
       'grupo' => $dataRequest['grupo'],
-      'material' => $dataRequest['material_auxiliar'],  //--------   
+      'material' => $dataRequest['material_auxiliar'],   
       'unidad' => $dataRequest['unidad'], 
-      'precio_unitario' => $costoDirectoAux   //-------- 
+      'precio_unitario' => $costoDirectoAux   
     ]);   
 
-    
     $updateAuxiliar = Auxi::where('material',$materialAuxiliar)->first();
     $idAuxiliar = $updateAuxiliar->id;
 
@@ -139,32 +135,55 @@ class AuxiController extends Controller
     return redirect()->route('auxis.index')->with('success', 'Auxiliar actualizado!');
   }
   
-  //------------Editar Concepto por ID---------//
+  //------edita y crea conceptos del auxiliar ---------//
   private function editarConcepto($idAuxiliar, $idMateriales, $cantidades)
   {
       $costoDirectoAux = 0;   
       foreach ($idMateriales as $key => $idMaterial) {
-          $registroMaterial = Materiales::find($idMaterial);
-          $cantidad = $cantidades[$key];
-          $precioUnitario = $registroMaterial->precio_unitario;
-          $importe = $precioUnitario * $cantidad;
-  
-          // Actualizar cada registro individualmente con su respectivo Id
-          $idConcepto = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->pluck('id')->get($key);
+
+        $registroMaterial = Materiales::find($idMaterial);
+        $cantidad = $cantidades[$key];
+        $precioUnitario = $registroMaterial->precio_unitario;
+        $importe = $precioUnitario * $cantidad;
+        $idConcepto = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->pluck('id')->get($key);      
+        
+        if ( $idConcepto == null && $idAuxiliar !== null ) {     
+          
+          ConceptosAuxiliares::create([            
+            'concepto' => $registroMaterial->material, 
+            'unidad' => $registroMaterial->unidad, 
+            'cantidad' => $cantidad, 
+            'precio_unitario' => $precioUnitario,     
+            'importe' => $importe,  
+            'id_material' => $idMaterial,      
+            'id_auxiliar' => $idAuxiliar 
+          ]);  
+          
+        } elseif ($idConcepto !== null && $idAuxiliar !== null){         
 
           ConceptosAuxiliares::where('id', $idConcepto)->update([
-              'concepto' => $registroMaterial->material, 
-              'unidad' => $registroMaterial->unidad, 
-              'cantidad' => $cantidad, 
-              'precio_unitario' => $precioUnitario,       
-              'importe' => $importe,  
-              'id_material' => $idMaterial
-          ]);             
-  
-          $costoDirectoAux += $importe;
-      }    
+            'concepto' => $registroMaterial->material, 
+            'unidad' => $registroMaterial->unidad, 
+            'cantidad' => $cantidad, 
+            'precio_unitario' => $precioUnitario,       
+            'importe' => $importe,  
+            'id_material' => $idMaterial
+          ]);
+        } 
+        $costoDirectoAux += $importe;
+      }          
       return $costoDirectoAux;
   }  
+
+  /** *borra conceptos del auxiliar */
+  public function deleteConcepto($idConcepto)
+  {
+    $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();
+    $idAuxiliar = $conceptoDelete->id_auxiliar;
+    $conceptoDelete->delete();
+    return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
+  }
+  
 
   /**     *copy the specified resource       */
   public function copy($id)
@@ -184,26 +203,22 @@ class AuxiController extends Controller
       $conceptoNew->save();
       $conceptosNew->push($conceptoNew);
       }
-
       return redirect()->route('auxis.index')->with('success', 'Auxiliar Copiado');	      
   }
+
   
   /**     * Remove the specified resource from storage.     */
   public function destroy(Auxi $auxi): RedirectResponse
-  {       
-
+  {    
     $idAuxiliar = $auxi->id;
     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
 
     foreach ($conceptos as $concepto ) {
-        //dump($concepto); // dump() mostrará la información  sin detener el script
         $concepto->delete();
       }
-      
+            
     $auxi->delete();
     return redirect()->route('auxis.index')->with('success', 'Auxiliar eliminado!');
   }
-
-
 
 }

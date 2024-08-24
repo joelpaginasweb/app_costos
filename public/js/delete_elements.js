@@ -1,7 +1,7 @@
+// -----------public
 
 /**
- * Método para eliminar el div contenedor del input * 
- *  
+ * Método para eliminar el div contenedor del input *  *  
  * @param {this} e 
  */
 const eliminar = (e) => {

@@ -2,13 +2,7 @@
 @section('title', 'Editar Auxiliares')
 @section('content')
 
-{{--
-
-<head>
-  <link rel="stylesheet" href="{{ asset ('css/auxiliares.css') }}">
-</head> --}}
-
-<section class="section section--up">
+<section class="section ">
   <div>
     <h1> EDITAR TARJETAS DE COSTOS MATERIALES AUXILIARES</h1>
   </div>
@@ -33,26 +27,25 @@
       </div>
     </div>
     <!-- --------- -->
+          {{-- <span>id={{$concepto->id}}</span> --}}
 
     <div class="container contain">
-
-
       <div class=" containerFlex " id="container_aux">
+
+        @foreach ($conceptos as $concepto)
         <div class=" container contain_element ">
-          <div class="">
-            @foreach ($conceptos as $concepto)
-            <span class="form__span" onclick="eliminar(this)">x</span>
-            <label for="id_registro" class="form__label">Id registro {{$concepto->id}}</label>
-            <label for="id_material" class="form__label">Id material</label>
-            <input type="number" step="0" name="id_material[]" class="form__input" value="{{$concepto->id_material}}">
-            <label for="cantidad_mater" class="form__label">cantidadmat</label>
-            <input type="number" step="0.0001" name="cantidad_mater[]" class="form__input"
-              value="{{$concepto->cantidad}}">
-            <br>
-            @endforeach
-          </div>
+          {{-- <span class="form__label" >{{$concepto->id}}</span> --}}
+          <a href="{{route('conceptoDelete', $concepto->id)}}" class="form__span" onclick="eliminar(this)">x</a>
+
+          <label for="id_material" class="form__label">Id material</label>
+          <input type="number" step="0" name="id_material[]" class="form__input" value="{{$concepto->id_material}}">
+          <label for="cantidad_mater" class="form__label">cantidad material</label>
+          <input type="number" step="0.0001" name="cantidad_mater[]" class="form__input"
+            value="{{$concepto->cantidad}}">
         </div>
+        @endforeach
       </div>
+
       <div class="container contain">
         <div class="container contain">
           <label for="formBoton" class="form__label"> Calcular Importe y Editar auxiliar </label>
@@ -61,7 +54,6 @@
       </div>
 
     </div>
-
   </form>
 
   <div class=" section ">
@@ -80,6 +72,11 @@
 
 </section>
 
+
+
+
+
 {{-- esta funcion no se compila desde resources/js/functions/ --}}
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
+
 @endsection

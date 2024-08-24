@@ -1,11 +1,11 @@
 
 
-const inputs = document.querySelectorAll('[id="select_auto"]');
-inputs.forEach(input => {
-  input.addEventListener('click', function() {
-    this.select();
-  });
-});
+// const inputs = document.querySelectorAll('[id="select_auto"]');
+// inputs.forEach(input => {
+//   input.addEventListener('click', function() {
+//     this.select();
+//   });
+// });
 
 /*--------------------------*/
 
