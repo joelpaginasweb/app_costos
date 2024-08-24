@@ -10,15 +10,6 @@
   @vite(['resources/css/app.css'])
   @vite(['resources/js/app.js'])
 
-
-  <!----------------datatables--------------------->
-
-
-
-  {{-- <link href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css" rel="stylesheet" type="text/css"> --}}
-
-  {{-- <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js" type="text/javascript"></script> --}}
-
   <!--------------titulo documento------------>
   <title>App Costos - @yield('title')</title>
 </head>

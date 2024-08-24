@@ -38,10 +38,9 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4> EDICION 17 ago </h4>
+      <h4> EDICION 24 ago </h4>
       <ul>
-        <li>Se instalo simple-datatables por cdn</li>
-        <li>Se edito estilo de tablas</li>
+        <li>Se agrego editar y borrar conceptos en editar auxiliares</li>
       </ul>
     </div>
     <br>
