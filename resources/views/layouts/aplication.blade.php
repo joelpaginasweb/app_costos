@@ -13,6 +13,7 @@
   <!--------------titulo documento------------>
   <title>App Costos - @yield('title')</title>
 </head>
+
 <body>
   <header>
     <div class="caja">

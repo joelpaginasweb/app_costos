@@ -93,7 +93,7 @@ class AuxiController extends Controller
   public function edit($id): View
   {     
       $auxi = Auxi::find($id); 
-      $idAuxiliar = $id;    
+      $idAuxiliar = $id;  
       $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
       return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
   }

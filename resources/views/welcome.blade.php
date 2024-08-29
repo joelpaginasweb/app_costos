@@ -38,9 +38,10 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4> EDICION 24 ago </h4>
+      <h4> EDICION 29 ago </h4>
       <ul>
         <li>Se agrego editar y borrar conceptos en editar auxiliares</li>
+        <li>Se agrego formato tarjeta costos en editar auxiliares</li>
       </ul>
     </div>
     <br>
