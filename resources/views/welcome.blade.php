@@ -38,10 +38,11 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4> EDICION 29 ago </h4>
+      <h4> EDICIONES </h4>
       <ul>
-        <li>Se agrego editar y borrar conceptos en editar auxiliares</li>
-        <li>Se agrego formato tarjeta costos en editar auxiliares</li>
+        <li>26 sep- Se agrego funcion open_user</li>
+        <li>29 ago -Se agrego editar y borrar conceptos en editar auxiliares, formato tarjeta costos en editar auxiliares</li>
+        
       </ul>
     </div>
     <br>
