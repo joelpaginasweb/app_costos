@@ -126,7 +126,7 @@
           <td>
             <form action="{{ route('updateConceptoCantidad', $concepto->id) }}" method="POST">
               @csrf
-              <input type="number" name="cantidad_concepto" id="select_auto" class="form__input--table"
+              <input type="number" name="cantidad_concepto"  class="form__input--table select_auto"
                 value="{{$concepto->cantidad}}" step="0.01" onkeydown="handleKeyDown(event)">
             </form>
           </td>

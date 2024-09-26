@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
   Route::resource('auxis', AuxiController::class);
   Route::get('/auxisCopy/{id}',[AuxiController::class, 'copy'])->name('auxisCopy');  
   Route::get('/conceptoDelete/{id}',[AuxiController::class, 'deleteConcepto'])->name('conceptoDelete');
+
+  Route::get('auxis/{auxi}/edit', [AuxiController::class, 'edit'])->name('auxis.edit');
 });
 
 

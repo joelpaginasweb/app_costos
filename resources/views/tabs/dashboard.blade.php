@@ -11,7 +11,7 @@
 </section>
 
 
- <section class="section__tablaBase section--down">
+ {{-- <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
     <div class="tablaBase__title">
       <h5>LISTADO DE PRESUPUESTOS</h5>
@@ -50,6 +50,6 @@
     </table>
   </div>
 
-</section> 
+</section>  --}}
 
 @endsection

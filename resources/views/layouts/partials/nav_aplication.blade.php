@@ -6,7 +6,6 @@
       <a href="{{route('dashboard.index')}}" class="menu__item">Dashboard</a>
       <ul>
         <li><a class="menu__option" href="">funcion</a></i>
-
       </ul>
     </li>
 
@@ -21,9 +20,7 @@
     <li>
       <a href="{{route('tarjetas.index')}}" class="menu__item">Tarjetas</a>
       <ul>
-        {{-- <li><a class="menu__option" href="" name="nuevatarj">Nueva</a></i> --}}
-        <li><a class="menu__option" href="">funcion</a></i>
-  
+        <li><a class="menu__option" href="">funcion</a></i>  
       </ul>
     </li>
 

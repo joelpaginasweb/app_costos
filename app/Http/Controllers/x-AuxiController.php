@@ -14,15 +14,22 @@ class AuxiController extends Controller
   /**      * Display a listing of the resource.      */
   public function index(): View
   {
-    // $id= 2;
     $auxis = Auxi::all();
-    // $auxis = Auxi::find($id);
-    // $idAuxiliar = $id;  
-    // $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
     return view('tabs/auxiliares',['auxis'=>$auxis]);
-
-    // return view('tabs/auxiliares',['auxis'=>$auxis, 'auxiFind'=>$auxiFind, 'conceptos'=>$conceptos  ]);
   }
+
+
+
+  /**     * Show the form for editing the specified resource.   */
+  public function edit($id): View
+  {     
+      $auxi = Auxi::find($id); 
+      $idAuxiliar = $id;  
+      $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
+      return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
+  }
+
+
 
   /**     * Show the form for creating a new resource.     */
   public function create(): View
@@ -96,15 +103,6 @@ class AuxiController extends Controller
   }  
   
   /**     * Show the form for editing the specified resource.   */
-  public function edit($id): View
-  {          
-      $auxi = Auxi::find($id); 
-      $idAuxiliar = $id;  
-      $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
-      return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
-  }
-
-    /**     * Show the form for editing the specified resource.   */
   // public function edit($id): View
   // {     
   //     $auxi = Auxi::find($id); 

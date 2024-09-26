@@ -1,29 +1,9 @@
+
+
 @extends('layouts.aplication')
 @section('title', 'Editar Auxiliares')
 @section('content')
 
-{{-- <section class="section "> --}}
-  {{-- <div> --}}
-    {{-- <h1> EDITAR TARJETAS DE COSTOS MATERIALES AUXILIARES</h1> --}}
-    {{-- <div> --}}
-      <!----------- web components-------- -->
-      {{-- <h3>-test web componentes-</h3> --}}
-      {{-- <hola-mundo name="eba depru " surname="web componente nativo"></hola-mundo> --}}
-      <!-- lit components -->
-      {{-- <eit-box-info></eit-box-info> --}}
-      {{-- <tabla-datos :conceptos='@json($conceptos)'></tabla-datos> --}}
-      {{-- <eit-box-info message="prueba de Lit web component"></eit-box-info> --}}
-      <!----------- web components-------- -->
-      {{--
-    </div> --}}
-  {{-- </div> --}}
-{{-- </section> --}}
-
-{{-- <section class="section__form"> --}}
-  {{-- <h4>EDITAR MATERIAL AUXILIAR </h4> --}}
-{{-- </section> --}}
-
-  <!----------- ventana emergente  ---------------->
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
     <div class="emergente__header ">
@@ -31,7 +11,6 @@
       <div class="emergente__close">
         <a href="#">
           <h4 id="close" class="emergente__h4">cerrar</h4>
-          {{-- <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img" id="close"> --}}
         </a>
       </div>
     </div>
@@ -117,10 +96,6 @@
   </div>
 </section>
 
-{{-- esta funcion no se compila desde resources/js/functions/ --}}
-<script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
-
-
-  
+<script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>  
 
 @endsection

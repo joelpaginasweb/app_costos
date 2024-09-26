@@ -114,7 +114,7 @@
 </section>
 
 {{-- esta funcion no se compila desde resources/js/functions/ --}}
-{{-- <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script> --}}
-{{-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script> --}}
-{{-- <script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script> --}}
+<script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
 @endsection

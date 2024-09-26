@@ -2,10 +2,6 @@
 @section('title', 'Editar Herr. y Eq.')
 @section('content')
 
-{{-- <head>
-  <link rel="stylesheet" href="{{ asset ('css/herramienta.css') }}">
-</head> --}}
-
 <section class="section section--up">
   <div>
     <h1>EDITAR MAQUINARIA HERRAMIENTA Y EQUIPO</h1>

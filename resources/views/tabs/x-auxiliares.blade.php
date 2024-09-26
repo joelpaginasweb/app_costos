@@ -83,6 +83,201 @@
 </section>
 
 
+<!----------- ventana emergente  ---------------->
+<div class="emergente__contain" id="emergente">
+  <div class="emergente__header ">
+    <h3 class="emergente__titulo">TARJETA AUXILIARES</h3>
+    <div class="emergente__close">
+      <a href="#">
+        <h4 id="close" class="emergente__h4">cerrar</h4>
+        <!-- <img src="{{asset ('img/cruzblk.png') }}" alt="cruzblk" class="close__img" id="close"> -->
+      </a>
+    </div>
+  </div>
+  <div class="containDatosTarj">
+    <div class="containConceptoTarj">
+      <h4>CONCEPTO:</h4>
+      <p>Mortero cemento-arena prop 1:4 - ejemplo de view </p>
+    </div>
+    <div class=" containDatos">
+      <div class="columna50">
+        <div class=" containDatos__datos ">
+          <h4>CLAVE ID:</h4>
+          <p>1</p>
+        </div>
+      </div>
+      <div class="columna50">
+        <div class=" containDatos__datos">
+          <h4>GRUPO:</h4>
+          <p>MATERIAL</p>
+        </div>
+      </div>
+      <div class="columna50">
+        <div class=" containDatos__datos ">
+          <h4>UNIDAD:</h4>
+          <p>m3</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contain__tablaemergent">
+    <table class="tabtarjetac">
+      <thead class="thead">
+        <tr>
+          <th>CLAVE ID</th>
+          <th>CONCEPTO</th>
+          <th>UNIDAD</th>
+          <th>CANTIDAD</th>
+          <th>PRECIO UN.</th>
+          <th>IMPORTE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <th>MATERIALES</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>cemento gris portland bulto 50kg</td>
+          <td>bto</td>
+          <td>8.90</td>
+          <td>249.00</td>
+          <td>2216.10</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>arena TRITURADA Num 4</td>
+          <td>m3</td>
+          <td>1.21</td>
+          <td>750.00</td>
+          <td>907.50</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>agua de red municipal</td>
+          <td>m3</td>
+          <td>0.346</td>
+          <td>20.00</td>
+          <td>6.92</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>SUB TOTAL</td>
+          <td>3130.52</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td></td>
+          <th>MANO DE OBRA</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td>NO APLICA </td>
+          <td>jr</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>NO APLICA </td>
+          <td>jr</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>NO APLICA</td>
+          <td>jr</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>SUB TOTAL</td>
+          <td>0.00</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td></td>
+          <th>HERRAMIENTA Y EQUIPO</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td>NO APLICA</td>
+          <td>hr</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>NO APLICA</td>
+          <td>hr</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>NO APLICA</td>
+          <td>hr</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>SUB TOTAL</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>COSTO DIRECTO</th>
+          <th>3130.52</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!----------- fin ventana emergente  --------------->
 
 <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
@@ -109,17 +304,10 @@
       <tbody class="tablaBase__tbody">
         @foreach ($auxis as $auxi)
         <tr class="">
-          <td>
-          {{-- <input type="checkbox" name="" id=""> --}}
-          <button class="edit-btn" data-id="{{$auxi->id}}">Editar</button>
-          </td>
+          <td><input type="checkbox" name="" id=""></td>
           <td>{{$auxi->id}}</td>
           <td>{{$auxi->grupo}}</td>
-          {{--  --}}
-          {{-- <td id="open" data-auxi="{{ $auxi}}"   class="pointer">{{$auxi->material}}</td>       --}}
-
-          <td id=""  class="pointer">{{$auxi->material}}</td> 
-           
+          <td id="open" class="pointer">{{$auxi->material}}</td>
           <td>{{$auxi->unidad}}</td>
           <td>{{number_format($auxi->precio_unitario, 2)}}</td>
           <td>{{$auxi->updated_at}}</td>
@@ -140,25 +328,13 @@
               </div>
             </div>
           </td>
+          {{-- ----------- --}}
         </tr>
         @endforeach
       </tbody>
     </table>
   </div>
 </section>
-
-<!----------- ventana emergente  ---------------->
-
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div id="modal-body">
-            <!-- Aquí se cargará el contenido de la vista -->
-        </div>
-    </div>
-</div>
-
-<!----------- fin ventana emergente  --------------->
 
 {{-- esta funcion no se compila desde resources/js/functions/ --}}
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>

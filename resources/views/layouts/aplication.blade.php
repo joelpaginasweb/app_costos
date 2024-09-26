@@ -24,7 +24,33 @@
       </div>
       @include(' layouts.partials.nav_aplication')
       <!----------------- login by breeze------------->
-      <div class="userContain">
+
+      <div class=" userContain">
+        <li>
+          <span class="user user__user"> {{ Auth::user()->name }}</span>
+
+
+          <ul class="user__div user__lista">
+            
+              <x-dropdown-link :href="route('profile.edit')" class="menu__option">
+                {{ __('Perfil') }}
+              </x-dropdown-link>
+
+              <!-- Authentication -->
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <x-dropdown-link :href="route('logout')"
+                  onclick="event.preventDefault(); this.closest('form').submit();" class="menu__option">
+                  {{ __('Cerrar Sesíon') }}
+                </x-dropdown-link>
+              </form>
+
+          </ul>
+        </li>
+      </div>
+
+{{-- user original de Laravel Breeze  --}}
+      {{-- <div class="userContain">
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <span class="user">
@@ -36,7 +62,6 @@
               <x-dropdown-link :href="route('profile.edit')" class="user__menu">
                 {{ __('Perfil') }}
               </x-dropdown-link>
-
               <!-- Authentication -->
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -48,8 +73,11 @@
             </div>
           </x-slot>
         </x-dropdown>
-      </div>
+      </div> --}}
+
     </div>
+
+    
   </header>
 
   <main class="mainAplication">
@@ -65,5 +93,7 @@
 
 
 </body>
+
+
 
 </html>
