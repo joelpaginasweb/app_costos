@@ -14,14 +14,9 @@ class AuxiController extends Controller
   /**      * Display a listing of the resource.      */
   public function index(): View
   {
-    // $id= 2;
-    $auxis = Auxi::all();
-    // $auxis = Auxi::find($id);
-    // $idAuxiliar = $id;  
-    // $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
-    return view('tabs/auxiliares',['auxis'=>$auxis]);
 
-    // return view('tabs/auxiliares',['auxis'=>$auxis, 'auxiFind'=>$auxiFind, 'conceptos'=>$conceptos  ]);
+    $auxis = Auxi::all();
+    return view('tabs/auxiliares',['auxis'=>$auxis]);
   }
 
   /**     * Show the form for creating a new resource.     */
@@ -29,7 +24,6 @@ class AuxiController extends Controller
   {
     //
   } 
-
 
   /**     * Store a newly created resource in storage.     */  
   public function store(Request $request): RedirectResponse
@@ -63,15 +57,16 @@ class AuxiController extends Controller
   }  
 
   /**      * Display the specified resource.     */
-  public function show(Auxi $auxi)
-  {
-      //Muestra los detalles de un registro específico.
-  }
+  // public function show(Auxi $auxi)
+  // {
+  //     
+  // }
 
   //----------crea y guarda conceptos del auxiliar-------------//
   private function guardarConcepto ($idAuxiliar, $idMateriales, $cantidades)
   {
     $costoDirectoAux = 0; 
+    
     foreach ($idMateriales as $key => $idMaterial){ 
 
       $registroMaterial = Materiales::find($idMaterial);       
@@ -103,16 +98,6 @@ class AuxiController extends Controller
       $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
       return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
   }
-
-    /**     * Show the form for editing the specified resource.   */
-  // public function edit($id): View
-  // {     
-  //     $auxi = Auxi::find($id); 
-  //     $idAuxiliar = $id;  
-  //     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
-  //     return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
-  // }
-
   
   /**     * Update the specified resource in storage.     */
   public function update(Request $request, Auxi $auxi): RedirectResponse
@@ -122,6 +107,7 @@ class AuxiController extends Controller
         'material_auxiliar' => 'required', 
         'unidad' => 'required'         
        ]);   
+
 
     $costoDirectoAux = $this->editarConcepto( 
       null,    
@@ -138,6 +124,7 @@ class AuxiController extends Controller
       'precio_unitario' => $costoDirectoAux   
     ]);   
 
+
     $updateAuxiliar = Auxi::where('material',$materialAuxiliar)->first();
     $idAuxiliar = $updateAuxiliar->id;
 
@@ -153,9 +140,9 @@ class AuxiController extends Controller
   //------edita y crea conceptos del auxiliar ---------//
   private function editarConcepto($idAuxiliar, $idMateriales, $cantidades)
   {
-      $costoDirectoAux = 0;   
-      foreach ($idMateriales as $key => $idMaterial) {
+      $costoDirectoAux = 0;  
 
+      foreach ($idMateriales as $key => $idMaterial) { 
         $registroMaterial = Materiales::find($idMaterial);
         $cantidad = $cantidades[$key];
         $precioUnitario = $registroMaterial->precio_unitario;
@@ -190,15 +177,14 @@ class AuxiController extends Controller
       return $costoDirectoAux;
   }  
 
-  /** *borra conceptos del auxiliar */
+  /** *borra conceptos de ConceptosAuxiliares */
   public function deleteConcepto($idConcepto)
   {
     $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();
     $idAuxiliar = $conceptoDelete->id_auxiliar;
     $conceptoDelete->delete();
     return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
-  }
-  
+  }  
 
   /**     *copy the specified resource       */
   public function copy($id)
@@ -208,7 +194,6 @@ class AuxiController extends Controller
       $auxiNew = $auxiBase->replicate();
       $auxiNew->save();
       $idAuxiliarNew = $auxiNew->id;
-
       $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
       $conceptosNew = collect(); //crea una nueva coleccion vacia para almacenar registros
 
@@ -220,18 +205,15 @@ class AuxiController extends Controller
       }
       return redirect()->route('auxis.index')->with('success', 'Auxiliar Copiado');	      
   }
-
   
   /**     * Remove the specified resource from storage.     */
   public function destroy(Auxi $auxi): RedirectResponse
   {    
     $idAuxiliar = $auxi->id;
     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
-
     foreach ($conceptos as $concepto ) {
         $concepto->delete();
-      }
-            
+      }            
     $auxi->delete();
     return redirect()->route('auxis.index')->with('success', 'Auxiliar eliminado!');
   }

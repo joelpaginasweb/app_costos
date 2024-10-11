@@ -10,6 +10,24 @@ if(botonCrearMO) {
     var container = document.createElement('div');//
     container.setAttribute('class', 'container');//
 
+// ------------------------------------------------
+    var labelSelect = document.createElement('label');
+    labelSelect.setAttribute('for', 'select');
+    labelSelect.setAttribute('class', 'form__label');
+    labelSelect.innerText = 'Tipo';
+
+    var selectMat = document.createElement('select');
+    selectMat.setAttribute('name', 'tipo_mano_obra[]');
+
+    var optionMat = document.createElement('option');
+    optionMat.setAttribute('value', 'categoria');
+    optionMat.innerText = 'categoria';
+
+    var optionAux = document.createElement('option');
+    optionAux.setAttribute('value', 'cuadrilla');
+    optionAux.innerText = 'cuadrilla';
+// ------------------------------------------------
+
     var labelMO = document.createElement('label');//
     labelMO.setAttribute('for', 'id_mano_obra');
     labelMO.setAttribute('class', 'form__label');
@@ -34,6 +52,11 @@ if(botonCrearMO) {
     inputCantidadMO.setAttribute('class', 'form__input');
     inputCantidadMO.setAttribute('placeholder', 'cantidad MO');
 
+    selectMat.appendChild(optionMat);
+    selectMat.appendChild(optionAux);
+
+    container.appendChild(labelSelect);
+    container.appendChild(selectMat);
     container.appendChild(labelMO);//
     container.appendChild(inputMO);//
     container.appendChild(labelCantidadMO);//

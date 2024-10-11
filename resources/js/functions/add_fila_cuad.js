@@ -1,21 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Constantes para el div contenedor de los inputs y el botón de agregar
-  const btnCreaAux = document.querySelector('#boton_crea_aux');
-  const conteinerAuxi = document.querySelector('#container_auxi');
+  const btnCreaCuad = document.querySelector('#btn_crea_cuad');
+  const conteinerCuad = document.querySelector('#container_cuad');
 
   /**  * Método  clic al botón de agregar elementos  */
-  btnCreaAux.addEventListener('click', e => {
+  btnCreaCuad.addEventListener('click', e => {
       let div = document.createElement('div');
       div.innerHTML = `
       <div class="container contain_element">
         <span class="form__span" onclick="eliminar(this)">x</span>
-        <label for="id_material" class="form__label">Id material</label>
-        <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
-        <label for="cantidad_mater" class="form__label">cantidad material</label>
-        <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input" placeholder="cantidad material">   
+        <label for="id_categoria" class="form__label">Id categoria</label>
+        <input type="number" step="0" name="id_categoria[]" class="form__input" placeholder="id categoria">
+        <label for="cantidad_mo" class="form__label">cantidad </label>
+        <input type="number" step="0.00001" name="cantidad_mo[]" class="form__input"
+            placeholder="cantidad">   
       </div>
       `;
-      conteinerAuxi.appendChild(div);
+      conteinerCuad.appendChild(div);
   });
 
 });

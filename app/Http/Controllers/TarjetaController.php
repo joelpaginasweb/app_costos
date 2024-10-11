@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Auxi;
+use App\Models\Cuadrillas;
 use App\Models\Tarjeta;
 use App\Models\Materiales;
 use App\Models\Manodeobra;
@@ -28,7 +29,7 @@ class TarjetaController extends Controller
     /**      * Show the form for creating a new resource. */
     public function create(): View
     {
-        // return view('tabs/tarjetas');
+        
     }  
 
     /**  * Store a newly created resource in storage. */
@@ -42,7 +43,7 @@ class TarjetaController extends Controller
       ]);
 
       $tipoMaterial = $request->input('tipo_material');
-      
+      $tipoManoObra = $request->input('tipo_mano_obra');       
 
       DB::transaction(function () use ($request, $dataRequest) {      
         $costoMaterial = $this->calcularConceptos(
@@ -50,22 +51,21 @@ class TarjetaController extends Controller
           $request->input('tipo_material'), 
           $request->input('id_material'), 
           $request->input('cantidad_mater'),
-          [], [], 
+          [], [], [],
           [], []
         );
 
         $costoManoObra = $this->calcularConceptos(
-          null, [],
-          [], [],
+          null, [],  [], [],
+           $request->input('tipo_mano_obra'),           
           $request->input('id_mano_obra'),
           $request->input('cant_mano_obra'),
           [], []
         );
 
         $costoEquipo = $this->calcularConceptos(
-          null, [], 
-          [], [],
-          [], [],
+          null, [], [],  [],
+           [], [], [],
           $request->input('id_equipo'),
           $request->input('cant_equipo'),
         ); 
@@ -104,13 +104,13 @@ class TarjetaController extends Controller
           $request->input('tipo_material'), 
           $request->input('id_material'),
           $request->input('cantidad_mater'),
-          [], [], 
+          [], [], [],
           [], []
         );   
 
         $costoManoObra = $this->calcularConceptos(
-          $idTarjeta, [], 
-          [], [],
+          $idTarjeta, [], [], [],
+          $request->input('tipo_mano_obra'),  
           $request->input('id_mano_obra'),
           $request->input('cant_mano_obra'),
           [], []
@@ -119,10 +119,21 @@ class TarjetaController extends Controller
         $costoEquipo = $this->calcularConceptos(
           $idTarjeta,  [], 
           [],  [],
-          [], [],
+          [], [], [],
           $request->input('id_equipo'),
           $request->input('cant_equipo'),
         );  
+
+        // $costoxx = $this->calcularConceptos(
+        //   $idTarjeta,  $request->input('tipo_material'), 
+        //   $request->input('id_material'),
+        //   $request->input('cantidad_mater'),
+        //   $request->input('tipo_mano_obra'),  
+        //   $request->input('id_mano_obra'),
+        //   $request->input('cant_mano_obra'),
+        //   $request->input('id_equipo'),
+        //   $request->input('cant_equipo'),
+        // ); 
       
       });
       
@@ -136,9 +147,10 @@ class TarjetaController extends Controller
   
     }
 
+
     private function calcularConceptos( $idTarjeta, $tipoMateriales,
       $idMateriales, $cantidadesMateriales,
-      $idManoObras, $cantidadesManoObras,
+      $tipoManoObras, $idManoObras, $cantidadesManoObras,
       $idEquipos,  $cantidadesEquipos  )      
     {     
       $costoMaterial = 0;
@@ -149,11 +161,10 @@ class TarjetaController extends Controller
            $registroMaterial = Auxi::find($idMaterial);           
           } else  {
             $registroMaterial = Materiales::find($idMaterial);
-          } 
-          
-        $cantidadMaterial = $cantidadesMateriales[$key];
-        $PUMaterial = $registroMaterial->precio_unitario; 
-        $importeMaterial =  $cantidadMaterial * $PUMaterial;
+          }           
+          $PUMaterial = $registroMaterial->precio_unitario; 
+          $cantidadMaterial = $cantidadesMateriales[$key];
+          $importeMaterial =  $cantidadMaterial * $PUMaterial;
         
         if ($idTarjeta !== null) { 
           $this->guardarConceptosMateriales($registroMaterial, $PUMaterial, $cantidadMaterial, $importeMaterial, $idMaterial, $idTarjeta);
@@ -163,13 +174,22 @@ class TarjetaController extends Controller
       
       $costoManoObra = 0;
       foreach ($idManoObras as $key => $idManoObra){
-        $registroManoObra = Manodeobra::find($idManoObra);
+        $tipoManoObra = $tipoManoObras[$key];
+
+        if ($tipoManoObra == "categoria") {          
+          $registroManoObra = Manodeobra::find($idManoObra);  
+          $PUManoObra = $registroManoObra->salario_real;
+          $conceptoMO = $registroManoObra->categoria;
+        } else  {
+           $registroManoObra = Cuadrillas::find($idManoObra);
+           $PUManoObra = $registroManoObra->total;
+            $conceptoMO = $registroManoObra->descripcion;
+         }
         $cantidadManoObra = $cantidadesManoObras[$key];
-        $PUManoObra = $registroManoObra->salario_real;
         $importeManoObra =  $cantidadManoObra * $PUManoObra;
 
         if ($idTarjeta !== null) {
-          $this->guardarConceptosManoObras( $registroManoObra, $PUManoObra, $cantidadManoObra, $importeManoObra, $idManoObra, $idTarjeta);
+          $this->guardarConceptosManoObras( $registroManoObra, $conceptoMO, $PUManoObra, $cantidadManoObra, $importeManoObra, $idManoObra, $idTarjeta);
         }
         $costoManoObra += $importeManoObra;
       }
@@ -225,12 +245,11 @@ class TarjetaController extends Controller
       ]);
     }  
 
-
-    private function guardarConceptosManoObras ($registroManoObra, $PUManoObra, $cantidadManoObra, $importeManoObra, $idManoObra, $idTarjeta )
+    private function guardarConceptosManoObras ($registroManoObra, $conceptoMO, $PUManoObra, $cantidadManoObra, $importeManoObra, $idManoObra, $idTarjeta )
     {           
       ConceptosManoObras::create([
         'id_mano_obra' => $idManoObra,
-        'concepto' => $registroManoObra->categoria,
+        'concepto' => $conceptoMO,
         'unidad' => $registroManoObra->unidad,
         'cantidad' => $cantidadManoObra,
         'precio_unitario' => $PUManoObra,

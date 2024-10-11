@@ -6,6 +6,7 @@ use App\Http\Controllers\MaterialesController;
 use App\Http\Controllers\ManodeobraController;
 use App\Http\Controllers\HerramientaController;
 use App\Http\Controllers\AuxiController;
+use App\Http\Controllers\CuadrillaController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -39,13 +40,19 @@ Route::middleware('auth')->group(function () {
   Route::resource('tarjetas', TarjetaController::class);
   Route::resource('materiales', MaterialesController::class);
   Route::resource('manodeobra', ManodeobraController::class);
-  Route::resource('herramientas', HerramientaController::class);
-
+  Route::resource('herramientas', HerramientaController::class);  
+  
   Route::resource('auxis', AuxiController::class);
   Route::get('/auxisCopy/{id}',[AuxiController::class, 'copy'])->name('auxisCopy');  
   Route::get('/conceptoDelete/{id}',[AuxiController::class, 'deleteConcepto'])->name('conceptoDelete');
-
   Route::get('auxis/{auxi}/edit', [AuxiController::class, 'edit'])->name('auxis.edit');
+
+  Route::resource('cuadrillas', CuadrillaController::class);
+  Route::get('/cuadrillasCopy/{id}',[CuadrillaController::class, 'copy'])->name('cuadrillasCopy');  
+  Route::get('/conceptoDelete/{id}',[CuadrillaController::class, 'deleteConcepto'])->name('conceptoDelete');
+  Route::get('cuadrillas/{cuadrilla}/edit', [CuadrillaController::class, 'edit'])->name('cuadrillas.edit');
+  
+
 });
 
 
