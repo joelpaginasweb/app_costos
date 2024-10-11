@@ -1,5 +1,5 @@
-// --------- resources
 
+document.addEventListener('DOMContentLoaded', () => {
 /**
  * Método para eliminar el div contenedor del input *  *  
  * @param {this} e 
@@ -11,5 +11,7 @@ const eliminar = (e) => {
   }
   divPadre.remove();
 };
+
+});
 
 

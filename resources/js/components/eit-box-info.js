@@ -26,8 +26,7 @@ class EitBoxInfo  extends LitElement {
   }
 
   render() {
-    return html`
-      <br>
+    return html`      
       <span>-Lit Component</span>
       <br>
       <span>${this.message}</span>

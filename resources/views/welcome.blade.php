@@ -38,11 +38,11 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4> EDICIONES </h4>
+      <h4>EDICIONES</h4>
       <ul>
+        <li>11 oct- Se agrego cuadrillas en Mano de Obra</li>
         <li>26 sep- Se agrego funcion open_user</li>
-        <li>29 ago -Se agrego editar y borrar conceptos en editar auxiliares, formato tarjeta costos en editar auxiliares</li>
-        
+        <li>29 ago -Se agrego editar y borrar conceptos en editar auxiliares, formato tarjeta costos en editar auxiliares</li>        
       </ul>
     </div>
     <br>
@@ -50,6 +50,7 @@
       <h4>PRUEBA WEB COMPONENTS</h4>
       <hola-mundo name="nuevo" surname="web component"></hola-mundo>
       <eit-box-info></eit-box-info>
+      <simple-greeting></simple-greeting>
     </div>
   </main>
 

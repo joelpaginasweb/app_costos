@@ -1,59 +1,48 @@
 @extends('layouts.aplication')
-@section('title', 'Auxiliares')
+@section('title', 'Cuadrillas')
 @section('content')
 
 <section class="section">
   <div>
-    <h1> TARJETAS AUXILIARES DE COSTOS </h1>
+    <h1> CUADRILLAS DE MANO DE OBRA </h1>
     <h4>APLICACION EN CONSTRUCCION</h4>
     <br>
-    <div>
-      <!----------- web components-------- -->
-      {{-- <h3>-test web componentes-</h3> --}}
-      <hola-mundo name="prueba de " surname="web componente nativo"></hola-mundo>
-      <!-- lit components -->
-      {{-- <eit-box-info message="prueba de Lit web component"></eit-box-info> --}}
-      <!----------- web components-------- -->
-    </div>
   </div>
 </section>
 
 <section class="section__form" id="nuevo_material">
   <div class="form__titulo">
-    <h4>CREAR NUEVO MATERIAL AUXILIAR </h4>
+    <h4>CREAR NUEVA CUADRILLA DE MANO DE OBRA </h4>
   </div>
 
-  <form action="{{route('auxis.store')}}" method="POST" class="form">
+  <form action="{{route('cuadrillas.store')}}" method="POST" class="form">
     @csrf
 
     <div class=" contain">
       <div class="containerFlex ">
         <input type="text" name="grupo" class="form__input" placeholder="grupo">
-        <textarea name="material_auxiliar" class=" form__textarea" placeholder="concepto nuevo auxiliar"></textarea>
+        <textarea name="descripcion" class="form__textarea" placeholder="descripcion de cuadrilla"></textarea>
         <input type="text" name="unidad" class="form__input" placeholder="unidad">
-        <input type="button" class="form__boton" id="boton_crea_aux" value="Agregar Material">
+        <input type="button" class="form__boton" id="btn_crea_cuad" value="Agregar Categoria">
       </div>
     </div>
 
     <div class="container contain">
-      <div id="container_auxi" class="containerFlex">
+      <div id="container_cuad" class="containerFlex">
         <div class="container contain_element">
           <span class="form__span" onclick="eliminar(this)">x</span>
-          <label for="id_material" class="form__label">Id material</label>
-          <input type="number" step="0" name="id_material[]" class="form__input" placeholder="id material">
-          <label for="cantidad_mater" class="form__label">cantidad material</label>
-          <input type="number" step="0.00001" name="cantidad_mater[]" class="form__input"
-            placeholder="cantidad material">
+          <label for="id_categoria" class="form__label">Id categoria</label>
+          <input type="number" step="0" name="id_categoria[]" class="form__input" placeholder="id categoria">
+          <label for="cantidad_mo" class="form__label">cantidad </label>
+          <input type="number" step="0.00001" name="cantidad_mo[]" class="form__input"
+            placeholder="cantidad">
         </div>
-      </div>
 
-      {{-- ----------------------- --}}
-      <!-- ------------------------ -->
-
+      </div>      
       <div class="container ">
         <div class="container ">
-          <label for="formBoton" class="form__label"> Crear Auxiliar </label>
-          <button type="submit" id="formBoton" class="form__boton">Crear Auxiliar</button>
+          <label for="formBoton" class="form__label"> Crear Cuadrilla</label>
+          <button type="submit" id="formBoton" class="form__boton">Crear Cuadrilla</button>
         </div>
       </div>
     </div>
@@ -70,7 +59,7 @@
   <div class=" section ">
     @if ($errors->any())
     <div class="alert alert-danger ">
-      <strong>¡Error al crear material!</strong>
+      <strong>¡Error al crear cuadrilla de mano de obra!</strong>
       <p>Los siguientes datos son necesarios: </p>
       <ul>
         @foreach ($errors->all() as $error)
@@ -85,7 +74,7 @@
 <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
     <div class="tablaBase__title">
-      <h5>LISTADO DE TARJETAS DE COSTOS AUXILIARES</h5>
+      <h5>LISTADO DE CUADRILLAS DE MANO DE OBRA</h5>
     </div>
   </div>
 
@@ -96,39 +85,37 @@
           <th>ED</th>
           <th>ID</th>
           <th>GRUPO</th>
-          <th>MATERIAL AUXILIAR</th>
-          <th>UNID</th>
-          <th>PRECIO UN</th>
+          <th>DESCRIPCION</th>
+          <th>UNIDAD</th>
+          <th>TOTAL</th>
           <th>FECHA</th>
           <th>ACCION</th>
         </tr>
       </thead>
 
       <tbody class="tablaBase__tbody">
-        @foreach ($auxis as $auxi)
+        @foreach ($cuadrillas as $cuadrilla)
         <tr class="">
           <td>
-          {{-- <input type="checkbox" name="" id=""> --}}
-          {{-- <button class="edit-btn" data-id="{{$auxi->id}}">Editar</button> --}}
-          <button class="edit-btn" >---</button>
+          <button>---</button>
+          {{-- <button class="edit-btn" data-id="{{$cuadrilla->id}}">Editar</button> --}}
           </td>
-          <td>{{$auxi->id}}</td>
-          <td>{{$auxi->grupo}}</td>
-          <td id=""  class="">{{$auxi->material}}</td> 
-          {{-- <td id="open" data-auxi="{{ $auxi}}"   class="pointer">{{$auxi->material}}</td>  --}}
-          <td>{{$auxi->unidad}}</td>
-          <td>{{number_format($auxi->precio_unitario, 2)}}</td>
-          <td>{{$auxi->updated_at}}</td>
+          <td>{{$cuadrilla->id}}</td>
+          <td>{{$cuadrilla->grupo}}</td>
+          <td id=""  class="pointer">{{$cuadrilla->descripcion}}</td>            
+          <td>{{$cuadrilla->unidad}}</td>
+          <td>{{number_format($cuadrilla->total, 2)}}</td>
+          <td>{{$cuadrilla->updated_at}}</td>
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('auxisCopy', $auxi->id)}}" class="tablaBase__boton">Cop</a>
+                <a href="{{route('cuadrillasCopy', $cuadrilla->id)}}" class="tablaBase__boton">Cop</a>
               </div>
               <div class="contain">
-                <a href="{{route('auxis.edit', $auxi->id)}}" class="tablaBase__boton">Ed</a>
+                <a href="{{route('cuadrillas.edit', $cuadrilla->id)}}" class="tablaBase__boton">Ed</a>
               </div>
               <div class="contain">
-                <form action="{{route('auxis.destroy', $auxi)}}" method="POST">
+                <form action="{{route('cuadrillas.destroy', $cuadrilla)}}" method="POST">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="tablaBase__boton">X</button>
@@ -144,6 +131,7 @@
 </section>
 
 <!----------- ventana emergente  ---------------->
+
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -155,7 +143,7 @@
 
 <!----------- fin ventana emergente  --------------->
 
-{{-- esta funcion no se compila desde resources/js/functions/ --}}
+{{-- esta funcion no se importa desde resources/js/functions/ --}}
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>

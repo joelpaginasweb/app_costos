@@ -1,37 +1,35 @@
 
-//abre ventana emergente en auxiliares y tarjetas
-// import './functions/open_element';
 
-import './functions/open_emergente2';
+// -------------edit.presupesto.blade--------------
+import './functions/select_one_click';
 
+// -----------tarjetas.blade--------------
+import './functions/crear_fila_material';
+import './functions/crear_fila_MO';
+import './functions/crear_fila_equipo';
+
+//----------cuadrillas.blade----------
+import './functions/add_fila_cuad';
+
+//----------editcuadrillas.blade----------
+import './functions/add_fila_edit_cuad';
+
+// ------------auxilares.blade-----------------
+import './functions/crea_element_aux';
+import './functions/open_emergente';
+
+// --------editauxiliares.blade--------------
+import './functions/crea_element_edit_aux';
+
+// ----------usuario---------------------
 import './functions/open_user';
 
 
+// ---------------------------------
+// import './functions/open_element';
 
-//selecciona caracter con un click en edit presupuesto
-import './functions/select_one_click';
-
-// ------------------------------
-
-// import './functions/crear_fila_material';
-// import './functions/crear_fila_MO';
-// import './functions/crear_fila_equipo';
-
-// ------------------------------
-
-//tiene conflicto con la funcion desplegar user
-//se agrego <div id="boton_crear_aux"></div> en footer_app para evitar conflicto
-// import './functions/crea_element_aux';
-// import './functions/crea_element_aux_mod';
-
-//tiene conflicto con la funcion desplegar user
-import './functions/crea_element_table';
-
-
-//no se compila desde aqui
+//no se importa, se cargo script en editauxiliares.blade
 // import './functions/delete_elements';
-
-// ------------------------------
 
 //funcion deprecada
 // import './functions/crear_fila_aux'; 

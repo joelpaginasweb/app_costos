@@ -117,7 +117,7 @@
   </div>
 </section>
 
-{{-- esta funcion no se compila desde resources/js/functions/ --}}
+{{-- esta funcion no se importa desde resources/js/functions/ --}}
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
 
 
