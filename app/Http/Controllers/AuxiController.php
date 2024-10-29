@@ -14,16 +14,13 @@ class AuxiController extends Controller
   /**      * Display a listing of the resource.      */
   public function index(): View
   {
-
     $auxis = Auxi::all();
     return view('tabs/auxiliares',['auxis'=>$auxis]);
   }
 
   /**     * Show the form for creating a new resource.     */
   public function create(): View
-  {
-    //
-  } 
+  {      } 
 
   /**     * Store a newly created resource in storage.     */  
   public function store(Request $request): RedirectResponse
@@ -56,11 +53,6 @@ class AuxiController extends Controller
       return redirect()->route('auxis.index')->with('success', 'Auxiliar Creado');		
   }  
 
-  /**      * Display the specified resource.     */
-  // public function show(Auxi $auxi)
-  // {
-  //     
-  // }
 
   //----------crea y guarda conceptos del auxiliar-------------//
   private function guardarConcepto ($idAuxiliar, $idMateriales, $cantidades)
@@ -72,17 +64,19 @@ class AuxiController extends Controller
       $registroMaterial = Materiales::find($idMaterial);       
       $cantidad = $cantidades[$key]; 
       $precioUnitario = $registroMaterial->precio_unitario;
-      $importe = $precioUnitario * $cantidad;  
+      $importe = $precioUnitario * $cantidad; 
+      
+      // dd($importe);
 
       if (  $idAuxiliar !== null) {        
         ConceptosAuxiliares::create([            
-          'concepto' => $registroMaterial->material, 
-          'unidad' => $registroMaterial->unidad, 
           'cantidad' => $cantidad, 
-          'precio_unitario' => $precioUnitario,     
           'importe' => $importe,  
           'id_material' => $idMaterial,      
           'id_auxiliar' => $idAuxiliar 
+          // 'concepto' => $registroMaterial->material, 
+          // 'unidad' => $registroMaterial->unidad, 
+          // 'precio_unitario' => $precioUnitario,     
         ]);                          
       }  
       $costoDirectoAux += $importe; 
@@ -108,7 +102,6 @@ class AuxiController extends Controller
         'unidad' => 'required'         
        ]);   
 
-
     $costoDirectoAux = $this->editarConcepto( 
       null,    
       $request->input('id_material'),
@@ -123,7 +116,6 @@ class AuxiController extends Controller
       'unidad' => $dataRequest['unidad'], 
       'precio_unitario' => $costoDirectoAux   
     ]);   
-
 
     $updateAuxiliar = Auxi::where('material',$materialAuxiliar)->first();
     $idAuxiliar = $updateAuxiliar->id;
@@ -152,10 +144,10 @@ class AuxiController extends Controller
         if ( $idConcepto == null && $idAuxiliar !== null ) {     
           
           ConceptosAuxiliares::create([            
-            'concepto' => $registroMaterial->material, 
-            'unidad' => $registroMaterial->unidad, 
+            // 'concepto' => $registroMaterial->material, 
+            // 'unidad' => $registroMaterial->unidad, 
             'cantidad' => $cantidad, 
-            'precio_unitario' => $precioUnitario,     
+            // 'precio_unitario' => $precioUnitario,     
             'importe' => $importe,  
             'id_material' => $idMaterial,      
             'id_auxiliar' => $idAuxiliar 
@@ -164,10 +156,10 @@ class AuxiController extends Controller
         } elseif ($idConcepto !== null && $idAuxiliar !== null){         
 
           ConceptosAuxiliares::where('id', $idConcepto)->update([
-            'concepto' => $registroMaterial->material, 
-            'unidad' => $registroMaterial->unidad, 
+            // 'concepto' => $registroMaterial->material, 
+            // 'unidad' => $registroMaterial->unidad, 
             'cantidad' => $cantidad, 
-            'precio_unitario' => $precioUnitario,       
+            // 'precio_unitario' => $precioUnitario,       
             'importe' => $importe,  
             'id_material' => $idMaterial
           ]);
@@ -217,5 +209,10 @@ class AuxiController extends Controller
     $auxi->delete();
     return redirect()->route('auxis.index')->with('success', 'Auxiliar eliminado!');
   }
+
+  
+  /**      * Display the specified resource.     */
+  // public function show(Auxi $auxi)
+  // { //  // }
 
 }

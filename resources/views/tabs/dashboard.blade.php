@@ -5,13 +5,12 @@
 <section class="section section--up">
   <div>
     <h1> DASHBOARD</h1>
-    <br> 
+    <br>
     <h4>APLICACION EN CONSTRUCCION</h4>
   </div>
 </section>
 
-
- {{-- <section class="section__tablaBase section--down">
+{{-- <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
     <div class="tablaBase__title">
       <h5>LISTADO DE PRESUPUESTOS</h5>
@@ -19,8 +18,8 @@
   </div>
   <div class="tablaBase__container">
     <table class="tablaBase tablaDashboard">
-    <thead>
-        <tr  class="tablaBase__head ">
+      <thead>
+        <tr class="tablaBase__head ">
           <th>ID PRESUP</th>
           <th>NOMBRE</th>
           <th>CLIENTE</th>
@@ -31,7 +30,7 @@
           <th>COSTO TOTAL</th>
           <th>FECHA</th>
         </tr>
-    </thead>
+      </thead>
       <tbody>
         @foreach ($dashboard as $dashbo)
         <tr onclick="abrir()" class="tablaBase__tbody">
@@ -50,6 +49,6 @@
     </table>
   </div>
 
-</section>  --}}
+</section> --}}
 
 @endsection

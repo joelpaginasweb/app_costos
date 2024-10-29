@@ -24,15 +24,12 @@
         </a>
       </div>
       @include(' layouts.partials.nav_aplication')
-      <!----------------- login by breeze------------->
 
+      <!----------------- login by breeze------------->
       <div class=" userContain">
         <li>
           <span class="user user__user"> {{ Auth::user()->name }}</span>
-
-
-          <ul class="user__div user__lista">
-            
+          <ul class="user__div user__lista">            
               <x-dropdown-link :href="route('profile.edit')" class="menu__option">
                 {{ __('Perfil') }}
               </x-dropdown-link>
@@ -45,7 +42,6 @@
                   {{ __('Cerrar Sesíon') }}
                 </x-dropdown-link>
               </form>
-
           </ul>
         </li>
       </div>
@@ -76,14 +72,11 @@
         </x-dropdown>
       </div> --}}
 
-    </div>
-
-    
+    </div>    
   </header>
 
   <main class="mainAplication">
     @yield('content')
-
   </main>
 
   <footer>

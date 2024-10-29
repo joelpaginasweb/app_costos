@@ -14,16 +14,13 @@ class AuxiController extends Controller
   /**      * Display a listing of the resource.      */
   public function index(): View
   {
-
     $auxis = Auxi::all();
     return view('tabs/auxiliares',['auxis'=>$auxis]);
   }
 
   /**     * Show the form for creating a new resource.     */
   public function create(): View
-  {
-    //
-  } 
+  {      } 
 
   /**     * Store a newly created resource in storage.     */  
   public function store(Request $request): RedirectResponse
@@ -58,9 +55,7 @@ class AuxiController extends Controller
 
   /**      * Display the specified resource.     */
   // public function show(Auxi $auxi)
-  // {
-  //     
-  // }
+  // { //  // }
 
   //----------crea y guarda conceptos del auxiliar-------------//
   private function guardarConcepto ($idAuxiliar, $idMateriales, $cantidades)
@@ -108,7 +103,6 @@ class AuxiController extends Controller
         'unidad' => 'required'         
        ]);   
 
-
     $costoDirectoAux = $this->editarConcepto( 
       null,    
       $request->input('id_material'),
@@ -123,7 +117,6 @@ class AuxiController extends Controller
       'unidad' => $dataRequest['unidad'], 
       'precio_unitario' => $costoDirectoAux   
     ]);   
-
 
     $updateAuxiliar = Auxi::where('material',$materialAuxiliar)->first();
     $idAuxiliar = $updateAuxiliar->id;
@@ -211,11 +204,9 @@ class AuxiController extends Controller
   {    
     $idAuxiliar = $auxi->id;
     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
-
     foreach ($conceptos as $concepto ) {
         $concepto->delete();
-      }
-            
+      }            
     $auxi->delete();
     return redirect()->route('auxis.index')->with('success', 'Auxiliar eliminado!');
   }

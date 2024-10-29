@@ -25,6 +25,7 @@
       <button type="submit" class="form__boton">Crear</button>
     </div>
   </form>
+  <h3>prueba prueba</h3>
 
   <div class="section">
     @if (Session::get('success'))
@@ -47,6 +48,7 @@
     </div>
     @endif
   </div>
+  
 
 </section>
 

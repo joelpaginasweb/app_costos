@@ -85,7 +85,9 @@
           <tbody id="crea_element">
             @foreach ($conceptos as $concepto)
             <tr>
-              <td> <a href="{{route('conceptoDelete', $concepto->id)}}" class="form__span">X</a> </td>
+
+              <td> <a href="{{route('conceptoDeleteAux', $concepto->id)}}" class="form__span">X</a> </td>
+
               <td><input type="number" step="0" name="id_material[]" class="form__input  form__input--short select_auto pointer"
                   value="{{$concepto->id_material}}"></td>
               <td>{{$concepto->concepto}}</td>

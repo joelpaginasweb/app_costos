@@ -9,5 +9,8 @@ class ConceptosAuxiliares extends Model
 {
     use HasFactory;
     protected $table = 'conceptos_auxiliares';
-    protected $fillable = ['id_material', 'concepto', 'unidad', 'cantidad', 'precio_unitario', 'importe', 'id_auxiliar'];
+    
+    // protected $fillable = ['id_material', 'concepto', 'unidad', 'cantidad', 'precio_unitario', 'importe', 'id_auxiliar'];
+
+    protected $fillable = ['id_material',  'cantidad',  'importe', 'id_auxiliar'];
 }

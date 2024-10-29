@@ -65,7 +65,7 @@
             @foreach ($conceptos as $concepto)
             <tr>
               {{-- <td> <a href="" class="form__span">X</a> </td> --}}
-              <td> <a href="{{route('conceptoDelete', $concepto->id)}}" class="form__span">X</a> </td>
+              <td> <a href="{{route('conceptoDeleteCuad', $concepto->id)}}" class="form__span">X</a> </td>
               <td><input type="number" step="0" name="id_categoria[]" class="form__input  form__input--short select_auto pointer"
                   value="{{$concepto->id_categoria}}"></td>
               <td>{{$concepto->categoria}}</td>

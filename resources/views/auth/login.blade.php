@@ -6,7 +6,6 @@
 <section class="section__login">
 
   <div class="login__contain">
-
     <h3>Iniciar Sesíon</h3>
   </div>
 
@@ -66,11 +65,5 @@
   </x-guest-layout>
 
 </section>
-
-
-
-
-
-
 
 @endsection

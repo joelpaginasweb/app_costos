@@ -29,7 +29,7 @@
     <div class=" contain">
       <div class="containerFlex ">
         <input type="text" name="grupo" class="form__input" placeholder="grupo">
-        <textarea name="material_auxiliar" class=" form__textarea" placeholder="concepto nuevo auxiliar"></textarea>
+        <textarea name="material_auxiliar" class=" form__textarea" placeholder="concepto material auxiliar"></textarea>
         <input type="text" name="unidad" class="form__input" placeholder="unidad">
         <input type="button" class="form__boton" id="boton_crea_aux" value="Agregar Material">
       </div>
@@ -96,7 +96,7 @@
           <th>ED</th>
           <th>ID</th>
           <th>GRUPO</th>
-          <th>MATERIAL AUXILIAR</th>
+          <th>CONCEPTO MATERIAL AUXILIAR</th>
           <th>UNID</th>
           <th>PRECIO UN</th>
           <th>FECHA</th>
