@@ -18,12 +18,13 @@ use App\Models\ConceptosEquipos;
 
 class TarjetaController extends Controller
 { 
-  /**      * Display a listing of the resource.      */
-  public function index(): View
-  {
-    $tarjetas = Tarjeta::all();
-    return view('tabs/tarjetas',['tarjetas'=>$tarjetas]);              
-  }
+
+    /**      * Display a listing of the resource.      */
+    public function index(): View
+    {
+      $tarjetas = Tarjeta::all();
+      return view('tabs/tarjetas',['tarjetas'=>$tarjetas]);              
+    }
 
     /**  * Store a newly created resource in storage. */
     public function store(Request $request): RedirectResponse
@@ -116,15 +117,21 @@ class TarjetaController extends Controller
           $request->input('id_equipo'),
           $request->input('cant_equipo'),
         );        
-      });      
+      });
+      
       return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Creada con Exito');    
-    }  
-    
-    /** */
+    }
+
+    /**      * Display the specified resource. */
+    public function show( $id)
+    {  
+    }
+
     private function calcularConceptos( $idTarjeta, $tipoMateriales,
       $idMateriales, $cantidadesMateriales,
       $tipoManoObras, $idManoObras, $cantidadesManoObras,
-      $idEquipos,  $cantidadesEquipos  )       
+      $idEquipos,  $cantidadesEquipos  ) 
+      
       {     
       $costoMaterial = 0;
       foreach ($idMateriales as $key => $idMaterial) {
@@ -132,8 +139,10 @@ class TarjetaController extends Controller
 
          if ($tipoMaterial == "auxiliar") {          
            $registroMaterial = Auxi::find($idMaterial);  
+
           } else  {
             $registroMaterial = Materiales::find($idMaterial);
+
           }           
           $PUMaterial = $registroMaterial->precio_unitario; 
           $cantidadMaterial = $cantidadesMateriales[$key];
@@ -143,7 +152,8 @@ class TarjetaController extends Controller
           $this->guardarConceptosMateriales($registroMaterial, $PUMaterial, $cantidadMaterial, $importeMaterial, $idMaterial, $idTarjeta, $tipoMaterial );
         }
         $costoMaterial += $importeMaterial;
-      }      
+      }
+      
       $costoManoObra = 0;
       foreach ($idManoObras as $key => $idManoObra){
         $tipoManoObra = $tipoManoObras[$key];
@@ -181,27 +191,35 @@ class TarjetaController extends Controller
       return [$costoMaterial, $costoManoObra, $costoEquipo];
     }
     
-    private function calcularTarjeta ($costoMaterial, $costoManoObra, $costoEquipo, $request)
-    {    
+    private function calcularTarjeta ($costoMaterial, $costoManoObra, $costoEquipo, $request){    
       $idPresupuesto = $request->input('id_presupuesto');      
-      $presupuesto = Presu::find($idPresupuesto); 
+      $presupuesto = Presu::find($idPresupuesto);
+
+      // dd($presupuesto);
+
       $porcentIndirecto = $presupuesto->porcent_indirecto;
       $porcentFinanciam = $presupuesto->porcent_financiam;
       $porcentUtilidad = $presupuesto->porcent_utilidad;
       $porcentCostosAdd = $presupuesto->porcent_costos_add;
+
       $costoDirecto = $costoMaterial[0] + $costoManoObra[1] + $costoEquipo[2]; 
+
       $indirecto = ($porcentIndirecto/100) * $costoDirecto; 
       $financiam = ($porcentFinanciam/100) * $costoDirecto;
       $utilidad = ($porcentUtilidad/100) * $costoDirecto;
       $cargosAdicion = ($porcentCostosAdd/100) * $costoDirecto;
+
       $costoIndirecto = $indirecto + $financiam + $utilidad + $cargosAdicion;
       $precioUnitario = $costoDirecto + $costoIndirecto; 
 
       return [$costoDirecto, $indirecto, $financiam, $utilidad, $cargosAdicion, $costoIndirecto, $precioUnitario ]; 
-    }   
+    }
+
+    
     
     private function guardarConceptosMateriales ($registroMaterial, $PUMaterial, $cantidadMaterial, $importeMaterial, $idMaterial, $idTarjeta, $tipoMaterial )
     {
+
       ConceptosMateriales::create([
           'id_material' => $idMaterial,
           'concepto' => $registroMaterial->material,
@@ -238,12 +256,34 @@ class TarjetaController extends Controller
         'importe' => $importeEquipo,
         'id_tarjeta' => $idTarjeta
       ]);
-    }   
-
+    }     
+  
+    /**  * Show the form for editing the specified resource.*   */ 
+    public function edit(Tarjeta $tarjeta): View
+    {
+      //
+    }
+    
+    /**      * Update the specified resource in storage. */
+    public function update(Request $request, Tarjeta $tarjeta): RedirectResponse
+    {
+      //
+    }
+    
     /**  * Remove the specified resource from storage.   */
     public function destroy(Tarjeta $tarjeta): RedirectResponse
     {
       $tarjeta->delete();
       return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Eliminada!');
+
     }   
-}
+    
+        /**      * Show the form for creating a new resource. */
+    // public function create(): View
+    // {    }  
+    
+    
+
+   
+  }
+  
