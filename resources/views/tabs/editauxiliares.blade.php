@@ -16,14 +16,18 @@
       <!----------- web components-------- -->
       {{--
     </div> --}}
-  {{-- </div> --}}
-{{-- </section> --}}
+    {{-- </div> --}}
+  {{-- </section> --}}
 
 {{-- <section class="section__form"> --}}
   {{-- <h4>EDITAR MATERIAL AUXILIAR </h4> --}}
-{{-- </section> --}}
+  {{-- </section> --}}
 
-  <!----------- ventana emergente  ---------------->
+
+
+
+
+<!----------- ventana emergente  ---------------->
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
     <div class="emergente__header ">
@@ -44,26 +48,30 @@
 
         <div class="datosEmer__contain border-bottom">
           <h4>CONCEPTO:</h4>
-          <textarea name="material_auxiliar" class="form__input form__input--area  pointer">{{$auxi->material}}</textarea>
+          <textarea name="material_auxiliar"
+            class="form__input form__input--area  pointer">{{$auxi->material}}</textarea>
         </div>
 
         <div class="datosEmer__contain">
           <div class="columna33">
-            <div class="datosEmer__dato">              
-              <h4>CLAVE ID:</h4>                
-                <p>{{$auxi->id}}</p>                
+            <div class="datosEmer__dato">
+              <h4>CLAVE ID:</h4>
+              <p>{{$auxi->id}}</p>
             </div>
           </div>
           <div class="columna50">
             <div class=" datosEmer__dato">
               <h4>GRUPO:</h4>
-              <input type="text" name="grupo" class="form__input select_auto pointer" value="{{$auxi->grupo}}">
+              {{----------- programar edicion------- --}}
+              <input type="text" name="grupo" class="form__input select_auto pointer" value="{{$auxi->grupo->grupo}}">
             </div>
           </div>
           <div class="columna50">
             <div class=" datosEmer__dato ">
               <h4>UNIDAD:</h4>
-              <input type="text" name="unidad" class="form__input select_auto pointer" value="{{$auxi->unidad}}">
+              {{------------ programar edicion-------- --}}
+              <input type="text" name="unidad" class="form__input select_auto pointer"
+                value="{{$auxi->unidad->unidad}}">
             </div>
           </div>
         </div>
@@ -85,16 +93,14 @@
           <tbody id="crea_element">
             @foreach ($conceptos as $concepto)
             <tr>
-
-              <td> <a href="{{route('conceptoDeleteAux', $concepto->id)}}" class="form__span">X</a> </td>
-
-              <td><input type="number" step="0" name="id_material[]" class="form__input  form__input--short select_auto pointer"
-                  value="{{$concepto->id_material}}"></td>
-              <td>{{$concepto->concepto}}</td>
-              <td>{{$concepto->unidad}}</td>
-              <td> <input type="number" step="0.0001" name="cantidad_mater[]" class="form__input form__input--short pointer select_auto "
-                  value="{{$concepto->cantidad}}"></td>
-              <td>{{$concepto->precio_unitario}}</td>
+              <td><a href="{{route('conceptoDeleteAux', $concepto->id)}}" class="form__span">X</a></td>
+              <td><input type="number" step="0" name="id_material[]"
+                  class="form__input  form__input--short select_auto pointer" value="{{$concepto->id_material}}"></td>
+              <td>{{$concepto->materialData->material}}</td>
+              <td>{{$concepto->materialData->unidad->unidad}}</td>
+              <td> <input type="number" step="0.0001" name="cantidad_mater[]"
+                  class="form__input form__input--short pointer select_auto " value="{{$concepto->cantidad}}"></td>
+              <td>{{$concepto->materialData->precio_unitario}}</td>
               <td> {{number_format($concepto->importe, 2)}}</td>
             </tr>
             @endforeach
@@ -112,7 +118,7 @@
           </tfoot>
         </table>
         <div class="tablaEmergent__divFooter">
-          <button type="submit" id="formBoton" class="form__boton">Editar Auxiliar</button>    
+          <button type="submit" id="formBoton" class="form__boton">Editar Auxiliar</button>
         </div>
       </div>
     </form>
@@ -123,6 +129,6 @@
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
 
 
-  
+
 
 @endsection

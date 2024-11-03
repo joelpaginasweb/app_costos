@@ -2,8 +2,6 @@
 @section('title', 'Mano de obra')
 @section('content')
 
-
-
 <section class="section">
   <div>
     <h1>CATEGORIAS DE MANO DE OBRA</h1>
@@ -76,9 +74,9 @@
         @foreach ($manodeobra as $manodeobra)
         <tr class="tabla__body">
           <td>{{$manodeobra->id}}</td>
-          <td>{{$manodeobra->grupo}}</td>
+          <td>{{$manodeobra->grupox->grupo}}</td>
           <td>{{$manodeobra->categoria}}</td>
-          <td>{{$manodeobra->unidad}}</td>
+          <td>{{$manodeobra->unidad->unidad}}</td>
           <td>{{$manodeobra->salario_base}}</td>
           <td>{{$manodeobra->factor_sr}}</td>
           <td>

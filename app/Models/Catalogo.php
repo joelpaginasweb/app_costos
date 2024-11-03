@@ -24,5 +24,7 @@ class Catalogo extends Model
       'utilidad',
       'cargos_adicion'    
     ];
-    // protected $casts = [ 'importe' => 'decimal:2', 'cantidad' => 'decimal:2' ]; // para que los datos se pasen con decimales 
+
+
+    
 }

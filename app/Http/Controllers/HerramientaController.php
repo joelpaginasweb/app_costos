@@ -7,91 +7,111 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
+use App\Models\Materiales;
+use App\Models\Grupos;
+use App\Models\Marcas;
+use App\Models\Proveedores;
+use App\Models\Unidades;
+
 class HerramientaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    /**    * Display a listing of the resource.   */
     public function index(): View
     {
-        $herramientas = Herramienta::all();
+        $herramientas = Herramienta::with(['grupo', 'marca', 'unidad', 'proveedor'])->get();
         return view('tabs/herramienta' ,['herramientas'=>$herramientas]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
-       
-    }
+    /**   * Show the form for creating a new resource.    */
+    // public function create(): View
+    // {    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    /**   * Store a newly created resource in storage.    */
     public function store(Request $request): RedirectResponse
     {
-      //dd($request ->all());
-      $request->validate([
+      $validatedRequest = $request->validate([
           'grupo' => 'required',
-          'equipo' => 'required',
-          'modelo' => 'required',
+          'herr_equipo' => 'required',
           'marca' => 'required',
           'proveedor' => 'required',
           'unidad' => 'required',
           'precio_unitario' => 'required'
       ]);
-      Herramienta::create($request->all());
+
+      // dd($validateData);
+
+      $ids = $this->getOrCreateIds($validatedRequest);
+
+      Herramienta::create([
+        'id_grupo' => $ids['grupo'],
+        'herramienta_equipo' => $validatedRequest['herr_equipo'],
+        'precio_unitario' => $validatedRequest['precio_unitario'],
+        'id_marca' => $ids['marca'],
+        'id_proveedor' => $ids['proveedor'],
+        'id_unidad' => $ids['unidad']
+      ]);
       return redirect()->route('herramientas.index')->with('success', 'Herramienta Creada');
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Herramienta $herramienta)
-    {
-        //
-    }
+    /**      * Display the specified resource.      */
+    // public function show(Herramienta $herramienta)
+    // {     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    /**      * Show the form for editing the specified resource.      */
     public function edit($id): View
     {
-        //dd($herramienta);
-        $herramienta = Herramienta::find($id);
+        $herramienta = Herramienta::with(['grupo', 'marca', 'unidad', 'proveedor'])->findOrFail($id);
         return view('tabs/editherramienta',['herramienta'=>$herramienta]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    /**      * Update the specified resource in storage.      */
     public function update(Request $request, Herramienta $herramienta): RedirectResponse
     {
-        //dd($request->all());
-        $request->validate([
-            'grupo' => 'required',
-            'equipo' => 'required',
-            'modelo' => 'required',
-            'marca' => 'required',
-            'proveedor' => 'required',
-            'unidad' => 'required',
-            'precio_unitario' => 'required'
-        ]);
-        $herramienta->update($request->all());
+      $validatedRequest = $request->validate([
+        'grupo' => 'required',
+        'herr_equipo' => 'required',
+        'marca' => 'required',
+        'proveedor' => 'required',
+        'unidad' => 'required',
+        'precio_unitario' => 'required'
+      ]);
+      
+      $ids = $this->getOrCreateIds($validatedRequest);
+      
+      $herramienta->update([
+        'id_grupo' => $ids['grupo'],
+        'herramienta_equipo' => $validatedRequest['herr_equipo'],
+        'precio_unitario' => $validatedRequest['precio_unitario'],
+        'id_marca' => $ids['marca'],
+        'id_proveedor' => $ids['proveedor'],
+        'id_unidad' => $ids['unidad']
+      ]);
+
         return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo actualizado...');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    /**      * Remove the specified resource from storage.      */
     public function destroy(Herramienta $herramienta): RedirectResponse
     {
-        //
-        //dd($herramienta);
         $herramienta->delete();
-        return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo eliminado...');
-        
+        return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo eliminado...');        
+    }
+
+    /** Helper function to get or create related model IDs. */
+    private function getOrCreateIds(array $data): array 
+    {
+      $grupo = Grupos::firstOrCreate(['grupo' => $data['grupo']]);
+      $marca = Marcas::firstOrCreate(['marca' => $data['marca']]);
+      $unidad = Unidades::firstOrCreate(['unidad' => $data['unidad']]);
+      $proveedor = Proveedores::firstOrCreate(['proveedor' => $data['proveedor']]);
+
+      return [
+        'grupo' => $grupo->id,
+        'marca' => $marca->id,
+        'unidad' => $unidad->id,
+        'proveedor' => $proveedor->id
+      ];
+
     }
 }

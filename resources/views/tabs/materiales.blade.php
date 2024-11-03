@@ -9,23 +9,21 @@
   </div>
 </section>
 
-<section class="section__form"> <!-- estilo de form en estilobase.css -->
+<section class="section__form"> 
   <div class="form__titulo">
     <h4>CREAR NUEVO MATERIAL </h4>
   </div>
-
   <form action="{{route('materiales.store')}}" method="POST" class="form">
     @csrf
     <div class="contenedorFlex">
       <input type="text" name="grupo" class="form__input" placeholder="grupo">
-      <textarea name="material" class=" form__textarea" placeholder="descripcion del nuevo material"></textarea>
+      <textarea name="material" class=" form__textarea" placeholder="ingresar descripcion del nuevo material"></textarea>
       <input type="text" name="unidad" class="form__input" placeholder="unidad">
       <input type="number" step="0.01" name="precio_unitario" class="form__input" placeholder="precio unitario">
       <input type="text" name="proveedor" class="form__input" placeholder="proveedor">
       <button type="submit" class="form__boton">Crear</button>
     </div>
   </form>
-  <h3>prueba prueba</h3>
 
   <div class="section">
     @if (Session::get('success'))
@@ -75,23 +73,23 @@
       </thead>
 
       <tbody class="tablaBase__tbody">
-        @foreach ($materiales as $materiale)
+        @foreach ($materiales as $material)
         <tr class="">
-          <td>{{$materiale->id}}</td>
-          <td>{{$materiale->grupo}}</td>
-          <td>{{$materiale->material}}</td>
-          <td>{{$materiale->unidad}}</td>
-          <td>{{$materiale->precio_unitario}}</td>
-          <td>{{$materiale->proveedor}}</td>
-          <td>{{$materiale->created_at}}</td>
+          <td>{{$material->id}}</td>
+          <td>{{$material->grupo->grupo}}</td> 
+          <td>{{$material->material}}</td>
+          <td>{{$material->unidad->unidad}}</td>
+          <td>{{$material->precio_unitario}}</td>
+          <td>{{$material->proveedor->proveedor}}</td>
+          <td>{{$material->updated_at}}</td>
           <td>
             <div class="contain">
               <div class="contain">
-                <a href="{{route('materiales.edit', $materiale->id)}}" class="tablaBase__boton">Ed</a>
+                <a href="{{route('materiales.edit', $material->id)}}" class="tablaBase__boton">Ed</a>
               </div>
 
               <div class="contain">
-                <form action="{{route('materiales.destroy', $materiale)}}" method="POST" >
+                <form action="{{route('materiales.destroy', $material)}}" method="POST" >
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="tablaBase__boton">X</button>

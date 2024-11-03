@@ -40,7 +40,7 @@
     <div>
       <h4>EDICIONES</h4>
       <ul>
-        <li>28 oct- claves foranes tablas Bd en auxiliares</li>
+        <li>28 oct- claves foranes en tablas de Bd triggers en tablas bd de auxiliares</li>    
         <li>28 oct- explosion insumos parcial, no concluido</li>
         <li>11 oct- Se agrego cuadrillas en Mano de Obra</li>
         <li>26 sep- Se agrego funcion open_user</li>

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Presu extends Model
 {
     use HasFactory;
-    protected $table = 'presus';
+    protected $table = 'presupuestos';
     protected $fillable = [
       'obra', 
       'cliente',

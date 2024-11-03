@@ -113,10 +113,10 @@
           <button class="edit-btn" >---</button>
           </td>
           <td>{{$auxi->id}}</td>
-          <td>{{$auxi->grupo}}</td>
+          <td>{{$auxi->grupo->grupo}}</td>
           <td id=""  class="">{{$auxi->material}}</td> 
           {{-- <td id="open" data-auxi="{{ $auxi}}"   class="pointer">{{$auxi->material}}</td>  --}}
-          <td>{{$auxi->unidad}}</td>
+          <td>{{$auxi->unidad->unidad}}</td>
           <td>{{number_format($auxi->precio_unitario, 2)}}</td>
           <td>{{$auxi->updated_at}}</td>
           <td>
