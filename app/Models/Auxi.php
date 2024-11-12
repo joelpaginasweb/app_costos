@@ -17,7 +17,6 @@ class Auxi extends Model
     'precio_unitario'
   ];
 
-
   //Relaciones a otros modelos
   public function grupo()
   {
@@ -29,9 +28,4 @@ class Auxi extends Model
     return $this->belongsTo(Unidades::class, 'id_unidad');
   }
 
-  // public function materialData()
-  // {
-  //   return $this->belongsTo(Materiales::class, 'id_material');
-  // }
-  
 }

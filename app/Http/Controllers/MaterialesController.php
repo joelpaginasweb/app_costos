@@ -46,6 +46,21 @@ class MaterialesController extends Controller
         return redirect()->route('materiales.index')->with('success', 'Material creado');
     }
 
+    // private function ccccc(array $data): array
+    // {
+    //   $grupo = Grupos::firstOrCreate(['grupo' => $data['grupo']]);
+    //   $unidad = Unidades::firstOrCreate(['unidad' => $data['unidad']]);
+    //   $proveedor = Proveedores::firstOrCreate(['proveedor' => $data['proveedor']]);
+
+    //   return [
+    //     'grupo' => $grupo->id,
+    //     'unidad' => $unidad->id,
+    //     'proveedor' => $proveedor->id
+    //   ];
+    // }
+
+
+
     /**     * Display the specified resource.     */
     // public function show(Materiales $materiale)
     // {          }

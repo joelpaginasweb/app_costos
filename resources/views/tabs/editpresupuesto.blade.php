@@ -3,30 +3,29 @@
 
 @section('content')
 
-<section class="section">
-  <div>
+<section class="section section--title">
     <h3 class="">EDITAR PRESUPUESTO CATALOGO DE CONCEPTOS</h3>
-  </div>
 </section>
 
 <section class="section">
   <div class="contain__datosobra">
+      <div class="datosobra">
+      <h5 class="datosobra__titulo">NUM. ID: </h5>
+      <h5 class="datosobra__dato">{{$presu->id}}</h5>
+    </div>
     <div class="datosobra">
       <h5 class="datosobra__titulo">TITULO: </h5>
-      <h5 class="datosobra__dato">{{$presu->obra}}</h5>
+      <h5 class="datosobra__dato">{{$presu->proyecto}}</h5>
     </div>
     <div class="datosobra">
       <h5 class="datosobra__titulo">CLIENTE: </h5>
-      <h5 class="datosobra__dato">{{$presu->cliente}}</h5>
+      <h5 class="datosobra__dato">{{$presu->cliente->nombre}}</h5>
     </div>
     <div class="datosobra">
-      <h5 class="datosobra__titulo">DIRECCION: </h5>
-      <h5 class="datosobra__dato">{{$presu->direccion}}</h5>
+      <h5 class="datosobra__titulo">UBICACION: </h5>
+      <h5 class="datosobra__dato">{{$presu->ubicacion}}</h5>
     </div>
-    <div class="datosobra">
-      <h5 class="datosobra__titulo">CIUDAD: </h5>
-      <h5 class="datosobra__dato">{{$presu->municipio}}</h5>
-    </div>
+
     <div class="datosobra">
       <h5 class="datosobra__titulo">ESTATUS: </h5>
       <h5 class="datosobra__dato">{{$presu->estatus}}</h5>
@@ -81,7 +80,6 @@
 </section>
 
 <section class="section__tablaBase section--down">
-
   <div class="tablaBase__contain">
     <div class="presupMonto">
       <h5>PRESUPUESTO TOTAL</h5>
@@ -101,28 +99,13 @@
           <th>IMPORTE</th>
         </tr>
       </thead>
-      {{-- <thead class="tabla__subhead">
-        <tr>
-          <th></th>
-          <th>
-            <div class="tabla__subtitulos">
-              <div class="tabla__partidas">PARTIDA</div>
-              <div class="tabla__partidas">PRELIMINARES</div>
-            </div>
-          </th>
-          <th></th>
-          <th></th>
-          <th>TOTAL PARTIDA</th>
-          <th>00.00</th>
-        </tr>
-      </thead> --}}
 
       <tbody class="tablaBase__tbody">
         @foreach ($conceptos as $concepto)
         <tr>
           <td>{{$concepto->id}}</td>
-          <td>{{$concepto->concepto}}</td>
-          <td>{{$concepto->unidad}}</td>
+          <td>{{$concepto->concepto->concepto}}</td>
+          <td>{{$concepto->concepto->unidad->unidad}}</td>
           <td>
             <form action="{{ route('updateConceptoCantidad', $concepto->id) }}" method="POST">
               @csrf
@@ -132,7 +115,7 @@
           </td>
           <td>
             {{-- {{$concepto->precio_unitario}} --}}
-            {{number_format($concepto->precio_unitario, 2)}}
+            {{number_format($concepto->concepto->precio_unitario, 2)}}
           </td>
           <td>
             {{-- {{$concepto->importe}} --}}
@@ -141,19 +124,12 @@
         </tr>
         @endforeach
       </tbody>
-    </table>
-
-
-    <!-------------- para llenar dato como celda de excel ------------>
-    <div id="excel-cell">
-      <span id="cell-value" ondblclick="activateInput()"></span>
-      <input id="input-cell" type="text" onkeydown="handleKeyDown(event)" style="display: none;">
-    </div>
+    </table>    
   </div>
 
 </section>
 
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+
 @endsection

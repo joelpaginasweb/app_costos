@@ -2,18 +2,12 @@
 @section('title', 'exploinsumos')
 @section('content')
 
-<section class="section">
-  <div>
-    <h1>EXPLOSION DE INSUMOS</h1>
-    <h4>APLICACION EN CONSTRUCCION</h4>
-  </div>
-
+<section class="section section--title">
+    <h3>EXPLOSION DE INSUMOS</h3>
 </section>
-
-
 <section class="section__form "> 
     <div class="form__titulo">
-      <h4>SELECCIONAR PRESUPUESTO</h4>
+      <h5>SELECCIONAR PRESUPUESTO</h5>
     </div>
     <div class="contain">
       <form method="GET" action="{{route('expinsumos.index') }}" class="form">
@@ -30,7 +24,7 @@
       </form>
     </div>
 
-    <div class="section">
+    <div class="form__alert">
       @if (Session::get('success'))
       <div class="alert alert--success ">
         <strong>{{Session::get('success')}} <br>
@@ -38,7 +32,7 @@
       @endif
     </div>
   
-    <div class=" section ">
+    <div class=" form__alert ">
       @if ($errors->any())
       <div class="alert alert-danger ">
         <strong>¡Error al crear material!</strong>
@@ -52,9 +46,6 @@
       @endif
     </div>
 </section>
-
-
-
 
 <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
@@ -121,6 +112,12 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+<script>
+  let tablaBase = document.querySelector("#tabla_base");
+  let dataTable = new simpleDatatables.DataTable(tablaBase,{
+    perPage:15,
+    perPageSelect:[10,15,50]
+  });
+</script>
 
 @endsection

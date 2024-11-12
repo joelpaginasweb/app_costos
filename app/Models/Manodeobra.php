@@ -20,7 +20,7 @@ class Manodeobra extends Model
   ];
 
   //Relaciones a otros modelos
-  public function grupox()
+  public function grupoData()
   {
     return $this->belongsTo(Grupos::class, 'id_grupo');
   }
@@ -28,16 +28,7 @@ class Manodeobra extends Model
   public function unidad()
   {
     return $this->belongsTo(Unidades::class, 'id_unidad');
-  }
-
-
-     // public function metodo/parametro()
-    // {
-    //   return $this->belongsTo(Modelo::class, 'id_claveForanea');
-    // }
-
-
-         
+  }         
 
 }
 

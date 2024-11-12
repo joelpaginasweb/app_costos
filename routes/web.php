@@ -33,17 +33,16 @@ Route::middleware('auth')->group(function () {
   // ---------------rutas de vistas con CRUDS y controller------------
 Route::middleware('auth')->group(function () {
   Route::resource('dashboard', DashboardController::class)->name('dashboard.index', 'dashboard');
-
-  Route::resource('presus', PresuController::class);
-  Route::get('/cantEdit/{id}', [PresuController::class, 'edit'])->name('cantEdit');
-
-  Route::post('/updateConceptoCantidad/{id}', [PresuController::class, 'updateConceptoCantidad'])->name('updateConceptoCantidad');
-  
   Route::resource('tarjetas', TarjetaController::class);
   Route::resource('materiales', MaterialesController::class);
   Route::resource('manodeobra', ManodeobraController::class);
-  Route::resource('herramientas', HerramientaController::class);  
+  Route::resource('herramientas', HerramientaController::class); 
 
+  Route::resource('presus', PresuController::class);
+  Route::get('/cantEdit/{id}', [PresuController::class, 'edit'])->name('cantEdit');
+  Route::post('/updateConceptoCantidad/{id}', [PresuController::class, 'updateConceptoCantidad'])->name('updateConceptoCantidad');
+  Route::post('/presus/storeCliente', [PresuController::class, 'storeCliente'])->name('presus.storeCliente');
+  Route::delete('/destroyCliente/{cliente}', [PresuController::class, 'destroyClient'])->name('presus.destroyCliente');
   
   Route::resource('auxis', AuxiController::class);
   Route::get('/auxisCopy/{id}',[AuxiController::class, 'copy'])->name('auxisCopy');  

@@ -11,21 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conceptos_auxiliares', function (Blueprint $table) {
+        Schema::create('conceptos_materiales', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('id_material')
+            ->references('id')
+            ->on('materiales');
+
+            $table->foreignId('id_tarjeta')
               ->references('id')
-              ->on('materiales');
+              ->on('tarjetas');           
+            
+            $table->decimal('cantidad',11,5);
+            $table->decimal('importe',11,5);
 
-
-            $table->foreignId('id_auxiliar')
-              ->references('id')
-              ->on('auxiliares');   
-
-            $table->decimal('cantidad', 11, 5);
-            $table->decimal('importe', 11, 4);
-          
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conceptos_auxiliares');
+        Schema::dropIfExists('conceptos_materiales');
     }
 };

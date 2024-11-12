@@ -16,7 +16,7 @@ class ManodeobraController extends Controller
   /**    * Display a listing of the resource.    */
   public function index(): View
   {
-    $manodeobra = Manodeobra::with(['grupox', 'unidad'])->get();
+    $manodeobra = Manodeobra::with(['grupoData', 'unidad'])->get();
     return view('tabs/manodeobra',['manodeobra'=>$manodeobra]);
   }
 
@@ -66,7 +66,7 @@ class ManodeobraController extends Controller
   /**    * Show the form for editing the specified resource.    */
   public function edit($id): View
   {        
-    $manodeobra = Manodeobra::with(['grupox', 'unidad'])->findOrFail($id);
+    $manodeobra = Manodeobra::with(['grupoData', 'unidad'])->findOrFail($id);
     return view('tabs/editmanodeobra',['manodeobra'=>$manodeobra]);
   }
 
@@ -111,7 +111,7 @@ class ManodeobraController extends Controller
   /** Helper function to get or create related model IDs. */
   private function getOrCreateIds(array $data): array
   {
-    $grupo = Grupos::firstOrCreate(['grupo' => $data['grupox']]);
+    $grupo = Grupos::firstOrCreate(['grupo' => $data['grupo']]);
     $unidad = Unidades::firstOrCreate(['unidad' => $data['unidad']]);
 
     return [

@@ -2,11 +2,22 @@
 @section('title', 'Dashboard')
 @section('content')
 
-<section class="section section--up">
+<section class="section section--title">
   <div>
-    <h1> DASHBOARD</h1>
+    <h2> DASHBOARD</h2>
     <br>
-    <h4>APLICACION EN CONSTRUCCION</h4>
+    <h3>APLICACION EN CONSTRUCCION</h3>
+  </div>  
+</section>
+
+<section class="section">
+  <div>
+    <!----------- web components-------- -->
+    <h3>-test web componentes-</h3>
+    <hola-mundo name="prueba de " surname="web componente nativo"></hola-mundo>
+    <!-- lit components -->
+    <eit-box-info message="prueba de Lit web component"></eit-box-info>
+    <!----------- web components-------- -->
   </div>
 </section>
 

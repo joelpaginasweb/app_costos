@@ -9,6 +9,16 @@ class ConceptosManoObras extends Model
 {
     use HasFactory;
     protected $table = 'conceptos_mano_obras';
-    protected $fillable = ['id_mano_obra',  'concepto', 'unidad', 'cantidad', 'precio_unitario', 'importe',  'id_tarjeta'];
+    protected $fillable = [
+      'id_categoria',
+      'id_tarjeta',
+      'cantidad', 
+      'importe'
+    ];
+
+    public function categoria()
+    {
+      return $this->belongsTo(Manodeobra::class, 'id_categoria');
+    }
 
 }

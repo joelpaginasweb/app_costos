@@ -23,10 +23,6 @@
   {{-- <h4>EDITAR MATERIAL AUXILIAR </h4> --}}
   {{-- </section> --}}
 
-
-
-
-
 <!----------- ventana emergente  ---------------->
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
@@ -55,7 +51,7 @@
         <div class="datosEmer__contain">
           <div class="columna33">
             <div class="datosEmer__dato">
-              <h4>CLAVE ID:</h4>
+              <h4>ID AUXILIAR:</h4>
               <p>{{$auxi->id}}</p>
             </div>
           </div>
@@ -82,8 +78,8 @@
           <thead class="tablaEmergent__thead">
             <tr>
               <th><input type="button" class="form__boton form__boton--short" id="boton_crear_tr" value="+ Fila"></th>
-              <th>CLAVE ID</th>
-              <th>CONCEPTO</th>
+              <th>ID MAT.</th>
+              <th>MATERIAL</th>
               <th>UNIDAD</th>
               <th>CANTIDAD</th>
               <th>PRECIO UN.</th>
@@ -117,11 +113,16 @@
             </tr>
           </tfoot>
         </table>
-        <div class="tablaEmergent__divFooter">
-          <button type="submit" id="formBoton" class="form__boton">Editar Auxiliar</button>
-        </div>
-      </div>
+        <div class="tablaEmergent__divFooter">        
+            <button type="submit" id="formBoton" class="form__boton">Editar</button>
     </form>
+    <form action="{{route('auxis.index')}}">
+      <button type="submit" class="form__boton">Auxiliares</button>
+    </form>
+
+  </div>
+
+  </div>
   </div>
 </section>
 

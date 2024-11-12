@@ -6,72 +6,105 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Dashbo;
+use App\Models\Clientes;
+use App\Models\Estados;
+use App\Models\Ciudades;
 use App\Models\Presu;
 use App\Models\Tarjeta;
 use App\Models\Catalogo;
 
 class PresuController extends Controller
 {
-    /**     * Display a listing of the resource.     */
     public function index(): View
     {      
-        $presus = Presu::all();        
-        return view('tabs/presupuesto',['presus'=>$presus]);       
+        $presus = Presu::with(['cliente'])->get();
+        $clientes = Clientes::with(['ciudad', 'estado'])->get();
+
+        return view('tabs/presupuesto',['presus'=>$presus, 'clientes'=>$clientes]);       
         
     }
 
     /**     * Show the form for creating a new resource.     */
     public function create(): View
-    {
-        //
+    {        }
+
+    /**    *guarda nuevo cliente* */
+    public function storeCliente(Request $request): RedirectResponse
+    { 
+      $validatedRequest = $request->validate([
+        'nombre' => 'required',
+        'calle' => 'required', 
+        'no_exterior' => 'required',       
+        'cp' => 'required',       
+        'colonia' => 'required',       
+        'ciudad' => 'required',   
+        'estado' => 'required' 
+      ]);
+
+      $ids = $this->getOrCreateIds($validatedRequest);
+      // dd($ids);
+
+      Clientes::create([
+        'nombre' => $validatedRequest['nombre'],
+        'calle' => $validatedRequest['calle'], 
+        'no_exterior' => $validatedRequest['no_exterior'], 
+        'cp' => $validatedRequest['cp'], 
+        'colonia' => $validatedRequest['colonia'], 
+        'id_ciudad' => $ids['ciudad'],
+        'id_estado' => $ids['estado']
+      ]);
+
+      return redirect()->route('presus.index')->with('success', 'Nuevo Cliente Creado');
     }
 
-    /**     * Store a newly created resource in storage.     */
+    /**     * Store a newly presupuesto created resource in storage.     */
     public function store(Request $request): RedirectResponse
     {
-        $dataRequest = $request->validate([
-          'obra'=>'required',
+        $validatedRequest = $request->validate([
+          'proyecto'=>'required',
           'cliente'=>'required',
-          'direccion'=>'required',
-          'colonia'=>'required',
-          'municipio'=>'required',
-          'estado'=>'required',
+          'ubicacion'=>'required',
+          // 'colonia'=>'required',
+          // 'municipio'=>'required',
+          // 'estado'=>'required',
           'porcent_indirecto'=>'required',
           'porcent_financiam'=>'required',
           'porcent_utilidad'=>'required',
           'porcent_costos_add'=>'required'
         ]);
 
-        DB::transaction(function () use ($request, $dataRequest) {
+        $ids = $this->getIdCliente($validatedRequest);
+
+        DB::transaction(function () use ($request, $validatedRequest, $ids) {
           $estatus = 'nuevo';
           $costoDirecto = 0; 
           $costoIndirecto = 0;
           $costoTotal = $costoDirecto + $costoIndirecto;
 
-          $porcent_indirecto = $dataRequest['porcent_indirecto'];
-          $porcent_financiam = $dataRequest['porcent_financiam'];
-          $porcent_utilidad = $dataRequest['porcent_utilidad'];
-          $porcent_costos_add = $dataRequest['porcent_costos_add'];          
+          $porcent_indirecto = $validatedRequest['porcent_indirecto'];
+          $porcent_financiam = $validatedRequest['porcent_financiam'];
+          $porcent_utilidad = $validatedRequest['porcent_utilidad'];
+          $porcent_costos_add = $validatedRequest['porcent_costos_add'];          
       
           $porcentSuma = $porcent_indirecto + $porcent_financiam + $porcent_utilidad + $porcent_costos_add;
 
           $newPresupuesto =  Presu::create([
-          'obra'=>$dataRequest['obra'],
-          'cliente'=>$dataRequest['cliente'] ,
-          'direccion'=>$dataRequest['direccion'] ,
-          'colonia'=>$dataRequest['colonia'] ,
-          'municipio'=>$dataRequest['municipio'] ,
-          'estado'=>$dataRequest['estado'] ,
+          'proyecto'=>$validatedRequest['proyecto'],
+          'id_cliente'=>$ids['cliente'] ,
+          'ubicacion'=>$validatedRequest['ubicacion'] ,
+          // 'colonia'=>$dataRequest['colonia'] ,
+          // 'municipio'=>$dataRequest['municipio'] ,
+          // 'estado'=>$dataRequest['estado'] ,
 
           'estatus'=> $estatus,
           'costo_directo' => $costoDirecto,
           'costo_indirecto' => $costoIndirecto,
           'costo_total' => $costoTotal,
 
-          'porcent_indirecto'=>$dataRequest['porcent_indirecto'] ,
-          'porcent_financiam'=>$dataRequest['porcent_financiam'] ,
-          'porcent_utilidad'=>$dataRequest['porcent_utilidad'] ,
-          'porcent_costos_add'=>$dataRequest['porcent_costos_add'] ,
+          'porcent_indirecto'=>$validatedRequest['porcent_indirecto'] ,
+          'porcent_financiam'=>$validatedRequest['porcent_financiam'] ,
+          'porcent_utilidad'=>$validatedRequest['porcent_utilidad'] ,
+          'porcent_costos_add'=>$validatedRequest['porcent_costos_add'] ,
           'porcent_suma' => $porcentSuma,
 
           'indirectos' => 0,
@@ -93,58 +126,69 @@ class PresuController extends Controller
     /**     * Show the form for editing the specified resource.    */
     public function edit($idPresup, Request $request): View
     {
-        $presu = Presu::find($idPresup);     
+      // $materiale = Materiales::with(['grupo', 'unidad', 'proveedor'])->findOrFail($id);
+      // $presu = Presu::find($idPresup);     
+      // $presu = Presu::with(['cliente'])->get($idPresup);
 
-        $tarjetas = Tarjeta::where('id_presup', $idPresup)->get();
-        foreach ($tarjetas as $tarjeta) {
-            $idTarjeta = $tarjeta->id;
-            $existeConcepto = Catalogo::where('id_tarjeta', $idTarjeta)->first();
+      $presu = Presu::with(['cliente'])->findOrFail($idPresup);
 
-            if (!$existeConcepto) {
-                $newConcepto = Catalogo::create([
-                  'concepto' => $tarjeta->concepto,
-                  'unidad' => $tarjeta->unidad,   
-                  'cantidad' => 0,            
-                  'precio_unitario' => $tarjeta->precio_unitario,  
-                  'importe' => 0,              
-                  'id_tarjeta' => $tarjeta->id,
-                  'id_presup' => $tarjeta->id_presup,
-                  'costo_directo' => 0,
-                  'costo_indirecto' => 0,
-                  'indirectos' => 0,
-                  'financiam' => 0,
-                  'utilidad' => 0,
-                  'cargos_adicion' => 0
-                ]);
-            }            
-        }
+      $tarjetas = Tarjeta::where('id_presup', $idPresup)->get();
+      foreach ($tarjetas as $tarjeta) {
+        $idTarjeta = $tarjeta->id;
+        $existeConcepto = Catalogo::where('id_tarjeta', $idTarjeta)->first();
+
+        if (!$existeConcepto) {
+          $newConcepto = Catalogo::create([
+            // 'concepto' => $tarjeta->concepto,
+            // 'unidad' => $tarjeta->unidad,   
+            // 'precio_unitario' => $tarjeta->precio_unitario,  
+            'id_tarjeta' => $tarjeta->id,
+            'id_presup' => $tarjeta->id_presup,
+            'cantidad' => 0,            
+            'importe' => 0,              
+            'costo_directo' => 0,
+            'costo_indirecto' => 0,
+            'indirectos' => 0,
+            'financiam' => 0,
+            'utilidad' => 0,
+            'cargos_adicion' => 0
+          ]);
+        }            
+      }
         
-        $conceptos = Catalogo::where('id_presup', $idPresup)->get();
-        $costoTotal = 0;     
+      $conceptos = Catalogo::where('id_presup', $idPresup)->get();
+      $costoTotal = 0;     
 
-        return view('tabs/editpresupuesto', [
-            'presu' => $presu,
-            'conceptos' => $conceptos,
-            'costoTotal' => $costoTotal
-        ]);
+      return view('tabs/editpresupuesto', [
+          'presu' => $presu,
+          'conceptos' => $conceptos,
+          'costoTotal' => $costoTotal
+      ]);
+
     }    
     
     //*--------------------------------------------------*/
     public function updateConceptoCantidad($id, Request $request)
     {      
       $concepto = Catalogo::find($id); 
-      $idTarjeta = $concepto->id_tarjeta;
-      $tarjeta = Tarjeta::where('id', $idTarjeta)->first();  // dd($tarjeta);
+      // dd($concepto);  
 
-      $costoDirectoTarjeta = $tarjeta->costo_directo; //dd($costoDirectoTarjeta);  
+      $idTarjeta = $concepto->id_tarjeta;
+      $tarjeta = Tarjeta::where('id', $idTarjeta)->first();   
+      // dd($tarjeta);
+
+      $costoDirectoTarjeta = $tarjeta->costo_directo; 
       $costoIndirectoTarjeta = $tarjeta->costo_indirecto;
       $indirectosTarjeta = $tarjeta->indirectos;
       $financiamTarjeta = $tarjeta->financiam;
       $utilidadTarjeta = $tarjeta->utilidad;
       $cargosAdicionTarjeta = $tarjeta->cargos_adicion;
 
-      $cantidadConcepto= $request->input('cantidad_concepto');     
-      $PUConcepto =  $concepto->precio_unitario; 
+      $cantidadConcepto= $request->input('cantidad_concepto');  
+      // dd($cantidadConcepto);  
+
+      $PUConcepto =  $concepto->concepto->precio_unitario; 
+      // dd($PUConcepto);  
 
       $costoDirecto = $cantidadConcepto * $costoDirectoTarjeta;  // dd($costoDirecto);
       $costoIndirecto = $cantidadConcepto * $costoIndirectoTarjeta; //dd($costoIndirecto);
@@ -228,15 +272,43 @@ class PresuController extends Controller
         $presu->save();          
     }
 
+
+    /** Helper function to get or create related model IDs. */
+    private function getIdCliente( $data)
+    {        
+      $cliente = Clientes::where('nombre' , $data['cliente'])->first();
+      return [         'cliente' => $cliente->id     ];      
+    }     
+
+    /** Helper function to get or create related model IDs. */
+    private function getOrCreateIds(array $data): array    {        
+      $estado = Estados::firstOrCreate(['estado' => $data['estado']]);
+      $ciudad = Ciudades::firstOrCreate([ 'ciudad' => $data['ciudad'],  'id_estado' => $estado->id, ]);
+
+      return [
+        'estado' => $estado->id,
+        'ciudad' => $ciudad->id
+      ];      
+    }
+
+
     /**     * Update the specified resource in storage.     */
     public function update(Request $request, Presu $presu): RedirectResponse
     {
         //
     }
 
-    /**     * Remove the specified resource from storage.     */
+    /**     * Remove the presu specified resource from storage.     */
     public function destroy(Presu $presu): RedirectResponse
     {
-        //
+      $presu->delete();
+      return redirect()->route('presus.index')->with('success', 'Registro eliminado!');
+    }
+
+    /**     * Remove the cliente specified resource from storage.     */
+    public function destroyClient( Clientes $cliente): RedirectResponse
+    {       
+      $cliente->delete();
+      return redirect()->route('presus.index')->with('success', 'Registro eliminado!');
     }
 }
