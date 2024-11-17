@@ -11,6 +11,7 @@ class ConceptosMateriales extends Model
     protected $table ='conceptos_materiales';
     protected $fillable = [
       'id_material',
+      'id_auxiliar',
       'id_tarjeta',
       'cantidad', 
       'importe'

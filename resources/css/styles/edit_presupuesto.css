@@ -88,38 +88,38 @@
 /* -------td--------- */
 .tablaEdit td:first-child {
   width: 5%;
-  width: fit-content;
+  /* width: fit-content; */
 
 }
 
 .tablaEdit td:nth-child(2) {
-  width: 40%;
+  width: 27%;
   max-width: 300px;
-  width: fit-content;
+  /* width: fit-content; */
 
 }
 
 .tablaEdit td:nth-child(3) {
-  width: 6%;
-  width: fit-content;
+  width: 4%;
+  /* width: fit-content; */
 
 }
 
 .tablaEdit td:nth-child(4) {
-  width: 8%;
-  width: fit-content;
+  width: 6%;
+  /* width: fit-content; */
 
 }
 
 .tablaEdit td:nth-child(5) {
-  width: 11%;
-  width: fit-content;
+  width: 9%;
+  /* width: fit-content; */
 
 }
 
 .tablaEdit td:last-child {
-  width: 11%;
-  width: fit-content;
+  width: 9%;
+  /* width: fit-content; */
 
 }
 

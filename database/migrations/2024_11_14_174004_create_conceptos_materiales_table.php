@@ -18,12 +18,17 @@ return new class extends Migration
             ->references('id')
             ->on('materiales');
 
+            $table->foreignId('id_auxiliar')
+            ->references('id')
+            ->on('auxiliares');
+
             $table->foreignId('id_tarjeta')
               ->references('id')
               ->on('tarjetas');           
             
             $table->decimal('cantidad',11,5);
             $table->decimal('importe',11,5);
+
 
             $table->timestamps();
         });

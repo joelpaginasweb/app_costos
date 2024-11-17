@@ -159,11 +159,7 @@ class PresuController extends Controller
       $conceptos = Catalogo::where('id_presup', $idPresup)->get();
       $costoTotal = 0;     
 
-      return view('tabs/editpresupuesto', [
-          'presu' => $presu,
-          'conceptos' => $conceptos,
-          'costoTotal' => $costoTotal
-      ]);
+      return view('tabs/editpresupuesto', [ 'presu' => $presu, 'conceptos' => $conceptos,  'costoTotal' => $costoTotal  ]);
 
     }    
     

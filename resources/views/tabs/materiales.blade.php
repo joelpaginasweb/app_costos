@@ -107,12 +107,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>
-  let tablaBase = document.querySelector("#tabla_base");
-  let dataTable = new simpleDatatables.DataTable(tablaBase, {
-    perPage: 15,
-    perPageSelect: [10, 15, 50]
-  });
-</script>
+
 
 @endsection

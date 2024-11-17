@@ -205,7 +205,6 @@ class AuxiController extends Controller
   {
     $grupo = Grupos::firstOrCreate(['grupo' => $data['grupo']]);
     $unidad = Unidades::firstOrCreate(['unidad' => $data['unidad']]);  
-
     return [
       'grupo' => $grupo->id,
       'unidad' => $unidad->id       

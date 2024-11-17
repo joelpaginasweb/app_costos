@@ -50,13 +50,9 @@
 <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
     <div class="tablaBase__title">
-      <h5>EXPLOSION DE INSUMOS</h5>
-    </div>
-    <div class="tablaBase__title">
-      <h5>PRESUPUESTO X</h5>
+      <h5>EXPLOSION DE INSUMOS DEL PRESUPUESTO Id = {{$idPresup}}</h5>
     </div>
   </div>
-
 
   <div class="tablaBase__container">
     <table class="tablaBase tablaMateriales" id="tabla_base">
@@ -78,11 +74,11 @@
         @forelse ($insumos as $insumo)
         <tr class="">
           <td>{{$insumo->id}}</td>
-          <td>{{$insumo->tipo}}</td>
-          <td>{{$insumo->insumo}}</td>
-          <td>{{$insumo->unidad}}</td>
+          <td>{{$insumo->grupo->grupo}}</td>
+          <td>{{$insumo->material->material}}</td>
+          <td>{{$insumo->material->unidad->unidad}}</td>
           <td>{{number_format($insumo->cantidad, 2)}}</td>
-          <td>{{number_format($insumo->precio_unitario, 2)}}</td>
+          <td>{{number_format($insumo->material->precio_unitario, 2)}}</td>
           <td>{{number_format($insumo->monto, 2)}}</td>
           <td>{{$insumo->updated_at}}</td>
         </tr>
@@ -112,12 +108,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>
-  let tablaBase = document.querySelector("#tabla_base");
-  let dataTable = new simpleDatatables.DataTable(tablaBase,{
-    perPage:15,
-    perPageSelect:[10,15,50]
-  });
-</script>
+
 
 @endsection

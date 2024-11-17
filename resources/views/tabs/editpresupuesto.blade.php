@@ -88,6 +88,7 @@
   </div>
 
   <div class="tablaBase__container">
+    {{-- <table class="tablaBase tablaEdit" id="tabla_base"> --}}
     <table class="tablaBase tablaEdit" id="tabla_base">
       <thead class="">
         <tr>
@@ -128,7 +129,6 @@
   </div>
 
 </section>
-
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 
