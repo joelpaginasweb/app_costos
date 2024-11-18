@@ -12,7 +12,7 @@ class Expinsumos extends Model
     protected $fillable = [
       'id_grupo',
       'id_presup',
-      // 'id_tarjeta',
+      'id_tarjeta',
       'id_material',
       'id_categoria',
       'id_equipo',

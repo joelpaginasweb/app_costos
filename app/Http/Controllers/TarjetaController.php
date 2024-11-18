@@ -132,58 +132,57 @@ class TarjetaController extends Controller
     private function calcularConceptos($idTarjeta, $tipoMateriales, $idMateriales, $cantidadesMateriales,
     $tipoManoObras, $idCategorias, $cantidadesManoObras, $idEquipos,  $cantidadesEquipos)       
     {    
-
+      
+      // --------------------------------------------------
       $costoMaterial = 0;
       foreach ($idMateriales as $key => $idMaterial) {
         $tipoMaterial = $tipoMateriales[$key];
+        $cantidadMaterial = $cantidadesMateriales[$key];
 
         if($tipoMaterial == 'material')  {
           $registroMaterial = Materiales::find($idMaterial);
+          $importeMaterial =  $cantidadMaterial * $registroMaterial->precio_unitario;
           $idAuxiliar = 0;
 
-          }elseif ($tipoMaterial == 'auxiliar') {          
-            $registroMaterial = Auxi::find($idMaterial); 
-            $idAuxiliar = $registroMaterial->id; 
-            $idMaterial = 0;
-            // dd($idAuxiliar);
-          }
-
-          $cantidadMaterial = $cantidadesMateriales[$key];
+        }elseif ($tipoMaterial == 'auxiliar') {          
+          $registroMaterial = Auxi::find($idMaterial);  
+          $idAuxiliar = $registroMaterial->id; 
           $importeMaterial =  $cantidadMaterial * $registroMaterial->precio_unitario;
-
-        if ($idTarjeta !== null) { 
-            // dd($idAuxiliar);
-          $this->guardarConceptosMateriales($registroMaterial,
-           $cantidadMaterial, $importeMaterial, $idMaterial, $idAuxiliar, $idTarjeta, $tipoMaterial );
+          $idMaterial = 0;
         }
 
+        if ($idTarjeta !== null) { 
+          $this->guardarConceptosMateriales($registroMaterial,
+           $cantidadMaterial, $importeMaterial, $idMaterial, $idAuxiliar, $idTarjeta,  );
+        }
         $costoMaterial += $importeMaterial;
-      }
-      
+      }      
+
+      // ---------------------------------------------
       $costoManoObra = 0;
       foreach ($idCategorias as $key => $idCategoria){
-
         $tipoManoObra = $tipoManoObras[$key];
+        $cantidadManoObra = $cantidadesManoObras[$key];
 
         if ($tipoManoObra == "categoria") {
             $registroManoObra = Manodeobra::find($idCategoria); 
-            $PUManoObra = $registroManoObra->salario_real;           
+            $importeManoObra =  $cantidadManoObra *  $registroManoObra->salario_real;
+            $idCuadrilla = 0;            
+
         } elseif($tipoManoObra == "cuadrilla")  {
             $registroManoObra = Cuadrillas::find($idCategoria);
-            $PUManoObra = $registroManoObra->total;
-            // $idMaterial = 0; pero con cuadrilla, agregar columna a tabla
-        }
-        
-        $cantidadManoObra = $cantidadesManoObras[$key];
-        $importeManoObra =  $cantidadManoObra *  $PUManoObra;
+            $idCuadrilla = $registroManoObra->id;
+            $importeManoObra =  $cantidadManoObra *  $registroManoObra->total;
+            $idCategoria = 0;            
+        }        
 
         if ($idTarjeta !== null) {
           $this->guardarConceptosManoObras( $registroManoObra,
-             $cantidadManoObra, $importeManoObra, $idCategoria, $idTarjeta);
+             $cantidadManoObra, $importeManoObra, $idCategoria, $idCuadrilla, $idTarjeta);
         }
         $costoManoObra += $importeManoObra;
       }
-
+      // ----------------------------------------------------------
       $costoEquipo = 0;
       foreach ($idEquipos as $key => $idEquipo){
         $registroEquipo = Herramienta::find($idEquipo);
@@ -222,7 +221,7 @@ class TarjetaController extends Controller
     }    
     
     private function guardarConceptosMateriales ($registroMaterial, $cantidadMaterial, 
-    $importeMaterial, $idMaterial, $idAuxiliar, $idTarjeta, $tipoMaterial )
+    $importeMaterial, $idMaterial, $idAuxiliar, $idTarjeta,  )
     {
       ConceptosMateriales::create([
           'id_material' => $idMaterial,
@@ -235,13 +234,14 @@ class TarjetaController extends Controller
     
     // pendiente aplicar misma logica de guardarConceptosMateriales pero con cuadrilla, agregar columna a tabla
     private function guardarConceptosManoObras ($registroManoObra,
-       $cantidadManoObra, $importeManoObra, $idCategoria, $idTarjeta )
+       $cantidadManoObra, $importeManoObra, $idCategoria, $idCuadrilla, $idTarjeta )
     {           
       ConceptosManoObras::create([
         'id_categoria' => $idCategoria,
+        'id_cuadrilla' => $idCuadrilla,
+        'id_tarjeta' => $idTarjeta,
         'cantidad' => $cantidadManoObra,
-        'importe' => $importeManoObra,
-        'id_tarjeta' => $idTarjeta
+        'importe' => $importeManoObra
       ]);
     } 
 

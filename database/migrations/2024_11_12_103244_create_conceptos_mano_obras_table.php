@@ -18,6 +18,11 @@ return new class extends Migration
             ->references('id')
             ->on('mano_de_obra');
 
+            
+            $table->foreignId('id_cuadrilla')
+            ->references('id')
+            ->on('cuadrillas');
+
             $table->foreignId('id_tarjeta')
               ->references('id')
               ->on('tarjetas');           

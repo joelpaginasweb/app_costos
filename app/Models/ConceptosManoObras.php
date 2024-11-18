@@ -11,6 +11,7 @@ class ConceptosManoObras extends Model
     protected $table = 'conceptos_mano_obras';
     protected $fillable = [
       'id_categoria',
+      'id_cuadrilla',
       'id_tarjeta',
       'cantidad', 
       'importe'
