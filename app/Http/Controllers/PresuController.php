@@ -126,10 +126,8 @@ class PresuController extends Controller
     /**     * Show the form for editing the specified resource.    */
     public function edit($idPresup, Request $request): View
     {
-      // $materiale = Materiales::with(['grupo', 'unidad', 'proveedor'])->findOrFail($id);
       // $presu = Presu::find($idPresup);     
       // $presu = Presu::with(['cliente'])->get($idPresup);
-
       $presu = Presu::with(['cliente'])->findOrFail($idPresup);
 
       $tarjetas = Tarjeta::where('id_presup', $idPresup)->get();

@@ -52,6 +52,8 @@
   <div class="tablaBase__contain">
     <div class="tablaBase__title">
       <h5>EXPLOSION DE INSUMOS DEL PRESUPUESTO Id = {{$idPresup}}</h5>
+      <h5>IMPORTE TOTAL DE INSUMOS =  {{number_format($montoTotal, 2)}}</h5>
+      {{-- <h5>IMPORTE TOTAL DE INSUMOS =  {{ formatCurrency($montoTotal, 'es_MX', 'MXN') }}</h5> --}}
     </div>
   </div>
 

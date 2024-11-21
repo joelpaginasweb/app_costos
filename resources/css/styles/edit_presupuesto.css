@@ -73,39 +73,27 @@
   border-bottom: solid 1px rgb(180, 180, 180);
 }
 
-.presupMonto {
-  display: flex;
-  width: 60%;
-  justify-content: space-between;
-  margin-left: 25%;
-  align-items: center;  
-}
-
 /*------ancho columnas tabla ------*/
 /* -------td--------- */
 .tablaEdit td:first-child {
   width: 5%;
   /* width: fit-content; */
-
 }
 
 .tablaEdit td:nth-child(2) {
   width: 27%;
   max-width: 300px;
   /* width: fit-content; */
-
 }
 
 .tablaEdit td:nth-child(3) {
   width: 4%;
   /* width: fit-content; */
-
 }
 
 .tablaEdit td:nth-child(4) {
   width: 6%;
   /* width: fit-content; */
-
 }
 
 .tablaEdit td:nth-child(5) {
@@ -117,6 +105,5 @@
 .tablaEdit td:last-child {
   width: 9%;
   /* width: fit-content; */
-
 }
 

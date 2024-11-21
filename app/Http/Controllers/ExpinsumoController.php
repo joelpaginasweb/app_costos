@@ -26,6 +26,9 @@ class ExpinsumoController extends Controller
       $categorias = collect();
       $equipos = collect();
       $idPresup = 0;
+      $insumosAgrupados = null;
+      $montoTotal = 0;
+
 
       if ($request->has('presup')) { 
           $idPresup = $request->input('presup');       
@@ -54,12 +57,16 @@ class ExpinsumoController extends Controller
                               ->get();
       }
 
+      $montoTotal = $this->saveGroupedInsumos($idPresup, $insumosAgrupados);
+      // dd($montoTotal);
+
       return view('tabs/expinsumos', [
           'insumos' => $insumos,
           'materiales' => $materiales,
           'categorias' => $categorias,
           'equipos' => $equipos,
           'idPresup' => $idPresup,
+          'montoTotal' => $montoTotal
       ]);
   }
 
@@ -148,6 +155,8 @@ class ExpinsumoController extends Controller
   /** Guarda los insumos agrupados en la base de datos */
   private function saveGroupedInsumos($idPresup, $insumosAgrupados)
   {
+      $montoTotal = 0; // Inicializamos la variable para almacenar la sumatoria
+
       foreach (['materiales', 'categorias', 'equipos'] as $tipo) {
           if (!isset($insumosAgrupados[$tipo])) {
               continue;
@@ -183,6 +192,71 @@ class ExpinsumoController extends Controller
                   'equipos' => $primerRegistro->equipo->precio_unitario ?? 0,
               };
               $monto = $cantidadTotal * $precioUnitario;
+
+              // Acumular el monto en montoTotal
+              $montoTotal += $monto;
+
+              // Guardar o actualizar el registro
+              Expinsumos::updateOrCreate(
+                  [
+                      'id_grupo' => $idGrupo,
+                      'id_presup' => $idPresup,
+                      'id_tarjeta' => $idTarjeta,
+                      'id_material' => $idMaterial,
+                      'id_categoria' => $idCategoria,
+                      'id_equipo' => $idEquipo,
+                  ],
+                  [
+                      'cantidad' => $cantidadTotal,
+                      'monto' => $monto,
+                  ]
+              );
+          }
+      }
+
+      // $montoTotal contiene la sumatoria de los montos guardados
+      return $montoTotal;
+  }
+
+  private function saveGroupedInsumosSinMontoTotal($idPresup, $insumosAgrupados)
+  {
+      foreach (['materiales', 'categorias', 'equipos'] as $tipo) {
+          if (!isset($insumosAgrupados[$tipo])) {
+              continue;
+          }
+
+          foreach ($insumosAgrupados[$tipo] as $grupoInsumo) {
+              $primerRegistro = $grupoInsumo->first(function ($registro) {
+                  return isset($registro->id_tarjeta) && $registro->id_tarjeta !== null;
+              });
+
+              if (!$primerRegistro) {
+                  continue;
+              }
+
+              // Determinar valores según el tipo de insumo
+              $idGrupo = match ($tipo) {
+                  'materiales' => 1,
+                  'categorias' => 2,
+                  'equipos' => 3,
+              };
+
+              $idTarjeta = $primerRegistro->id_tarjeta ?? null;
+              $idMaterial = $primerRegistro->id_material ?? 0;
+              $idCategoria = $primerRegistro->id_categoria ?? 0;
+              $idEquipo = $primerRegistro->id_equipo ?? 0;
+
+              $cantidadTotal = $grupoInsumo->sum('cantidad');
+
+              // Determinar monto
+              $precioUnitario = match ($tipo) {
+                  'materiales' => $primerRegistro->material->precio_unitario ?? 0,
+                  'categorias' => $primerRegistro->categoria->salario_real ?? 0,
+                  'equipos' => $primerRegistro->equipo->precio_unitario ?? 0,
+              };
+              $monto = $cantidadTotal * $precioUnitario;
+             
+              // $montoTotal = sumatoria de los valores de  $monto  de todos y cada uno de  los registros por guardar en Expinsumos              
 
               // Guardar o actualizar el registro
               Expinsumos::updateOrCreate(

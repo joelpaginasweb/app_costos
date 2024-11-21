@@ -81,7 +81,7 @@
 
 <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
-    <div class="presupMonto">
+    <div class="tablaBase__title">
       <h5>PRESUPUESTO TOTAL</h5>
       <h5>{{number_format($presu->costo_total, 2)}}</h5>
     </div>
