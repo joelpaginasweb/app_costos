@@ -69,7 +69,38 @@
   cursor: pointer;
 }
 
-/*-------------------------*/
+/*------------ancho columnas tabla---------------*/
+.tablaExpinsumos td:first-child {
+  width: 6%;
+}
 
+.tablaExpinsumos td:nth-child(2) {
+  width: 8%;
+}
+
+.tablaExpinsumos td:nth-child(3) {
+  width: 33%;
+  max-width: 300px;
+}
+
+.tablaExpinsumos td:nth-child(4) {
+  width: 5%;
+}
+
+.tablaExpinsumos td:nth-child(5) {
+  width: 7%;
+}
+
+.tablaExpinsumos td:nth-child(6) {
+  width: 8%;
+}
+
+.tablaExpinsumos td:nth-child(7) {
+  width: 9%;
+}
+
+.tablaExpinsumos td:last-child {
+  width: 9%;
+}
 
 

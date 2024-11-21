@@ -13,10 +13,10 @@ class Herramienta extends Model
     protected $fillable = [
       'id_grupo',
       'herramienta_equipo',
-      'precio_unitario',
       'id_marca',
       'id_proveedor',
       'id_unidad',
+      'precio_unitario'
     ];
 
     //Relaciones a otros modelos
