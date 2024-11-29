@@ -16,7 +16,7 @@ class ManodeobraController extends Controller
   /**    * Display a listing of the resource.    */
   public function index(): View
   {
-    $manodeobra = Manodeobra::with(['grupoData', 'unidad'])->get();
+    $manodeobra = Manodeobra::with(['grupoData', 'unidad'])->where('id', '!=', 0)->get();
     return view('tabs/manodeobra',['manodeobra'=>$manodeobra]);
   }
 

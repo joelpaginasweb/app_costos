@@ -17,7 +17,7 @@
       @csrf
 
       <div class=" contain">
-        <div class="containerFlex ">
+        <div class=" ">
           <input type="text" name="grupo" class="form__input" placeholder="grupo">
           <textarea name="material_auxiliar" class=" form__textarea"
             placeholder="concepto material auxiliar"></textarea>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="container contain">
-        <div id="container_auxi" class="containerFlex">
+        <div id="container_auxi" class="">
           <div class="container contain_element">
             <span class="form__span" onclick="eliminar(this)">x</span>
             <label for="id_material" class="form__label">Id material</label>
@@ -39,7 +39,6 @@
         </div>
         <div class="container ">
           <div class="container ">
-            {{-- <label for="formBoton" class="form__label"> Crear Auxiliar </label> --}}
             <button type="submit" id="formBoton" class="form__boton">Crear Auxiliar</button>
           </div>
         </div>

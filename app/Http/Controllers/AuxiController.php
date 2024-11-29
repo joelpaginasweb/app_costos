@@ -15,7 +15,8 @@ class AuxiController extends Controller
   /**      * Display a listing of the resource.      */
   public function index(): View
   {
-    $auxis = Auxi::with(['grupo', 'unidad'])->get();    
+    // $auxis = Auxi::with(['grupo', 'unidad'])->get();    
+    $auxis = Auxi::with(['grupo', 'unidad'])->where('id', '!=', 0)->get(); 
     return view('tabs/auxiliares',['auxis'=>$auxis]);
   }
 
@@ -59,7 +60,6 @@ class AuxiController extends Controller
     
     foreach ($idMateriales as $key => $idMaterial)
     {
-
       $registroMaterial = Materiales::find($idMaterial);       
       $cantidad = $cantidades[$key]; 
       $precioUnitario = $registroMaterial->precio_unitario;
@@ -76,30 +76,31 @@ class AuxiController extends Controller
       $costoDirectoAux += $importe; 
     }    
     return $costoDirectoAux; 
-  }  
+  } 
 
-  
   /** * Show the form for editing the specified resource. */
   public function edit($id): View
   {          
     $auxi = Auxi::with(['grupo', 'unidad'])->findOrFail($id);
-    $idAuxiliar = $id;  
+    $idAuxiliar = $id;      
     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->with(['materialData', 'unidad'])->get();
-
     return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
   }
+
   
   /**  * Update the specified resource in storage.  */
   public function update(Request $request, Auxi $auxi): RedirectResponse
   {
-      $validatedRequest = $request->validate([
-        'grupo' => 'required',
-        'material_auxiliar' => 'required', 
-        'unidad' => 'required'         
-       ]);   
+    $validatedRequest = $request->validate([
+      'grupo' => 'required',
+      'material_auxiliar' => 'required', 
+      'unidad' => 'required'         
+    ]);   
+
+    $idAuxiliar = $auxi->id;
 
     $costoDirectoAux = $this->editarConcepto( 
-      null,    
+      $idAuxiliar,   
       $request->input('id_material'),
       $request->input('cantidad_mater')               
     );
@@ -112,26 +113,16 @@ class AuxiController extends Controller
       'material' => $validatedRequest['material_auxiliar'],   
       'id_unidad' => $ids['unidad'],
       'precio_unitario' => $costoDirectoAux   
-    ]);   
+    ]); 
 
-    $updateAuxiliar = Auxi::where('material',$materialAuxiliar)->first();
-    $idAuxiliar = $updateAuxiliar->id;
-
-    $costoDirectoAux = $this->editarConcepto(
-      $idAuxiliar,
-      $request->input('id_material'),
-      $request->input('cantidad_mater') 
-    );   
-    // return redirect()->route('auxis.index')->with('success', 'Auxiliar actualizado!');
-      // return redirect()->back(); 
-      return redirect()->back()->with('success', 'Auxiliar actualizado!'); 
+    return redirect()->back()->with('success', 'Auxiliar actualizado!'); 
+    
   }
   
-  /** *edita y crea conceptos del auxiliar */
+  /** *edita o crea conceptos del auxiliar , calcula costo directo */
   private function editarConcepto($idAuxiliar, $idMateriales, $cantidades)
   {
-      $costoDirectoAux = 0;  
-
+      $costoDirectoAux = 0;
       foreach ($idMateriales as $key => $idMaterial) { 
         $registroMaterial = Materiales::find($idMaterial);
         $cantidad = $cantidades[$key];
@@ -158,14 +149,51 @@ class AuxiController extends Controller
       }          
       return $costoDirectoAux;
   }  
-  
+
+  /**  * Borra conceptos de ConceptosAuxiliares y actualiza el auxiliar relacionado al redirigir.  */
+  public function deleteConceptoNO($idConcepto, Request $request)
+  {
+      // Obtener el concepto a eliminar
+      $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();
+      
+      if (!$conceptoDelete) {
+          return redirect()->back()->with('error', 'Concepto no encontrado.');
+      }
+
+      // Obtener el ID del auxiliar asociado
+      $idAuxiliar = $conceptoDelete->id_auxiliar;
+      
+      // Eliminar el concepto
+      $conceptoDelete->delete();
+
+      // Buscar el auxiliar asociado
+      $auxi = Auxi::findOrFail($idAuxiliar);
+
+      // Simular un Request con datos necesarios para update
+      $fakeRequest = new Request([
+          'grupo' => $auxi->id_grupo,
+          'material_auxiliar' => $auxi->material,
+          'unidad' => $auxi->id_unidad,
+          'id_material' => [], // Reemplaza con los materiales actuales si es necesario
+          'cantidad_mater' => [] // Reemplaza con las cantidades actuales si es necesario
+      ]);
+
+      // Ejecutar el método update
+      $this->update($fakeRequest, $auxi);
+
+      // Redirigir a la vista de edición con un mensaje de éxito
+      return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar])
+          ->with('success', 'Concepto eliminado y auxiliar actualizado.');
+  }
+
+
   /** *borra conceptos de ConceptosAuxiliares */
   public function deleteConcepto($idConcepto)
   {
-    $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();
-    $idAuxiliar = $conceptoDelete->id_auxiliar;
-    $conceptoDelete->delete();
-    return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
+      $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();   
+      $idAuxiliar = $conceptoDelete->id_auxiliar;
+      $conceptoDelete->delete();
+      return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
   }
 
   /** *copy the specified resource  */
@@ -211,11 +239,11 @@ class AuxiController extends Controller
     ];
   }
 
-        /**      * Display the specified resource.     */
-    // public function show(Auxi $auxi)
-    // {  }
+  /**      * Display the specified resource.     */
+  // public function show(Auxi $auxi)
+  // {  }
 
-      /**     * Show the form for creating a new resource.     */
+  /**     * Show the form for creating a new resource.     */
   // public function create(): View
   // {      } 
 

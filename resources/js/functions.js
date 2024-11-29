@@ -11,6 +11,9 @@ import './functions/crear_fila_material';
 import './functions/crear_fila_MO';
 import './functions/crear_fila_equipo';
 
+// --------edittarjetas.blade--------------
+import './functions/add_fila_edit_tarj';
+
 //----------cuadrillas.blade----------
 import './functions/add_fila_cuad';
 
@@ -36,3 +39,4 @@ import './functions/open_user';
 
 //funcion deprecada
 // import './functions/crear_fila_aux'; 
+//crear_fila_table

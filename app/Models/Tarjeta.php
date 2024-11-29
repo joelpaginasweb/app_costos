@@ -37,6 +37,11 @@ class Tarjeta extends Model
       return $this->belongsTo(Unidades::class, 'id_unidad');
     }
 
+    public function presupuesto()
+    {
+      return $this->belongsTo(Presu::class, 'id_presup');
+    }
+
 }
 
 

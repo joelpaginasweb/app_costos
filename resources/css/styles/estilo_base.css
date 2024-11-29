@@ -1,13 +1,16 @@
 * {
-  /* margin: 0px; */
-  /* padding: 0px; */
-  /* box-sizing: border-box; */
   font-family: Arial, sans-serif;
-  /* outline: 1px solid rgba(173, 97, 97, 0.2);  */
+  /* outline: 1px solid rgb(216, 148, 148);  */
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.overflow_hidden {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 
 .element_display {
@@ -214,7 +217,7 @@ body, main, footer, .mainAplication {
 }
 
 .form__input--short {
-  width: 6em;
+  width: 5em;
   text-align: center;
   margin: 0px 0px;
 
@@ -312,6 +315,16 @@ input::-webkit-inner-spin-button {
   height: 20px;
   margin: 1px 0px;
   padding: 0px 5px;
+}
+
+.select_none{
+  border: solid 1px #5c5c5c;
+  background: #e7e7e7;
+  border-radius: 3px;
+
+  -webkit-appearance: none; /*  navegadores WebKit */
+  -moz-appearance: none;    /*  Firefox */
+  appearance: none;         /*  otros  */
 }
 
 

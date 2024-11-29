@@ -22,4 +22,9 @@ class ConceptosMateriales extends Model
       return $this->belongsTo(Materiales::class, 'id_material');
     }
 
+    public function auxiliar()
+    {
+      return $this->belongsTo(Auxi::class, 'id_auxiliar');
+    }
+
 }

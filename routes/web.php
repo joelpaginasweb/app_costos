@@ -27,16 +27,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-  require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';
 
-  //--------------------------------
-  // ---------------rutas de vistas con CRUDS y controller------------
+// ---------------rutas de vistas con CRUDS y controller------------
 Route::middleware('auth')->group(function () {
   Route::resource('dashboard', DashboardController::class)->name('dashboard.index', 'dashboard');
-  Route::resource('tarjetas', TarjetaController::class);
   Route::resource('materiales', MaterialesController::class);
   Route::resource('manodeobra', ManodeobraController::class);
   Route::resource('herramientas', HerramientaController::class); 
+
+
+
 
   Route::resource('presus', PresuController::class);
   Route::get('/cantEdit/{id}', [PresuController::class, 'edit'])->name('cantEdit');
@@ -47,12 +48,22 @@ Route::middleware('auth')->group(function () {
   Route::resource('auxis', AuxiController::class);
   Route::get('/auxisCopy/{id}',[AuxiController::class, 'copy'])->name('auxisCopy');  
   Route::get('/conceptoDeleteAux/{id}',[AuxiController::class, 'deleteConcepto'])->name('conceptoDeleteAux');
-  Route::get('auxis/{auxi}/edit', [AuxiController::class, 'edit'])->name('auxis.edit');
+  // Route::get('auxis/{auxi}/edit', [AuxiController::class, 'edit'])->name('auxis.edit');
+  //  GET|HEAD        auxis/{auxi}/edit .................... auxis.edit › AuxiController@edit
+  // http://127.0.0.1:8000/auxis/1/edit
+
+
+
+  Route::resource('tarjetas', TarjetaController::class);
+  Route::get('/tarjetasCopy/{id}',[TarjetaController::class, 'copy'])->name('tarjetasCopy');  
+  Route::get('/conceptoDeleteTarj/{id}',[TarjetaController::class, 'deleteConcepto'])->name('conceptoDeleteTarj');
+  //GET|HEAD        tarjetas/{tarjeta}/edit ............... tarjetas.edit › TarjetaController@edit
+  // http://127.0.0.1:8000/tarjetas/1/edit
   
   Route::resource('cuadrillas', CuadrillaController::class);
   Route::get('/cuadrillasCopy/{id}',[CuadrillaController::class, 'copy'])->name('cuadrillasCopy');  
   Route::get('/conceptoDeleteCuad/{id}',[CuadrillaController::class, 'deleteConcepto'])->name('conceptoDeleteCuad');
-  Route::get('cuadrillas/{cuadrilla}/edit', [CuadrillaController::class, 'edit'])->name('cuadrillas.edit');
+  // Route::get('cuadrillas/{cuadrilla}/edit', [CuadrillaController::class, 'edit'])->name('cuadrillas.edit');
 
   Route::resource('expinsumos', ExpinsumoController::class);  
   Route::get('/expinsumos', [ExpinsumoController::class, 'index'])->name('expinsumos.index');

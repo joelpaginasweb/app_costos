@@ -22,4 +22,9 @@ class ConceptosManoObras extends Model
       return $this->belongsTo(Manodeobra::class, 'id_categoria');
     }
 
+    public function cuadrilla()
+    {
+      return $this->belongsTo(Cuadrillas::class, 'id_cuadrilla');
+    }
+
 }

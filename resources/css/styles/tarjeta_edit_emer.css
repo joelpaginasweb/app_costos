@@ -1,0 +1,200 @@
+* {
+  font-family: Arial, sans-serif;
+  /* outline: 1px solid rgb(216, 148, 148);  */
+}
+.emergente__contenedor {
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  width: 80%;
+  min-width: 680px;
+  max-height: 80%;
+  /* overflow-y: auto; */
+  height: fit-content;
+  font-size: 12px;
+  background: #f5f5f5;
+  border: 1px solid #3d3d3d;
+  z-index: 100;
+  /* display: none; */
+}
+
+.emergente__contain-display {
+  /* display */
+  display:block;
+  position: relative;
+  z-index: 0;
+  margin-bottom: 3%;
+  left: 0;  top: 0;
+}
+
+
+.containDatosTarj {
+  margin-left: 1%;
+  margin-right: 10%;
+  margin-top: 10px;
+  width: 98%;
+  height: auto;
+  background: #ffffff;
+  margin-top: 7px;
+  border: 1px solid #b4b4b4;
+}
+
+.containConceptoTarj {
+  display: flex;
+  padding: 0.3em;
+  border-bottom: solid 1px #b4b4b4;
+}
+
+.containDatos {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 20px 4px 8px;
+  height: auto;
+}
+
+.containDatos__datos {
+  display: flex;
+  padding: 0.3em;
+  padding: 2px;
+}
+
+.containDatosTarj p {
+  padding-left: 11px;
+  padding-bottom: 3px;
+}
+
+.contain__tablemergent {
+  margin-left: 1%;
+  margin-right: 10%;
+  margin-top: 10px;
+  width: 98%;
+  height: auto;
+  background: #ffffff;
+}
+
+.tablemergent {
+  font-size: 10px;
+  /* font-size: small; */
+  /* text-align: center; */
+  /* border-collapse: collapse; */
+  /* width: 100%; */
+  table-layout: auto;
+}
+
+/*------ancho columnas tabla tarjetas------*/
+.tablemergent th:first-child {
+  width: 3%;
+}
+
+.tablemergent th:nth-child(2) {
+  width: 1%;
+}
+
+.tablemergent th:nth-child(3) {
+  width: 35%;
+  max-width: 300px;
+}
+
+.tablemergent th:nth-child(4) {
+  width: 3%;
+}
+
+.tablemergent th:nth-child(5) {
+  width: 3%;
+}
+
+.tablemergent th:nth-child(6) {
+  width: 5%;
+}
+
+.tablemergent th:last-child {
+  width: 7%;
+}
+
+/*-------------head tarjeta titulos--------------*/
+.tablemergent__thead {
+  color: #ffffff;
+  background-color: #12577c;
+  font-weight: bold;
+}
+
+.tablemergent__thead th {
+  padding: 3px 3px;
+  text-overflow: clip;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*-------------celdas tarjeta----------------*/
+.tablemergent td {
+  padding: 3px 3px;
+  border: 1px solid #b4b4b4;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.tablemergent__td {
+   overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  max-width: 300px; 
+} 
+
+.tablemergent tbody th {
+  padding: 3px 3px;
+  border: 1px solid #b4b4b4;
+}
+
+/*---------------subsection__tablaIndir--------------*/
+
+
+.subsection__tablaIndir{
+  display: flex;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  align-items: center;
+  justify-content: center;  
+}
+
+.contain__botonesIndir {
+  width: auto;
+  justify-content: space-between;
+  padding: 0px 1% 100px 40%;
+}
+
+.contain__btn{
+  min-width: 130px;
+}
+
+.contain__tablaIndir {
+  width: 40%;
+  background: #ffffff;
+}
+
+.tablaindir td:first-child {
+  width: 23%;
+}
+
+.tablaindir td:nth-child(2) {
+  width: 13%;
+}
+
+.tablaindir td:last-child {
+  width: 12%;
+}
+
+.tablemergent {
+  font-size: 12px;
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+}
+
+.tablaindir td {
+  padding: 3px 3px;
+  border: 1px solid #b4b4b4;
+  margin: 0;
+}
+

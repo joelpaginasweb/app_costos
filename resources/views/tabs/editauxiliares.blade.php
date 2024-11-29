@@ -2,30 +2,11 @@
 @section('title', 'Editar Auxiliares')
 @section('content')
 
-{{-- <section class="section "> --}}
-  {{-- <div> --}}
-    {{-- <h1> EDITAR TARJETAS DE COSTOS MATERIALES AUXILIARES</h1> --}}
-    {{-- <div> --}}
-      <!----------- web components-------- -->
-      {{-- <h3>-test web componentes-</h3> --}}
-      {{-- <hola-mundo name="eba depru " surname="web componente nativo"></hola-mundo> --}}
-      <!-- lit components -->
-      {{-- <eit-box-info></eit-box-info> --}}
-      {{-- <tabla-datos :conceptos='@json($conceptos)'></tabla-datos> --}}
-      {{-- <eit-box-info message="prueba de Lit web component"></eit-box-info> --}}
-      <!----------- web components-------- -->
-      {{--
-    </div> --}}
-    {{-- </div> --}}
-  {{-- </section> --}}
-
-{{-- <section class="section__form"> --}}
-  {{-- <h4>EDITAR MATERIAL AUXILIAR </h4> --}}
-  {{-- </section> --}}
 
 <!----------- ventana emergente  ---------------->
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
+
     <div class="emergente__header ">
       <h3 class="emergente__titulo">TARJETA AUXILIAR</h3>
       <div class="emergente__close">
@@ -71,6 +52,7 @@
             </div>
           </div>
         </div>
+
       </div>
 
       <div class="contain__tablemergent">
@@ -92,7 +74,9 @@
               <td><a href="{{route('conceptoDeleteAux', $concepto->id)}}" class="form__span">X</a></td>
               <td><input type="number" step="0" name="id_material[]"
                   class="form__input  form__input--short select_auto pointer" value="{{$concepto->id_material}}"></td>
+
               <td>{{$concepto->materialData->material}}</td>
+              
               <td>{{$concepto->materialData->unidad->unidad}}</td>
               <td> <input type="number" step="0.0001" name="cantidad_mater[]"
                   class="form__input form__input--short pointer select_auto " value="{{$concepto->cantidad}}"></td>
@@ -113,16 +97,13 @@
             </tr>
           </tfoot>
         </table>
-        <div class="tablaEmergent__divFooter">        
-            <button type="submit" id="formBoton" class="form__boton">Editar</button>
+        <div class="tablaEmergent__divFooter">
+          <button type="submit" id="formBoton" class="form__boton">Editar</button>
     </form>
     <form action="{{route('auxis.index')}}">
       <button type="submit" class="form__boton">Auxiliares</button>
     </form>
 
-  </div>
-
-  </div>
   </div>
 </section>
 

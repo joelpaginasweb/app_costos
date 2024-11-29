@@ -59,7 +59,7 @@
         </select>
         <button type="submit" class="form__boton">Crear</button>
     </form>
-    <div class="containerFlex">
+    <div class="">
       <div class="container">
         <!-- <button type="submit" class="form__boton">Editar</button> -->
         <div class="form__boton display_action">

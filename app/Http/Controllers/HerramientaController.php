@@ -18,7 +18,7 @@ class HerramientaController extends Controller
     /**    * Display a listing of the resource.   */
     public function index(): View
     {
-        $herramientas = Herramienta::with(['grupo', 'marca', 'unidad', 'proveedor'])->get();
+        $herramientas = Herramienta::with(['grupo', 'marca', 'unidad', 'proveedor'])->where('id', '!=', 0)->get();
         return view('tabs/herramienta' ,['herramientas'=>$herramientas]);
     }
 

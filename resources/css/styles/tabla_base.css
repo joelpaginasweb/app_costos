@@ -3,17 +3,13 @@
 .tablaBase__contain {
   width: auto;
   height: 1.8em;
-  background: #a9cde0;  
   display: flex;
   justify-content: center;
-  border: 1px solid #7c7c7c;
-
-  /**/
-
+  border: 1px solid #7c7c7c;  
+  /* background: #a9cde0;   */
   background-color: #12577c;
   color: #ffffff;
   font-size: 14px;
-
 }
 
 .tablaBase__contain--white {

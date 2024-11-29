@@ -16,7 +16,7 @@ class CuadrillaController extends Controller
     /**       * Display a listing of the resource.      */
     public function index(): View
     {        
-      $cuadrillas = Cuadrillas::with(['grupo','unidad'])->get();
+      $cuadrillas = Cuadrillas::with(['grupo','unidad'])->where('id', '!=', 0)->get();
       return view ('tabs/cuadrillas', ['cuadrillas'=>$cuadrillas]);
     }
 
@@ -95,8 +95,10 @@ class CuadrillaController extends Controller
           'unidad' => 'required'         
         ]);
 
+        $idCuadrilla = $cuadrilla->id;
+        
         $totalCuadrilla = $this->editarConcepto (
-            null,
+            $idCuadrilla,
             $request->input('id_categoria'),
             $request->input('cantidad_mo')
         );
@@ -110,19 +112,8 @@ class CuadrillaController extends Controller
           'id_unidad' => $ids['unidad'], 
           'total' => $totalCuadrilla          
         ]);
-
-      $updateCuadrilla = Cuadrillas::where('descripcion', $descripcion)->first();
-      $idCuadrilla = $updateCuadrilla->id;
-
-      $totalCuadrilla = $this->editarConcepto (
-        $idCuadrilla,
-        $request->input('id_categoria'),
-        $request->input('cantidad_mo')
-      );
-
-      // return redirect()->route('cuadrillas.index')->with('success', 'Cuadrilla Actualizada');
-      // return redirect()->back(); 
-      return redirect()->back()->with('success', 'Auxiliar actualizado!');      
+ 
+      return redirect()->back()->with('success', 'Cuadrilla actualizada!');      
     }
 
     private function editarConcepto ($idCuadrilla, $idCategorias, $cantidades)

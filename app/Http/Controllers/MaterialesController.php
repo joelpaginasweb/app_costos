@@ -14,7 +14,7 @@ class MaterialesController extends Controller
     /** Display a listing of the resource. */
     public function index(): View
     {   
-        $materiales = Materiales::with(['grupo', 'unidad', 'proveedor'])->get();
+        $materiales = Materiales::with(['grupo', 'unidad', 'proveedor'])->where('id', '!=', 0)->get();
         return view('tabs/materiales', ['materiales' => $materiales]);
     }  
 

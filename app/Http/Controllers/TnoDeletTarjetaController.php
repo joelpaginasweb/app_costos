@@ -298,98 +298,109 @@ class TarjetaController extends Controller
   /**      * Show the form for editing the specified resource.      */
     /**-----pendiente optimizar metodo edit--------- */
     public function edit($id): View
-    {
-      $tarjeta = Tarjeta::with(['grupo', 'unidad'])->findOrFail($id);
-      $idTarjeta = $id;
+  {
+    $tarjeta = Tarjeta::with(['grupo', 'unidad'])->findOrFail($id);
 
+    $idTarjeta = $id;
 
-      $conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
-      ['id_auxiliar', 0]])->get();
-      // dd($conceptosMat);
+    //$conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
+    // ['id_auxiliar', 0]])->with(['material'])->get();
 
-      $conceptosAux = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
-      ['id_material', 0]])->get();
+    $conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
+    ['id_auxiliar', 0]])->get();
+    // dd($conceptosMat);
 
-      // Crear colección de conceptosIns
-      $conceptosIns = collect();
+    $conceptosAux = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
+    ['id_material', 0]])->get();
 
-      foreach ($conceptosMat as $conceptoMat) {
-          if ($conceptoMat->id_material != 0) {
-              $conceptosIns->push([
-                  'id_reg' => $conceptoMat->id,
-                  'id_insumo' => $conceptoMat->id_material,
-                  'material' => $conceptoMat->material->material,
-                  'unidad' => $conceptoMat->material->unidad->unidad,
-                  'cantidad' => $conceptoMat->cantidad ?? 0,
-                  'precio_unitario' => $conceptoMat->material->precio_unitario,
-                  'importe' => $conceptoMat->importe ?? 0,
-                  'tipo' => 'material', // Indica que es un material
-              ]);
-          }
-      }
+    // Crear colección de conceptosIns
+    $conceptosIns = collect();
 
-      foreach ($conceptosAux as $conceptoAux) {
-          if ($conceptoAux->id_auxiliar != 0) {
-              $conceptosIns->push([
-                  'id_reg' => $conceptoAux->id,
-                  'id_insumo' => $conceptoAux->id_auxiliar,
-                  'material' => $conceptoAux->auxiliar->material,
-                  'unidad' => $conceptoAux->auxiliar->unidad->unidad,
-                  'cantidad' => $conceptoAux->cantidad ?? 0,
-                  'precio_unitario' => $conceptoAux->auxiliar->precio_unitario,
-                  'importe' => $conceptoAux->importe ?? 0,
-                  'tipo' => 'auxiliar', // Indica que es un auxiliar
-
-              ]);
-          }
-      }
-
-      $conceptosCat = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
-          ['id_cuadrilla', 0]])->get();
-
-      $conceptosCuad = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
-          ['id_categoria', 0]])->get();
-
-      $conceptosMO = collect();
-
-      foreach ($conceptosCat as $conceptoCat) {
-        if($conceptoCat->id_categoria !=0) {
-          $conceptosMO->push([
-            'id_MO' => $conceptoCat->id_categoria,
-            'concepto_MO' => $conceptoCat->categoria->categoria,
-            'unidad' => $conceptoCat->categoria->unidad->unidad,
-            'cantidad' => $conceptoCat->cantidad,
-            'precio_unitario' => $conceptoCat->categoria->salario_real,
-            'importe' => $conceptoCat->importe,
-            'tipo' => 'categoria'
-          ]);
+    foreach ($conceptosMat as $conceptoMat) {
+        if ($conceptoMat->id_material != 0) {
+            $conceptosIns->push([
+                'id_insumo' => $conceptoMat->id_material,
+                'material' => $conceptoMat->material->material,
+                'unidad' => $conceptoMat->material->unidad->unidad,
+                'cantidad' => $conceptoMat->cantidad ?? 0,
+                'precio_unitario' => $conceptoMat->material->precio_unitario,
+                'importe' => $conceptoMat->importe ?? 0,
+                'tipo' => 'material', // Indica que es un material
+            ]);
         }
-      }  
-
-      foreach ($conceptosCuad as $conceptoCuad) {
-        if($conceptoCuad->id_cuadrilla !=0) {
-          $conceptosMO->push([
-            'id_MO' => $conceptoCuad->id_cuadrilla,
-            'concepto_MO' => $conceptoCuad->cuadrilla->descripcion,
-            'unidad' => $conceptoCuad->cuadrilla->unidad->unidad,
-            'cantidad' => $conceptoCuad->cantidad,
-            'precio_unitario' => $conceptoCuad->cuadrilla->total,
-            'importe' => $conceptoCuad->importe,
-            'tipo' => 'cuadrilla'
-          ]);
-        }
-      } 
-
-      $conceptosEq = ConceptosEquipos::where('id_tarjeta', $idTarjeta)->get();
-      // dd($conceptosIns);
-
-      return view('tabs/edittarjetas', [
-          'tarjeta' => $tarjeta,
-          'conceptosIns' => $conceptosIns, 
-          'conceptosMO' => $conceptosMO,
-          'conceptosEq' => $conceptosEq,
-      ]);
     }
+
+    foreach ($conceptosAux as $conceptoAux) {
+        if ($conceptoAux->id_auxiliar != 0) {
+            $conceptosIns->push([
+                'id_insumo' => $conceptoAux->id_auxiliar,
+                'material' => $conceptoAux->auxiliar->material,
+                'unidad' => $conceptoAux->auxiliar->unidad->unidad,
+                'cantidad' => $conceptoAux->cantidad ?? 0,
+                'precio_unitario' => $conceptoAux->auxiliar->precio_unitario,
+                'importe' => $conceptoAux->importe ?? 0,
+                'tipo' => 'auxiliar', // Indica que es un auxiliar
+
+            ]);
+        }
+    }
+
+    $conceptosCat = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
+        ['id_cuadrilla', 0]])->get();
+
+    $conceptosCuad = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
+        ['id_categoria', 0]])->get();
+
+    //$conceptosCat = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
+    //['id_cuadrilla', 0]])->with(['categoria'])->get();
+    // dd($conceptosCat, $conceptosCuad);
+
+    $conceptosMO = collect();
+
+    foreach ($conceptosCat as $conceptoCat) {
+      if($conceptoCat->id_categoria !=0) {
+        $conceptosMO->push([
+          'id_MO' => $conceptoCat->id_categoria,
+          'concepto_MO' => $conceptoCat->categoria->categoria,
+          'unidad' => $conceptoCat->categoria->unidad->unidad,
+          'cantidad' => $conceptoCat->cantidad,
+          'precio_unitario' => $conceptoCat->categoria->salario_real,
+          'importe' => $conceptoCat->importe,
+          'tipo' => 'categoria'
+        ]);
+      }
+    }  
+
+    foreach ($conceptosCuad as $conceptoCuad) {
+      if($conceptoCuad->id_cuadrilla !=0) {
+        $conceptosMO->push([
+          'id_MO' => $conceptoCuad->id_cuadrilla,
+          'concepto_MO' => $conceptoCuad->cuadrilla->descripcion,
+          'unidad' => $conceptoCuad->cuadrilla->unidad->unidad,
+          'cantidad' => $conceptoCuad->cantidad,
+          'precio_unitario' => $conceptoCuad->cuadrilla->total,
+          'importe' => $conceptoCuad->importe,
+          'tipo' => 'cuadrilla'
+        ]);
+      }
+    } 
+
+
+
+    $conceptosEq = ConceptosEquipos::where('id_tarjeta', $idTarjeta)
+        ->with(['equipo'])->get();
+
+    // dd($conceptosIns);
+
+
+    return view('tabs/edittarjetas', [
+        'tarjeta' => $tarjeta,
+        'conceptosIns' => $conceptosIns, 
+        'conceptosMO' => $conceptosMO,
+        'conceptosEq' => $conceptosEq,
+    ]);
+  }
+
 
   /**   * Update the specified resource in storage.   */
   public function update(Request $request, Tarjeta $tarjeta): RedirectResponse
@@ -414,13 +425,14 @@ class TarjetaController extends Controller
   }
 
     /** *borra conceptos de ConceptosAuxiliares */
-    public function deleteConcepto($idReg)
-    {      
-      $conceptoDelete = ConceptosMateriales::where('id', $idReg)->first(); 
+    public function deleteConcepto($idConcepto)
+    {
 
-      $idTarjeta = $conceptoDelete->id_tarjeta;
+      $conceptoDelete = ConceptosMateriales::where('id', $idConcepto)->first();
+
+      $idAuxiliar = $conceptoDelete->id_auxiliar;
       $conceptoDelete->delete();
-      return redirect()->route('tarjetas.edit', ['tarjeta' => $idTarjeta]);
+      return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
     }
 
   /** *copy the specified resource  */
