@@ -42,16 +42,14 @@ class TarjetaController extends Controller
   public function store(Request $request): RedirectResponse
   {
     $validatedData = $request->validate(self::VALIDATION_RULES);
-    // dd($validatedData);
-
+    
       try {
         DB::transaction(function () use ($request, $validatedData) {
-          $costos = $this->calcularCostos($request);
-          // dd($costos);
 
+          $costos = $this->calcularCostos($request);
           $tarjeta = $this->guardarOActualizarTarjeta($validatedData, $costos);
-          // dd($tarjeta);
           $this->guardarConceptosDetallados($tarjeta->id, $request);
+
         });
 
           return redirect()->route('tarjetas.index')
@@ -64,7 +62,6 @@ class TarjetaController extends Controller
 
   private function calcularCostos(Request $request): array
   {
-  //  dd($request);
       $costosBase = $this->calcularCostosBase($request);
       return array_merge(
           $costosBase,
@@ -171,7 +168,6 @@ class TarjetaController extends Controller
   /**--------------------------------------------------------------------------------------*/
   private function guardarOActualizarTarjeta(array $validatedData, array $costos): Tarjeta  
   {
-
       $ids = $this->getOrCreateIds($validatedData);
       return Tarjeta::updateOrCreate(
           ['id' => $validatedData['id'] ?? null], 
@@ -303,12 +299,10 @@ class TarjetaController extends Controller
 
       $conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
       ['id_auxiliar', 0]])->get();
-      // dd($conceptosMat);
 
       $conceptosAux = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
       ['id_material', 0]])->get();
 
-      // Crear colección de conceptosIns
       $conceptosIns = collect();
 
       foreach ($conceptosMat as $conceptoMat) {
@@ -381,7 +375,6 @@ class TarjetaController extends Controller
       } 
 
       $conceptosEq = ConceptosEquipos::where('id_tarjeta', $idTarjeta)->get();
-      // dd($conceptosIns, $conceptosMO,  $conceptosEq);
 
       return view('tabs/edittarjetas', [
           'tarjeta' => $tarjeta,
@@ -394,7 +387,6 @@ class TarjetaController extends Controller
   /**   * Update the specified resource in storage.   */
   public function update(Request $request, Tarjeta $tarjeta): RedirectResponse
   {
-      // Añade el ID de la tarjeta a los datos validados
       $validatedData = $request->validate(self::VALIDATION_RULES);
       $validatedData['id'] = $tarjeta->id;
 
@@ -427,7 +419,6 @@ class TarjetaController extends Controller
           $conceptoDelete = ConceptosEquipos::where('id', $idReg)->first(); 
           break;
       default:
-          // Manejar caso no esperado
           return redirect()->back()->with('error', 'Tipo de concepto no válido');
     }
 

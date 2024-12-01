@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Herramienta;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-use App\Models\Materiales;
+use App\Models\Herramienta;
 use App\Models\Grupos;
 use App\Models\Marcas;
 use App\Models\Proveedores;
@@ -50,7 +49,7 @@ class HerramientaController extends Controller
         'id_proveedor' => $ids['proveedor'],
         'id_unidad' => $ids['unidad']
       ]);
-      return redirect()->route('herramientas.index')->with('success', 'Herramienta Creada');
+      return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo Creada');
 
     }
 
@@ -96,6 +95,23 @@ class HerramientaController extends Controller
     {
         $herramienta->delete();
         return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo eliminado...');        
+    }
+
+    /**  * Remove the specified resource from storage. */
+    public function copy($id)
+    {
+
+      $equipoBase = Herramienta::find($id);
+      $idEquipo = $id;
+      $equipoNew = $equipoBase->replicate();
+      $equipoNew->save();
+
+      // $idEquipoNew = $equipoNew->id;
+
+      return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo duplicado...');
+
+
+      
     }
 
     /** Helper function to get or create related model IDs. */

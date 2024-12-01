@@ -89,6 +89,20 @@ class MaterialesController extends Controller
       return redirect()->route('materiales.index')->with('success', 'Material eliminado!');
     }
 
+    /**  * Remove the specified resource from storage. */
+    public function copy($id)
+    {
+      $materialBase = Materiales::find($id);
+      $idMaterial = $id;
+      $materialNew = $materialBase->replicate();
+      $materialNew->save();
+
+      // $idMaterialNew = $materialNew->id;
+
+      return redirect()->route('materiales.index')->with('success', 'Material duplicado');
+
+    }
+
     /** Helper function to get or create related model IDs. */
     private function getOrCreateIds(array $data): array
     {

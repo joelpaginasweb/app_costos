@@ -84,6 +84,11 @@
           <td>{{$material->updated_at}}</td>
           <td>
             <div class="contain">
+
+              <div class="contain">
+                <a href="{{route('materialCopy', $material->id)}}" class="tablaBase__boton">Cop</a>
+              </div>
+
               <div class="contain">
                 <a href="{{route('materiales.edit', $material->id)}}" class="tablaBase__boton">Ed</a>
               </div>

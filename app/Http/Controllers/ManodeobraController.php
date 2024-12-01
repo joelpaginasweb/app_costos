@@ -108,6 +108,23 @@ class ManodeobraController extends Controller
     return redirect()->route('manodeobra.index')->with('success', 'Categoria de mano de obra eliminada!');
   }
 
+  /**  * Remove the specified resource from storage. */
+  public function copy($id)
+  {
+
+    $categoriaBase = Manodeobra::find($id);
+    $idCategoria = $id;
+    $categoriaNew = $categoriaBase->replicate();
+    $categoriaNew->save();
+
+    // $idCategoriaNew = $categoriaNew->id;
+
+    return redirect()->route('manodeobra.index')->with('success', 'Categoria duplicada');
+
+
+    
+  }
+
   /** Helper function to get or create related model IDs. */
   private function getOrCreateIds(array $data): array
   {

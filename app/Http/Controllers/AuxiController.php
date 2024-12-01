@@ -245,7 +245,9 @@ class AuxiController extends Controller
       $conceptoNew->save();
       $conceptosNew->push($conceptoNew);
       }
-      return redirect()->route('auxis.index')->with('success', 'Auxiliar Copiado');	      
+      return redirect()->route('auxis.index')->with('success', 'Auxiliar duplicado');	  
+	
+
   }
   
   /**  * Remove the specified resource from storage. */
