@@ -1,8 +1,6 @@
 @extends('layouts.aplication')
 @section('title', 'Editar Auxiliares')
 @section('content')
-
-
 <!----------- ventana emergente  ---------------->
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
@@ -16,19 +14,15 @@
         </a>
       </div>
     </div>
-
     <form action="{{route('auxis.update', $auxi)}}" method="POST" class="form">
       @csrf
       @method('PUT')
-
       <div class="datosEmer">
-
         <div class="datosEmer__contain border-bottom">
           <h4>CONCEPTO:</h4>
           <textarea name="material_auxiliar"
             class="form__input form__input--area  pointer">{{$auxi->material}}</textarea>
         </div>
-
         <div class="datosEmer__contain">
           <div class="columna33">
             <div class="datosEmer__dato">
@@ -52,9 +46,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <div class="contain__tablemergent">
         <table class="tablaEmergent">
           <thead class="tablaEmergent__thead">
@@ -74,9 +66,7 @@
               <td><a href="{{route('conceptoDeleteAux', $concepto->id)}}" class="form__span">X</a></td>
               <td><input type="number" step="0" name="id_material[]"
                   class="form__input  form__input--short select_auto pointer" value="{{$concepto->id_material}}"></td>
-
-              <td>{{$concepto->materialData->material}}</td>
-              
+              <td>{{$concepto->materialData->material}}</td>              
               <td>{{$concepto->materialData->unidad->unidad}}</td>
               <td> <input type="number" step="0.0001" name="cantidad_mater[]"
                   class="form__input form__input--short pointer select_auto " value="{{$concepto->cantidad}}"></td>
@@ -99,14 +89,12 @@
         </table>
         <div class="tablaEmergent__divFooter">
           <button type="submit" id="formBoton" class="form__boton">Editar</button>
-    </form>
+    </form>    
     <form action="{{route('auxis.index')}}">
       <button type="submit" class="form__boton">Auxiliares</button>
     </form>
-
   </div>
 </section>
-
 {{-- esta funcion no se importa desde resources/js/functions/ --}}
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
 

@@ -159,7 +159,6 @@
           <td>{{$tarjeta->concepto}}</td>
           <td>{{$tarjeta->unidad->unidad}}</td>
           <td>
-            {{-- {{$tarjeta->costo_material}} --}}
             {{number_format($tarjeta->costo_material, 2)}}
           </td>
           <td>
@@ -171,19 +170,20 @@
           <td>
             {{number_format($tarjeta->costo_directo, 2)}}
           </td>
-
           <td>
             {{number_format($tarjeta->costo_indirecto, 2)}}
           </td>
-
           <td>
             {{number_format($tarjeta->precio_unitario, 2)}}
           </td>
-
           <td>{{$tarjeta->id_presup}}</td>
-
           <td>
             <div class="contain">
+            <div class="contain">
+                {{-- <a href="{{route('auxisCopy', $auxi->id)}}" class="tablaBase__boton">Cop</a> --}}
+                <a href="{{route('tarjetasCopy', $tarjeta->id)}}" class="tablaBase__boton">Cop</a>
+                {{-- <a href="{}" class="tablaBase__boton">Cop</a> --}}
+              </div>
               <div class="contain">
                 <a href=" {{route('tarjetas.edit', $tarjeta->id)}} " class="tablaBase__boton">Ed</a>
               </div>

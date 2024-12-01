@@ -296,12 +296,10 @@ class TarjetaController extends Controller
   }
 
   /**      * Show the form for editing the specified resource.      */
-    /**-----pendiente optimizar metodo edit--------- */
     public function edit($id): View
     {
       $tarjeta = Tarjeta::with(['grupo', 'unidad'])->findOrFail($id);
       $idTarjeta = $id;
-
 
       $conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
       ['id_auxiliar', 0]])->get();
@@ -355,6 +353,7 @@ class TarjetaController extends Controller
       foreach ($conceptosCat as $conceptoCat) {
         if($conceptoCat->id_categoria !=0) {
           $conceptosMO->push([
+            'id_reg' => $conceptoCat->id,
             'id_MO' => $conceptoCat->id_categoria,
             'concepto_MO' => $conceptoCat->categoria->categoria,
             'unidad' => $conceptoCat->categoria->unidad->unidad,
@@ -369,6 +368,7 @@ class TarjetaController extends Controller
       foreach ($conceptosCuad as $conceptoCuad) {
         if($conceptoCuad->id_cuadrilla !=0) {
           $conceptosMO->push([
+            'id_reg' => $conceptoCuad->id,
             'id_MO' => $conceptoCuad->id_cuadrilla,
             'concepto_MO' => $conceptoCuad->cuadrilla->descripcion,
             'unidad' => $conceptoCuad->cuadrilla->unidad->unidad,
@@ -381,7 +381,7 @@ class TarjetaController extends Controller
       } 
 
       $conceptosEq = ConceptosEquipos::where('id_tarjeta', $idTarjeta)->get();
-      // dd($conceptosIns);
+      // dd($conceptosIns, $conceptosMO,  $conceptosEq);
 
       return view('tabs/edittarjetas', [
           'tarjeta' => $tarjeta,
@@ -413,21 +413,62 @@ class TarjetaController extends Controller
       }   
   }
 
-    /** *borra conceptos de ConceptosAuxiliares */
-    public function deleteConcepto($idReg)
-    {      
-      $conceptoDelete = ConceptosMateriales::where('id', $idReg)->first(); 
-
-      $idTarjeta = $conceptoDelete->id_tarjeta;
-      $conceptoDelete->delete();
-      return redirect()->route('tarjetas.edit', ['tarjeta' => $idTarjeta]);
+  /** *borra conceptos de ConceptosMateriales */
+  public function deleteConcepto($idReg, $type = null)
+  {  
+    switch($type) {
+      case 'ins':
+          $conceptoDelete = ConceptosMateriales::where('id', $idReg)->first(); 
+          break;
+      case 'mo':
+          $conceptoDelete = ConceptosManoObras::where('id', $idReg)->first(); 
+          break;
+      case 'eq':
+          $conceptoDelete = ConceptosEquipos::where('id', $idReg)->first(); 
+          break;
+      default:
+          // Manejar caso no esperado
+          return redirect()->back()->with('error', 'Tipo de concepto no válido');
     }
+
+    $idTarjeta = $conceptoDelete->id_tarjeta;
+    $conceptoDelete->delete();
+    return redirect()->route('tarjetas.edit', ['tarjeta' => $idTarjeta]);
+  }
+
 
   /** *copy the specified resource  */
   public function copy($id)
-  {
-    //
-  }
+{    
+    $tarjetaBase = Tarjeta::findOrFail($id);
+    $tarjetaNew = $tarjetaBase->replicate();
+    $tarjetaNew->save();
+
+    $conceptosTypes = [
+        'materiales' => ConceptosMateriales::class,
+        'manoObras' => ConceptosManoObras::class,
+        'equipos' => ConceptosEquipos::class
+    ];
+
+    foreach ($conceptosTypes as $key => $className) {
+        $this->duplicateConceptos($id, $tarjetaNew->id, $className);
+    }
+
+    return redirect()->route('tarjetas.index')
+        ->with('success', 'Tarjeta de costos Duplicada con Éxito');
+}
+
+private function duplicateConceptos($oldId, $newId, $className)
+{
+    $conceptosBase = $className::where('id_tarjeta', $oldId)->get();
+    
+    $conceptosBase->each(function ($conceptoBase) use ($newId) {
+        $conceptoNew = $conceptoBase->replicate();
+        $conceptoNew->id_tarjeta = $newId;
+        $conceptoNew->save();
+    });
+}
+
 
   public function destroy(Tarjeta $tarjeta): RedirectResponse
   {

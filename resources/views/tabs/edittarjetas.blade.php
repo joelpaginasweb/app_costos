@@ -73,11 +73,14 @@
               <td></td>
             </tr>
           </tbody>
+
           <tbody id="tbody_mat">
-            @foreach ($conceptosIns as $conceptoIns)
-            
+            @foreach ($conceptosIns as $conceptoIns)            
             <tr>
-              <td><a href="{{route('conceptoDeleteTarj', $conceptoIns['id_reg'])}}" class="form__span">X</a></td>
+            <td>
+              <a href="{{route('conceptoDeleteTarj', ['id' => $conceptoIns['id_reg'], 'type' => 'ins'])}}" class="form__span">X</a>
+            </td>
+              {{-- <td><a href="{{route('conceptoDeleteTarj', $conceptoIns['id_reg'])}}" class="form__span">X</a></td> --}}
               {{-- <td><a href="" class="form__span">X</a></td> --}}
               <td>
                 <div class="contain">
@@ -126,7 +129,9 @@
           <tbody id="tbody_mo">
             @foreach ($conceptosMO as $conceptoMO)
             <tr>
-              <td><a href="{}" class="form__span">X</a></td>
+              <td>
+                <a href="{{route('conceptoDeleteTarj', ['id' => $conceptoMO['id_reg'], 'type' => 'mo'])}}" class="form__span">X</a>
+              </td>
               <td>
                 <div class="contain">
                   <div class="contain">
@@ -177,7 +182,9 @@
           <tbody id="tbody_eq">
             @foreach ($conceptosEq as $conceptoEq)
             <tr>
-              <td><a href="{}" class="form__span">X</a></td>
+            <td>
+                <a href="{{route('conceptoDeleteTarj', ['id' => $conceptoEq['id'], 'type' => 'eq'])}}" class="form__span">X</a>
+                </td>
               <td>
                 <input type="number" step="0" name="id_equipo[]"
                   class="form__input  form__input--short select_auto pointer " value="{{$conceptoEq->id_equipo}}">

@@ -36,9 +36,6 @@ Route::middleware('auth')->group(function () {
   Route::resource('manodeobra', ManodeobraController::class);
   Route::resource('herramientas', HerramientaController::class); 
 
-
-
-
   Route::resource('presus', PresuController::class);
   Route::get('/cantEdit/{id}', [PresuController::class, 'edit'])->name('cantEdit');
   Route::post('/updateConceptoCantidad/{id}', [PresuController::class, 'updateConceptoCantidad'])->name('updateConceptoCantidad');
@@ -52,11 +49,9 @@ Route::middleware('auth')->group(function () {
   //  GET|HEAD        auxis/{auxi}/edit .................... auxis.edit › AuxiController@edit
   // http://127.0.0.1:8000/auxis/1/edit
 
-
-
   Route::resource('tarjetas', TarjetaController::class);
   Route::get('/tarjetasCopy/{id}',[TarjetaController::class, 'copy'])->name('tarjetasCopy');  
-  Route::get('/conceptoDeleteTarj/{id}',[TarjetaController::class, 'deleteConcepto'])->name('conceptoDeleteTarj');
+  Route::get('/conceptoDeleteTarj/{id}/{type?}', [TarjetaController::class, 'deleteConcepto'])->name('conceptoDeleteTarj');
   //GET|HEAD        tarjetas/{tarjeta}/edit ............... tarjetas.edit › TarjetaController@edit
   // http://127.0.0.1:8000/tarjetas/1/edit
   
@@ -68,7 +63,6 @@ Route::middleware('auth')->group(function () {
   Route::resource('expinsumos', ExpinsumoController::class);  
   Route::get('/expinsumos', [ExpinsumoController::class, 'index'])->name('expinsumos.index');
 });
-
 
 // -----------------ruta para metodo individual------------------
 //GET -- visible por URL - para recuperar datos en vista
