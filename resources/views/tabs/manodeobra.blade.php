@@ -22,11 +22,7 @@
         <button type="submit" class="form__boton">Crear</button>
       </div>
     </form>
-
-
   </div>
-
-
 </section>
 <section>
   <div class="form__alert">
@@ -82,7 +78,7 @@
           <td>{{$manodeobra->salario_base}}</td>
           <td>{{$manodeobra->factor_sr}}</td>
           <td>
-            {{number_format($manodeobra->salario_real, 2)}}
+            {{number_format($manodeobra->salario_real,2)}}
           </td>
           <td>
             <div class="contain">

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>-</td>
         <td>-</td>
         <td> <input type="number" step="0.0001" name="cantidad_mater[]" class="form__input form__input--short select_auto pointer"
-        value=""></td>
+        value="0.00"></td>
         <td>0.00</td>
         <td>0.00</td>
       </tr>

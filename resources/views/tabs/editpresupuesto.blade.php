@@ -84,6 +84,7 @@
     <div class="tablaBase__title">
       <h5>PRESUPUESTO TOTAL</h5>
       <h5>{{number_format($presu->costo_total, 2)}}</h5>
+      {{-- <h5>{{$presu->costo_total}}</h5> --}}
     </div>
   </div>
 
@@ -115,7 +116,7 @@
             </form>
           </td>
           <td>
-            {{-- {{$concepto->precio_unitario}} --}}
+            {{-- {{$concepto->concepto->precio_unitario}} --}}
             {{number_format($concepto->concepto->precio_unitario, 2)}}
           </td>
           <td>

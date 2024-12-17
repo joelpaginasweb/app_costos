@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>-</td>
         <td>-</td>
         <td>
-          <input type="number" step="0.0001" name="cantidad_mater[]"
+          <input type="number" step="0.00001" name="cantidad_mater[]"
             class="form__input form__input--short pointer select_auto " value="{{$conceptoIns['cantidad']}}">          
         </td>
         <td>0.00</td>
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>-</td>
         <td>-</td>
         <td> 
-            <input type="number" step="0.0001" name="cant_mano_obra[]"
+            <input type="number" step="0.00001" name="cant_mano_obra[]"
                 class="form__input form__input--short pointer select_auto " value="{{$conceptoMO['cantidad']}}">
         </td>
         <td>0.00</td>
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>-</td>
         <td>-</td>
         <td> 
-          <input type="number" step="0.0001" name="cant_equipo[]"
+          <input type="number" step="0.00001" name="cant_equipo[]"
           class="form__input form__input--short pointer select_auto " value="{{$conceptoEq->cantidad}}">
         </td>
         <td>0.00</td>

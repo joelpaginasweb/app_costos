@@ -72,6 +72,7 @@
                   class="form__input form__input--short pointer select_auto " value="{{$concepto->cantidad}}"></td>
               <td>{{$concepto->materialData->precio_unitario}}</td>
               <td> {{number_format($concepto->importe, 2)}}</td>
+              {{-- <td> {{$concepto->importe}}</td> --}}
             </tr>
             @endforeach
           </tbody>
@@ -84,6 +85,7 @@
               <td></td>
               <td>C. DIRECTO</td>
               <td>{{number_format($auxi->precio_unitario, 2)}}</td>
+              {{-- <td>{{$auxi->precio_unitario}}</td> --}}
             </tr>
           </tfoot>
         </table>

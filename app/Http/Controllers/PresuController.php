@@ -64,9 +64,6 @@ class PresuController extends Controller
           'proyecto'=>'required',
           'cliente'=>'required',
           'ubicacion'=>'required',
-          // 'colonia'=>'required',
-          // 'municipio'=>'required',
-          // 'estado'=>'required',
           'porcent_indirecto'=>'required',
           'porcent_financiam'=>'required',
           'porcent_utilidad'=>'required',
@@ -92,9 +89,6 @@ class PresuController extends Controller
           'proyecto'=>$validatedRequest['proyecto'],
           'id_cliente'=>$ids['cliente'] ,
           'ubicacion'=>$validatedRequest['ubicacion'] ,
-          // 'colonia'=>$dataRequest['colonia'] ,
-          // 'municipio'=>$dataRequest['municipio'] ,
-          // 'estado'=>$dataRequest['estado'] ,
 
           'estatus'=> $estatus,
           'costo_directo' => $costoDirecto,
@@ -126,20 +120,15 @@ class PresuController extends Controller
     /**     * Show the form for editing the specified resource.    */
     public function edit($idPresup, Request $request): View
     {
-      // $presu = Presu::find($idPresup);     
-      // $presu = Presu::with(['cliente'])->get($idPresup);
       $presu = Presu::with(['cliente'])->findOrFail($idPresup);
-
       $tarjetas = Tarjeta::where('id_presup', $idPresup)->get();
+
       foreach ($tarjetas as $tarjeta) {
         $idTarjeta = $tarjeta->id;
         $existeConcepto = Catalogo::where('id_tarjeta', $idTarjeta)->first();
 
         if (!$existeConcepto) {
           $newConcepto = Catalogo::create([
-            // 'concepto' => $tarjeta->concepto,
-            // 'unidad' => $tarjeta->unidad,   
-            // 'precio_unitario' => $tarjeta->precio_unitario,  
             'id_tarjeta' => $tarjeta->id,
             'id_presup' => $tarjeta->id_presup,
             'cantidad' => 0,            
@@ -156,9 +145,7 @@ class PresuController extends Controller
         
       $conceptos = Catalogo::where('id_presup', $idPresup)->get();
       $costoTotal = 0;     
-
       return view('tabs/editpresupuesto', [ 'presu' => $presu, 'conceptos' => $conceptos,  'costoTotal' => $costoTotal  ]);
-
     }    
     
     //*--------------------------------------------------*/
@@ -166,11 +153,9 @@ class PresuController extends Controller
     {      
       $concepto = Catalogo::find($id); 
       // dd($concepto);  
-
       $idTarjeta = $concepto->id_tarjeta;
       $tarjeta = Tarjeta::where('id', $idTarjeta)->first();   
       // dd($tarjeta);
-
       $costoDirectoTarjeta = $tarjeta->costo_directo; 
       $costoIndirectoTarjeta = $tarjeta->costo_indirecto;
       $indirectosTarjeta = $tarjeta->indirectos;
@@ -181,12 +166,15 @@ class PresuController extends Controller
       $cantidadConcepto= $request->input('cantidad_concepto');  
       // dd($cantidadConcepto);  
 
-      $PUConcepto =  $concepto->concepto->precio_unitario; 
-      // dd($PUConcepto);  
+      // $PUConcepto =  $concepto->concepto->precio_unitario; antes de normalizar bd 
+      $PUTarjeta = $tarjeta->precio_unitario;
 
+      // dd($PUConcepto, $PUTarjeta); 
+      // $importeConcepto = $cantidadConcepto * $PUConcepto;  antes de normalizar bd 
+
+      $importeConcepto = $cantidadConcepto * $PUTarjeta;  
       $costoDirecto = $cantidadConcepto * $costoDirectoTarjeta;  // dd($costoDirecto);
       $costoIndirecto = $cantidadConcepto * $costoIndirectoTarjeta; //dd($costoIndirecto);
-      $importeConcepto = $cantidadConcepto * $PUConcepto;  
       $indirectosConcepto = $cantidadConcepto * $indirectosTarjeta;
       $financiamConcepto = $cantidadConcepto * $financiamTarjeta;
       $utilidadConcepto = $cantidadConcepto * $utilidadTarjeta;
@@ -203,7 +191,8 @@ class PresuController extends Controller
       $concepto->save();      
        
       $idPresup = $concepto->id_presup;
-      $costoTotal = $this->calcularConceptos($PUConcepto, $idPresup);        
+      // $costoTotal = $this->calcularConceptos($PUConcepto, $idPresup); antes de normalizar bd       
+      $costoTotal = $this->calcularConceptos($PUTarjeta, $idPresup);        
 
       return redirect()->route('cantEdit', $concepto->id_presup);
     }
@@ -214,7 +203,8 @@ class PresuController extends Controller
       // }
     
     //*--------------------------------------------------*/
-    public function calcularConceptos($PUConcepto, $idPresup)
+    // public function calcularConceptos($PUConcepto, $idPresup) antes de normalizar bd
+    public function calcularConceptos($PUTarjeta, $idPresup)
     { 
         $presu = Presu::find($idPresup);        
         $conceptos = Catalogo::where('id_presup', $idPresup)->get();
@@ -229,15 +219,6 @@ class PresuController extends Controller
         $cargosAdicionTotal = 0;        
 
         foreach ($conceptos as $concepto) {  
-          $importeConcepto = $concepto->importe;
-          $costoTotal += $importeConcepto;   
-
-          $costoDirecto = $concepto->costo_directo;
-          $costoDirectoTotal += $costoDirecto;
-
-          $costoIndirecto = $concepto->costo_indirecto;
-          $costoIndirectoTotal += $costoIndirecto;       
-
           $indirectos = $concepto->indirectos;
           $indirectosTotal += $indirectos;
 
@@ -249,19 +230,25 @@ class PresuController extends Controller
 
           $cargosAdicion = $concepto->cargos_adicion;
           $cargosAdicionTotal += $cargosAdicion; 
-        }
+          // -----------------------------
+          $costoIndirecto = $concepto->costo_indirecto;
+          $costoIndirectoTotal += $costoIndirecto;
 
-        // dd($costoIndirectoTotal);
-        $presu->indirectos = $indirectosTotal;
+          $costoDirecto = $concepto->costo_directo;
+          $costoDirectoTotal += $costoDirecto;
 
-        $presu->costo_directo = $costoDirectoTotal;
-        $presu->costo_indirecto = $costoIndirectoTotal;
-        $presu->costo_total = $costoTotal;
+          $importeConcepto = $concepto->importe;
+          $costoTotal += $importeConcepto;   
+        }  
 
         $presu->indirectos = $indirectosTotal;
         $presu->financiam = $financiamTotal;
         $presu->utilidad = $utilidadTotal;
         $presu->cargos_adicion = $cargosAdicionTotal;
+          // -----------------------------
+        $presu->costo_indirecto = $costoIndirectoTotal;
+        $presu->costo_directo = $costoDirectoTotal;
+        $presu->costo_total = $costoTotal;
 
         $presu->save();          
     }

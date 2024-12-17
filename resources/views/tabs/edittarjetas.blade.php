@@ -97,11 +97,13 @@
               <td class="tablemergent__td">{{$conceptoIns['material']}}</td>
               <td>{{$conceptoIns['unidad']}}</td>
               <td>
-                <input type="number" step="0.0001" name="cantidad_mater[]"
+                <input type="number" step="0.00001" name="cantidad_mater[]"
                   class="form__input form__input--short pointer select_auto " value="{{$conceptoIns['cantidad']}}">
               </td>
               <td>{{number_format ($conceptoIns['precio_unitario'], 2)}}</td>
+              {{-- <td>{{$conceptoIns['precio_unitario']}}</td> --}}
               <td>{{number_format($conceptoIns['importe'], 2)}}</td>
+              {{-- <td>{{$conceptoIns['importe']}}</td> --}}
             </tr>
             @endforeach
           </tbody>
@@ -114,6 +116,7 @@
               <td></td>
               <td>SUB-TOTAL</td>
               <td>{{number_format($tarjeta->costo_material,2)}}</td>
+              {{-- <td>{{$tarjeta->costo_material}}</td> --}}
             </tr>
           </tbody>
           <tbody>
@@ -147,11 +150,13 @@
               <td class="tablemergent__td">{{$conceptoMO['concepto_MO']}}</td>
               <td>{{$conceptoMO['unidad']}}</td>
               <td>
-                <input type="number" step="0.0001" name="cant_mano_obra[]"
+                <input type="number" step="0.00001" name="cant_mano_obra[]"
                   class="form__input form__input--short pointer select_auto " value="{{$conceptoMO['cantidad']}}">
               </td>
               <td>{{number_format ($conceptoMO['precio_unitario'], 2)}}</td>
+              {{-- <td>{{$conceptoMO['precio_unitario']}}</td> --}}
               <td>{{number_format($conceptoMO['importe'], 2)}}</td>
+              {{-- <td>{{$conceptoMO['importe']}}</td> --}}
             </tr>
             @endforeach
           </tbody>
@@ -165,6 +170,7 @@
               <td></td>
               <td>SUB-TOTAL</td>
               <td>{{number_format($tarjeta->costo_mano_obra,2)}}</td>
+              {{-- <td>{{$tarjeta->costo_mano_obra}}</td> --}}
             </tr>
           </tbody>
           {{---------------------------------- --}}
@@ -192,11 +198,12 @@
               <td class="tablemergent__td">{{$conceptoEq->equipo->herramienta_equipo}}</td>
               <td>{{$conceptoEq->equipo->unidad->unidad}}</td>
               <td>
-                <input type="number" step="0.0001" name="cant_equipo[]"
+                <input type="number" step="0.00001" name="cant_equipo[]"
                   class="form__input form__input--short pointer select_auto " value="{{$conceptoEq->cantidad}}">
               </td>
               <td>{{$conceptoEq->equipo->precio_unitario}}</td>
               <td>{{number_format($conceptoEq->importe, 2)}}</td>
+              {{-- <td>{{$conceptoEq->importe}}</td> --}}
             </tr>
             @endforeach
           </tbody>
@@ -209,7 +216,8 @@
               <td></td>
               <td></td>
               <td>SUB-TOTAL</td>
-              <td>{{number_format($tarjeta->costo_equipo,2)}}</td>
+              <td>{{number_format($tarjeta->costo_equipo,2)}}</td>  
+              {{-- <td>{{$tarjeta->costo_equipo}}</td> --}}
             </tr>
             <tr>
               <td></td>
@@ -218,7 +226,8 @@
               <td></td>
               <td></td>
               <th>COSTO DIRECTO</th>
-              <th>{{number_format($tarjeta->costo_directo,2)}}</th>
+              <th>{{number_format($tarjeta->costo_directo,2)}}</th> 
+              {{-- <th>{{$tarjeta->costo_directo}}</th> --}}
             </tr>
           </tbody>
         </table>
@@ -248,26 +257,31 @@
           <td>INDIRECTOS</td>
           <td>{{$tarjeta->presupuesto->porcent_indirecto}}</td>
           <td>{{number_format($tarjeta->indirectos,2)}}</td>
+          {{-- <td>{{$tarjeta->indirectos}}</td> --}}
         </tr>
         <tr>
           <td>FINANCIAMIENTO</td>
           <td>{{$tarjeta->presupuesto->porcent_financiam}}</td>
           <td>{{number_format($tarjeta->financiam,2)}}</td>
+          {{-- <td>{{$tarjeta->financiam}}</td> --}}
         </tr>
         <tr>
           <td>UTILIDAD</td>
           <td>{{$tarjeta->presupuesto->porcent_utilidad}}</td>
           <td>{{number_format($tarjeta->utilidad,2)}}</td>
+          {{-- <td>{{$tarjeta->utilidad}}</td> --}}
         </tr>
         <tr>
           <td>CARGOS ADICIONALES</td>
           <td>{{$tarjeta->presupuesto->porcent_costos_add}}</td>
           <td>{{number_format($tarjeta->cargos_adicion,2)}}</td>
+          {{-- <td>{{$tarjeta->cargos_adicion}}</td> --}}
         </tr>
         <tr>
           <td></td>
           <th>PRECIO UNITARIO</th>
           <th>{{number_format($tarjeta->precio_unitario,2)}}</th>
+          {{-- <th>{{$tarjeta->precio_unitario}}</th> --}}
         </tr>
       </tbody>
     </table>

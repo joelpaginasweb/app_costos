@@ -170,64 +170,6 @@ class AuxiController extends Controller
       return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
   }
 
-  // public function deleteConceptoNoFunc($idConcepto)
-  // {      
-  //     $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();       
-  //     $idAuxiliar = $conceptoDelete->id_auxiliar;
-  //     $conceptoDelete->delete();
-      
-  //     // Find the Auxi model instance
-  //     $auxi = Auxi::findOrFail($idAuxiliar);
-      
-  //     // Create a request instance to simulate the update request
-  //     $request = Request::create('', 'POST', [
-  //         'grupo' => $auxi->grupo,
-  //         'material_auxiliar' => $auxi->material,
-  //         'unidad' => $auxi->unidad,
-  //         'id_material' => ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->pluck('id_material')->toArray(),
-  //         'cantidad_mater' => ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->pluck('cantidad')->toArray()
-  //     ]);
-      
-  //     // Call the update method
-  //     return $this->update($request, $auxi);
-  // }
-
-  /**  * Borra conceptos de ConceptosAuxiliares y actualiza el auxiliar relacionado al redirigir.  */
-  // public function deleteConceptoNO($idConcepto, Request $request)
-  // {
-  //     // Obtener el concepto a eliminar
-  //     $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();
-      
-  //     if (!$conceptoDelete) {
-  //         return redirect()->back()->with('error', 'Concepto no encontrado.');
-  //     }
-
-  //     // Obtener el ID del auxiliar asociado
-  //     $idAuxiliar = $conceptoDelete->id_auxiliar;
-      
-  //     // Eliminar el concepto
-  //     $conceptoDelete->delete();
-
-  //     // Buscar el auxiliar asociado
-  //     $auxi = Auxi::findOrFail($idAuxiliar);
-
-  //     // Simular un Request con datos necesarios para update
-  //     $fakeRequest = new Request([
-  //         'grupo' => $auxi->id_grupo,
-  //         'material_auxiliar' => $auxi->material,
-  //         'unidad' => $auxi->id_unidad,
-  //         'id_material' => [], // Reemplaza con los materiales actuales si es necesario
-  //         'cantidad_mater' => [] // Reemplaza con las cantidades actuales si es necesario
-  //     ]);
-
-  //     // Ejecutar el método update
-  //     $this->update($fakeRequest, $auxi);
-
-  //     // Redirigir a la vista de edición con un mensaje de éxito
-  //     return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar])
-  //         ->with('success', 'Concepto eliminado y auxiliar actualizado.');
-  // }
-
   /** *copy the specified resource  */
   public function copy($id)
   {      

@@ -9,6 +9,7 @@ class Tarjeta extends Model
 {
     use HasFactory;
     protected $table = 'tarjetas';
+    
     protected $fillable = [      
       'id_grupo',
       'concepto', 

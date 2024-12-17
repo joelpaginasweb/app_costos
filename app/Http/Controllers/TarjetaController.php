@@ -47,6 +47,7 @@ class TarjetaController extends Controller
         DB::transaction(function () use ($request, $validatedData) {
 
           $costos = $this->calcularCostos($request);
+          // dd($costos);
           $tarjeta = $this->guardarOActualizarTarjeta($validatedData, $costos);
           $this->guardarConceptosDetallados($tarjeta->id, $request);
 
@@ -89,6 +90,8 @@ class TarjetaController extends Controller
       );
 
       $costoDirecto = $costoMaterial + $costoManoObra + $costoEquipo;
+      // $costoDirecto = 111.4891639653;
+      // dd($costoDirecto);
 
       return [
           'costo_material' => $costoMaterial,
@@ -117,6 +120,7 @@ class TarjetaController extends Controller
   private function calcularCostoManoObra(array $tipos, array $ids, array $cantidades): float
   {
       $costo = 0;
+      $importes = [];
       foreach ($ids as $key => $id) {
           $tipo = $tipos[$key];
           $cantidad = $cantidades[$key];
@@ -128,8 +132,15 @@ class TarjetaController extends Controller
           $precioUnitario = $tipo === 'categoria' 
               ? $registro->salario_real 
               : $registro->total;
-              
-          $costo += $cantidad * $precioUnitario;
+
+              $importe = $cantidad * $precioUnitario;
+              //$importes = // resultados de $cantidad * $precioUnitario de todos los items del array
+              $importes[] = $importe;
+              // dd($importes);
+
+          $costo += $importe;
+
+          // dd($importe);
       }
       return $costo;
   }
@@ -392,7 +403,10 @@ class TarjetaController extends Controller
 
       try {
           DB::transaction(function () use ($request, $validatedData, $tarjeta) {
-              $costos = $this->calcularCostos($request);     
+              $costos = $this->calcularCostos($request);  
+
+          // dd($costos, $validatedData );
+                
               $tarjeta = $this->guardarOActualizarTarjeta($validatedData, $costos);
               $this->guardarConceptosDetallados($tarjeta->id, $request);
           });

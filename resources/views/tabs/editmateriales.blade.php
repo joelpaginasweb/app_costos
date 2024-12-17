@@ -53,8 +53,7 @@
         <input type="text" name="unidad" class="form__input" value="{{$materiale->unidad->unidad}}">
       </div>
       <div class="container">
-          <label for="precio_unitario" class="form__label">precio_unitario</label> 
-
+          <label for="precio_unitario" class="form__label">precio unitario</label> 
         <input type="number" step="0.01" name="precio_unitario" class="form__input"
           value="{{$materiale->precio_unitario}}">
       </div>

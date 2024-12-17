@@ -74,6 +74,7 @@
                   value="{{$concepto->cantidad}}"></td>
               <td>{{$concepto->categoriaData->salario_real}}</td>
               <td>{{number_format($concepto->importe, 2)}}</td>
+              {{-- <td>{{$concepto->importe}}</td> --}}
             </tr>
             @endforeach
           </tbody>
@@ -86,6 +87,7 @@
               <td></td>
               <td>TOTAL</td>
               <td>{{number_format($cuadrilla->total, 2)}}</td>
+              {{-- <td>{{$cuadrilla->total}}</td> --}}
             </tr>
           </tfoot>
         </table>
