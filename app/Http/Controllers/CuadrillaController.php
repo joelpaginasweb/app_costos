@@ -159,21 +159,28 @@ class CuadrillaController extends Controller
     /**     *copy the specified resource       */
     public function copy($id)
     {      
-        $cuadrillaBase = Cuadrillas::find($id);
-        $idCuadrilla = $id;    
-        $cuadrillaNew = $cuadrillaBase->replicate();
-        $cuadrillaNew->save();
-        $idCuadrillaNew = $cuadrillaNew->id;  
-        $conceptos = ConceptosCuadrillas::where('id_cuadrilla', $idCuadrilla)->get();
-        $conceptosNew = collect(); //crea una nueva coleccion vacia para almacenar registros
-  
-        foreach ($conceptos as $concepto) {
+      $cuadrillaBase = Cuadrillas::find($id);
+      $idCuadrilla = $id;  
+
+      $cuadrillaNew = $cuadrillaBase->replicate();
+      $cuadrillaNew->save();
+
+      $idCuadrillaNew = $cuadrillaNew->id;  
+
+      $conceptos = ConceptosCuadrillas::where('id_cuadrilla', $idCuadrilla)->get();
+      $conceptosNew = collect(); //crea una nueva coleccion vacia para almacenar registros
+
+      foreach ($conceptos as $concepto) {
         $conceptoNew = $concepto->replicate();      
         $conceptoNew->id_cuadrilla = $idCuadrillaNew; 
         $conceptoNew->save();
         $conceptosNew->push($conceptoNew);
-        }
-        return redirect()->route('cuadrillas.index')->with('success', 'Cuadrilla Copiada');  
+      }
+
+        // return redirect()->route('cuadrillas.index')->with('success', 'Cuadrilla Copiada'); 
+      return redirect()->route('cuadrillas.edit', ['cuadrilla' => $idCuadrillaNew])->with('success', 'Cuadrilla Copiada');
+
+
     }
 
     /**      * Remove the specified resource from storage.      */

@@ -47,9 +47,11 @@ Route::middleware('auth')->group(function () {
   Route::post('/updateConceptoCantidad/{id}', [PresuController::class, 'updateConceptoCantidad'])->name('updateConceptoCantidad');
   Route::post('/presus/storeCliente', [PresuController::class, 'storeCliente'])->name('presus.storeCliente');
   Route::delete('/destroyCliente/{cliente}', [PresuController::class, 'destroyClient'])->name('presus.destroyCliente');
+  Route::get('/presusCopy/{id}',[PresuController::class, 'copy'])->name('presusCopy');
   
   Route::resource('auxis', AuxiController::class);
-  Route::get('/auxisCopy/{id}',[AuxiController::class, 'copy'])->name('auxisCopy');  
+  Route::get('/auxisCopy/{id}',[AuxiController::class, 'copy'])->name('auxisCopy');
+
   Route::get('/conceptoDeleteAux/{id}',[AuxiController::class, 'deleteConcepto'])->name('conceptoDeleteAux');
 
   Route::resource('tarjetas', TarjetaController::class);

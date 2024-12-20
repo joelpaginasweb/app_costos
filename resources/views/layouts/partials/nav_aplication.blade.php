@@ -7,7 +7,7 @@
       </ul>
     </li>
     <li>
-      <a href="{{route('presus.index')}}" class="menu__item">Presupuesto</a>
+      <a href="{{route('presus.index')}}" class="menu__item">Presupuestos</a>
       <ul>      
         <li><a class="menu__option" href="{{route('expinsumos.index')}}">Exp Insumos</a></i>
         <li><a class="menu__option" href="">...</a></i>  

@@ -84,15 +84,17 @@ class AuxiController extends Controller
     $auxi = Auxi::with(['grupo', 'unidad'])->findOrFail($id);
     $idAuxiliar = $id;      
     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->with(['materialData', 'unidad'])->get();
+    
     return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
   }
 
+
+
+  
   
   /**  * Update the specified resource in storage.  */
   public function update(Request $request, Auxi $auxi): RedirectResponse
   {
-
-    //-------------------------------------------
     $validatedRequest = $request->validate([
       'grupo' => 'required',
       'material_auxiliar' => 'required', 
@@ -117,8 +119,7 @@ class AuxiController extends Controller
       'precio_unitario' => $costoDirectoAux   
     ]); 
 
-    return redirect()->back()->with('success', 'Auxiliar actualizado!'); 
-    
+    return redirect()->back()->with('success', 'Auxiliar actualizado!');    
   }
   
   /** *edita o crea conceptos del auxiliar , calcula costo directo */
@@ -152,13 +153,40 @@ class AuxiController extends Controller
       return $costoDirectoAux;
   }  
 
+  /** *copy the specified resource  */
+  public function copy($id)
+  {      
+      $auxiBase = Auxi::find($id);
+      $idAuxiliar = $id;  
+
+      $auxiNew = $auxiBase->replicate();
+      $auxiNew->save();
+      
+      $idAuxiliarNew = $auxiNew->id;
+
+      $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
+      $conceptosNew = collect(); 
+      
+      foreach ($conceptos as $concepto) {
+        $conceptoNew = $concepto->replicate();      
+        $conceptoNew->id_auxiliar = $idAuxiliarNew; 
+        $conceptoNew->save();
+        $conceptosNew->push($conceptoNew);
+      }
+
+      // return redirect()->route('auxis.index')->with('success', 'Auxiliar duplicado');	
+    return redirect()->route('auxis.edit', ['auxi' => $idAuxiliarNew])->with('success', 'Auxiliar duplicado');
+    // return redirect()->route('auxis.edit', ['auxi' => $idAuxiliarNew]);
+
+  }
+  
+
   /** *elimina conceptos de ConceptosAuxiliares */
   public function deleteConcepto($idConcepto)
   {
       $conceptoDelete = ConceptosAuxiliares::where('id', $idConcepto)->first();   
       $idAuxiliar = $conceptoDelete->id_auxiliar;
       $conceptoDelete->delete();
-
       //---------------------
     // Obtener los nuevos datos del auxiliar (asumiendo que se han actualizado en la vista)
     $auxi = Auxi::find($idAuxiliar);
@@ -170,28 +198,6 @@ class AuxiController extends Controller
       return redirect()->route('auxis.edit', ['auxi' => $idAuxiliar]);
   }
 
-  /** *copy the specified resource  */
-  public function copy($id)
-  {      
-      $auxiBase = Auxi::find($id);
-      $idAuxiliar = $id;    
-      $auxiNew = $auxiBase->replicate();
-      $auxiNew->save();
-      $idAuxiliarNew = $auxiNew->id;
-      $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->get();
-      $conceptosNew = collect(); //crea una nueva coleccion vacia para almacenar registros
-
-      foreach ($conceptos as $concepto) {
-      $conceptoNew = $concepto->replicate();      
-      $conceptoNew->id_auxiliar = $idAuxiliarNew; 
-      $conceptoNew->save();
-      $conceptosNew->push($conceptoNew);
-      }
-      return redirect()->route('auxis.index')->with('success', 'Auxiliar duplicado');	  
-	
-
-  }
-  
   /**  * Remove the specified resource from storage. */
   public function destroy(Auxi $auxi): RedirectResponse
   {    

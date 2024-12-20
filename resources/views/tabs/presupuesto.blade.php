@@ -229,10 +229,15 @@
           {{-- ------------------ --}}
           <td>
             <div class="contain">
+
               <div class="contain">
                 <a href="{{route('presus.edit', $presu->id)}}" class="tablaBase__boton">Ed</a>
               </div>
-              {{-------metodo destroy---------}}
+
+              <div class="contain">
+                <a href="{{route('presusCopy', $presu->id)}}" class="tablaBase__boton">Cop</a>
+              </div>
+
               <div class="contain">
                 <form action="{{route('presus.destroy', $presu)}}" method="POST">
                   @csrf

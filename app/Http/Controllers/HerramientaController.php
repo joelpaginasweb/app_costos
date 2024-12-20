@@ -100,18 +100,12 @@ class HerramientaController extends Controller
     /**  * Remove the specified resource from storage. */
     public function copy($id)
     {
-
       $equipoBase = Herramienta::find($id);
       $idEquipo = $id;
       $equipoNew = $equipoBase->replicate();
       $equipoNew->save();
 
-      // $idEquipoNew = $equipoNew->id;
-
-      return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo duplicado...');
-
-
-      
+      return redirect()->route('herramientas.index')->with('success', 'Herramienta o Equipo duplicado...');      
     }
 
     /** Helper function to get or create related model IDs. */

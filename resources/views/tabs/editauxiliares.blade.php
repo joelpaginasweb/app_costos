@@ -2,6 +2,29 @@
 @section('title', 'Editar Auxiliares')
 @section('content')
 <!----------- ventana emergente  ---------------->
+<section>
+  <div class=" form__alert ">
+    @if (Session::get('success'))
+    <div class="alert alert--success ">
+      <strong>{{Session::get('success')}} <br>
+    </div>
+    @endif
+  </div>
+  {{-- <div class=" form__alert ">
+    @if ($errors->any())
+    <div class="alert alert-danger ">
+      <strong>¡Error al crear material!</strong>
+      <p>Los siguientes datos son necesarios: </p>
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+  </div> --}}
+</section>
+
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
 

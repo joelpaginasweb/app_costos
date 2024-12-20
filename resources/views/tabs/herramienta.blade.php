@@ -88,12 +88,12 @@
           <td>
             <div class="contain">
               <div class="contain">
+                <a href="{{route('herramientas.edit', $herramienta->id)}}" class="tablaBase__boton">Ed</a>
+              </div>
+               <div class="contain">
                 <a href="{{route('herramientasCopy', $herramienta->id)}}" class="tablaBase__boton">Cop</a>
               </div>
 
-              <div class="contain">
-                <a href="{{route('herramientas.edit', $herramienta->id)}}" class="tablaBase__boton">Ed</a>
-              </div>
               <div class="contain">
                 <form action="{{route('herramientas.destroy', $herramienta)}}" method="POST" class="">
                   @csrf

@@ -20,8 +20,7 @@ class PresuController extends Controller
         $presus = Presu::with(['cliente'])->get();
         $clientes = Clientes::with(['ciudad', 'estado'])->get();
 
-        return view('tabs/presupuesto',['presus'=>$presus, 'clientes'=>$clientes]);       
-        
+        return view('tabs/presupuesto',['presus'=>$presus, 'clientes'=>$clientes]);          
     }
 
     /**     * Show the form for creating a new resource.     */
@@ -259,25 +258,48 @@ class PresuController extends Controller
     {        
       $cliente = Clientes::where('nombre' , $data['cliente'])->first();
       return [         'cliente' => $cliente->id     ];      
-    }     
+    }   
 
-    /** Helper function to get or create related model IDs. */
-    private function getOrCreateIds(array $data): array    {        
-      $estado = Estados::firstOrCreate(['estado' => $data['estado']]);
-      $ciudad = Ciudades::firstOrCreate([ 'ciudad' => $data['ciudad'],  'id_estado' => $estado->id, ]);
-
-      return [
-        'estado' => $estado->id,
-        'ciudad' => $ciudad->id
-      ];      
-    }
-
-
-    /**     * Update the specified resource in storage.     */
-    public function update(Request $request, Presu $presu): RedirectResponse
+    /**  *----- Copy the specified resource--------  */
+    public function copy($id)
     {
-        //
+      $presuBase = Presu::findOrFail($id);
+      $idPresup = $id;
+
+      $presuNew = $presuBase->replicate();
+      $presuNew->save();
+
+      $idPresuNew = $presuNew->id;
+
+   
+      //  Copiar los registros del modelo Tarjeta
+     $tarjetas = Tarjeta::where('id_presup', $idPresup)->get();
+
+      foreach ($tarjetas as $tarjeta) {
+
+         $tarjetaController = app(TarjetaController::class); // Instanciar el controlador
+        //  $tarjetaController->copyTarjeta($tarjeta->id, $idPresuNew); // Llamar al método copyTarjeta
+        $tarjetaNew = $tarjetaController->copyTarjeta($tarjeta->id, $idPresuNew); // Llamar al método copyTarjeta
+        // dd($tarjetaNew);
+        $idTarjetaNew = $tarjetaNew->id; // Obtener el id de la nueva tarjeta
+
+        // $conceptos = Catalogo::where('id_presup', $idPresup)->get();
+        $concepto = Catalogo::where('id_tarjeta', $tarjeta->id)->first();
+        // $conceptosNew = collect();
+        // foreach ($conceptos as $concepto) {
+          $conceptoNew = $concepto->replicate();
+          $conceptoNew->id_presup = $idPresuNew;
+          $conceptoNew->id_tarjeta  = $idTarjetaNew;
+          $conceptoNew->save();
+          // $conceptosNew->push($conceptoNew);
+        // }
+
+      } 
+      
+      return redirect()->route('presus.index')->with('success', 'Presupuesto copiado!');
     }
+
+
 
     /**     * Remove the presu specified resource from storage.     */
     public function destroy(Presu $presu): RedirectResponse
@@ -292,4 +314,22 @@ class PresuController extends Controller
       $cliente->delete();
       return redirect()->route('presus.index')->with('success', 'Registro eliminado!');
     }
+
+    /** Helper function to get or create related model IDs. */
+    private function getOrCreateIds(array $data): array    {        
+      $estado = Estados::firstOrCreate(['estado' => $data['estado']]);
+      $ciudad = Ciudades::firstOrCreate([ 'ciudad' => $data['ciudad'],  'id_estado' => $estado->id, ]);
+
+      return [
+        'estado' => $estado->id,
+        'ciudad' => $ciudad->id
+      ];      
+    }
+
+    /**     * Update the specified resource in storage.     */
+    public function update(Request $request, Presu $presu): RedirectResponse
+    {
+        //
+    }
+
 }

@@ -66,7 +66,6 @@
     </div>
     @endif
   </div>
-
 </section>
 
 <section class="section__tablaBase section--down">
@@ -106,12 +105,12 @@
           <td>{{$cuadrilla->updated_at}}</td>
           <td>
             <div class="contain">
-              <div class="contain">
-                <a href="{{route('cuadrillasCopy', $cuadrilla->id)}}" class="tablaBase__boton">Cop</a>
-              </div>
-              <div class="contain">
+            <div class="contain">
                 <a href="{{route('cuadrillas.edit', $cuadrilla->id)}}" class="tablaBase__boton">Ed</a>
               </div>
+              <div class="contain">
+                <a href="{{route('cuadrillasCopy', $cuadrilla->id)}}" class="tablaBase__boton">Cop</a>
+              </div>              
               <div class="contain">
                 <form action="{{route('cuadrillas.destroy', $cuadrilla)}}" method="POST">
                   @csrf

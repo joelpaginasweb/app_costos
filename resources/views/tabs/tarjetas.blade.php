@@ -37,8 +37,8 @@
           {{------------------------}}
           <div class="" id="container_mater">
             <div class="container">
-            {{--  --}}
-             {{-- <span class="form__span" onclick="eliminar(this)">x</span> --}}
+              {{-- --}}
+              {{-- <span class="form__span" onclick="eliminar(this)">x</span> --}}
 
               <label for="select" class="form__label">Tipo</label>
               <select name="tipo_material[]">
@@ -62,7 +62,7 @@
           {{------------------------}}
           <div class="" id="container_mo">
             <div class="container ">
-             {{-- <span class="form__span" onclick="eliminar(this)">x</span> --}}
+              {{-- <span class="form__span" onclick="eliminar(this)">x</span> --}}
               <label for="select" class="form__label">Tipo</label>
               <select name="tipo_mano_obra[]">
                 <option value="categoria" selected>categoria</option>
@@ -84,7 +84,7 @@
           {{-- ---------------- --}}
           <div class="" id="container_equipo">
             <div class="container ">
-             {{-- <span class="form__span" onclick="eliminar(this)">x</span> --}}
+              {{-- <span class="form__span" onclick="eliminar(this)">x</span> --}}
               <label for="id_equipo" class="form__label">Id equipo</label>
               <input type="number" step="0" name="id_equipo[]" class="form__input" placeholder="Id equipo">
               <label for="cant_equipo" class="form__label">cantidad equipo</label>
@@ -179,13 +179,11 @@
           <td>{{$tarjeta->id_presup}}</td>
           <td>
             <div class="contain">
-            <div class="contain">
-                {{-- <a href="{{route('auxisCopy', $auxi->id)}}" class="tablaBase__boton">Cop</a> --}}
-                <a href="{{route('tarjetasCopy', $tarjeta->id)}}" class="tablaBase__boton">Cop</a>
-                {{-- <a href="{}" class="tablaBase__boton">Cop</a> --}}
-              </div>
               <div class="contain">
                 <a href=" {{route('tarjetas.edit', $tarjeta->id)}} " class="tablaBase__boton">Ed</a>
+              </div>
+              <div class="contain">
+                <a href="{{route('tarjetasCopy', $tarjeta->id)}}" class="tablaBase__boton">Cop</a>
               </div>
               <div class="contain">
                 <form action=" {{route('tarjetas.destroy', $tarjeta)}} " method="POST">
