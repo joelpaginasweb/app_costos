@@ -10,19 +10,22 @@
   
   <div class="contenedorFlex">
      <div class="container">
-      <p><strong>Material Actual</strong></p>
+      <p><strong>Material</strong></p>
     </div>
     <div class="container">
-      <p>Grupo: {{ $materiale->grupo->grupo}}</p>
+      <p>N° Id: {{$materiale->id}} -</p>
+    </div>    
+    <div class="container">
+      <p>Grupo: {{ $materiale->grupo->grupo}} -</p>
     </div>
     <div class="container">
-      <p> Material: {{$materiale->material}} </p>
+      <p> Material: {{$materiale->material}} -</p>
     </div>
     <div class="container">
-      <p>Unidad: {{ $materiale->unidad->unidad}}</p>
+      <p>Unidad: {{ $materiale->unidad->unidad}} -</p>
     </div>
     <div class="container">
-      <p> precio unitario: {{$materiale->precio_unitario}} </p>
+      <p> precio unitario: {{$materiale->precio_unitario}} -</p>
     </div>
     <div class="container">
       <p>Proveedor: {{ $materiale->proveedor->proveedor}}</p>
@@ -32,7 +35,7 @@
 
 <section class="section__form">
   <div class="form__titulo">
-    <h5>ACTUALIZAR DATOS DEL MATERIAL Numero de Id = {{$materiale->id}}</h5>
+    <h5>ACTUALIZAR DATOS</h5>
   </div>
 
   <form action="{{route('materiales.update' ,$materiale)}}" method="POST" class="form">

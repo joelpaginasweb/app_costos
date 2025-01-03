@@ -86,11 +86,7 @@ class AuxiController extends Controller
     $conceptos = ConceptosAuxiliares::where('id_auxiliar', $idAuxiliar)->with(['materialData', 'unidad'])->get();
     
     return view('tabs/editauxiliares',['auxi'=>$auxi, 'conceptos'=>$conceptos]);
-  }
-
-
-
-  
+  }  
   
   /**  * Update the specified resource in storage.  */
   public function update(Request $request, Auxi $auxi): RedirectResponse

@@ -27,7 +27,6 @@
 
 <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
-
     <div class="emergente__header ">
       <h3 class="emergente__titulo">TARJETA AUXILIAR</h3>
       <div class="emergente__close">

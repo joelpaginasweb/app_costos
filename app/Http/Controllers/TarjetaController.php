@@ -405,7 +405,7 @@ class TarjetaController extends Controller
           DB::transaction(function () use ($request, $validatedData, $tarjeta) {
               $costos = $this->calcularCostos($request);  
 
-          // dd($costos, $validatedData );
+            // dd($costos, $validatedData );
                 
               $tarjeta = $this->guardarOActualizarTarjeta($validatedData, $costos);
               $this->guardarConceptosDetallados($tarjeta->id, $request);
@@ -449,6 +449,8 @@ class TarjetaController extends Controller
     $tarjetaNew = $tarjetaBase->replicate();
     $tarjetaNew->save();
 
+    $idTarjetaNew = $tarjetaNew->id;
+
     $conceptosTypes = [
         'materiales' => ConceptosMateriales::class,
         'manoObras' => ConceptosManoObras::class,
@@ -459,22 +461,20 @@ class TarjetaController extends Controller
         $this->duplicateConceptos($id, $tarjetaNew->id, $className);
     }
 
-    return redirect()->route('tarjetas.index')
-        ->with('success', 'Tarjeta de costos Duplicada con Éxito');
+
+    return redirect()->route('tarjetas.edit', ['tarjeta' => $idTarjetaNew])->with('success', 'Tarjeta de costos Duplicada ');
+
+    // return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Duplicada con Éxito');
   }
 
   public function copyTarjeta($idTarjeta, $idPresuNew)
   {
     $tarjetaBase = Tarjeta::findOrFail($idTarjeta);
 
-    // Crear un nuevo registro del modelo Tarjeta
     $tarjetaNew = $tarjetaBase->replicate();
-    $tarjetaNew->id_presup = $idPresuNew; // Actualizar el id_presup
-    $tarjetaNew->save();
-    // $idTarjetaNew = $tarjetaNew->id;
-
-    
-    // Copiar conceptos relacionados
+    $tarjetaNew->id_presup = $idPresuNew; 
+    $tarjetaNew->save();    
+   
     $conceptosTypes = [
       'materiales' => ConceptosMateriales::class,
       'manoObras' => ConceptosManoObras::class,

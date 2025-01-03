@@ -10,7 +10,7 @@
       <h3 class="emergente__titulo">TARJETA DE COSTOS</h3>
       <div class="emergente__close">
         <a href="#">
-          <h4 id="close" class="emergente__h4">cerrar</h4>
+          {{-- <h4 id="close" class="emergente__h4">cerrar</h4> --}}
         </a>
       </div>
     </div>
@@ -29,6 +29,8 @@
           <div class=" containDatos__datos">
             <h4>ID PRESUPUESTO:</h4>
              <input type="number" step="0" name="id_presupuesto" class="form__input" value="{{$tarjeta->id_presup}}">
+            {{-- <p>{{$tarjeta->id_presup}}</p> --}}
+
           </div>
           <div class=" containDatos__datos ">
             <h4>ID TARJETA:</h4>

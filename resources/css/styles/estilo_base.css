@@ -176,15 +176,12 @@ body, main, footer, .mainAplication {
   padding: 5px 8% ;
 }
 
-
-
 .form__titulo {
   color: #fcf8f8;
   background-color: #12577c;
   font-size: 14px;
   text-align: center;
   padding: 4px 10%;
-  /* cursor: pointer; */
 }
 
 .form {

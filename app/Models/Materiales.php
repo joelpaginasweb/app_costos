@@ -20,8 +20,7 @@ class Materiales extends Model
   ];  
 
   //Relaciones a otros modelos
-  public function grupo()
-  {
+  public function grupo() { 
     return $this->belongsTo(Grupos::class, 'id_grupo');
   }
 

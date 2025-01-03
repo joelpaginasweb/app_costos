@@ -18,15 +18,22 @@
 }
 
 .tablaBase__title {
-  /* margin: auto  0;
-  width: 100%;
-  text-align: center; */
+  color: #fcf8f8;
+  background-color: #12577c;
+  font-size: 14px;
+  text-align: center;
+  padding: 4px 10%;
+}
+
+.tablaBase__title--datos {
   display: flex;
-  width: 60%;
+  width: 95%;
   justify-content: space-between;
   margin-left: 25%;
   align-items: center; 
 }
+
+
 
 .tablaBase__container {
   padding: 0px;

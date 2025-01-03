@@ -7,9 +7,11 @@
 </section>
 <!-- -------------------------- -->
 <section class="section__form">
+
   <div class="form__titulo pointer display_action">
     <h5>REGISTRAR NUEVO CLIENTE</h5>
   </div>
+
   <div class="form__content form__content--short  element_display">
     <form action="{{route('presus.storeCliente')}}" method="POST" class="form">
       @csrf
@@ -129,9 +131,6 @@
         <input type="text" name="proyecto" placeholder="Nombre del Proyecto" class="form__input">
         <input type="text" name="cliente" placeholder="cliente" class="form__input" value="Cliente Generico">
         <input type="text" name="ubicacion" placeholder="ubicacion" class="form__input">
-        {{-- <input type="text" name="colonia" placeholder="colonia" class="form__input"> --}}
-        {{-- <input type="text" name="municipio" placeholder="municipio" class="form__input"> --}}
-        {{-- <input type="text" name="estado" placeholder="estado " class="form__input"> --}}
       </div>
       <div class="contenedorFlex">
         <div class="container">
@@ -182,11 +181,25 @@
 {{-- --------------------------- --}}
 
 <section class="section__tablaBase section--down">
-  <div class="tablaBase__contain">
+
+  {{-- <div class="tablaBase__contain">
     <div class="tablaBase__title">
       <h5>LISTADO DE PRESUPUESTOS</h5>
     </div>
-  </div>
+  </div> --}}
+
+  {{-- <div class="tablaBase__contain"> --}}
+    <div class="tablaBase__title ">
+      <h5>LISTADO DE PRESUPUESTOS</h5>
+    </div>
+  {{-- </div> --}}
+
+    {{-- <div class="tablaBase__contain"> --}}
+    {{-- <div class="tablaBase__title"> --}}
+      {{-- <h5>LISTADO DE PRESUPUESTOS</h5> --}}
+    {{-- </div> --}}
+  {{-- </div> --}}
+
   <div class="tablaBase__container">
     <table class="tablaBase tablaPresus" id="tabla_base">
       <thead>
