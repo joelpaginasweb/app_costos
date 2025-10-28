@@ -17,6 +17,8 @@ use App\Models\Unidades;
 use App\Models\ConceptosMateriales;
 use App\Models\ConceptosManoObras;
 use App\Models\ConceptosEquipos;
+use App\Models\Porcent;
+
 
 
 class TarjetaController extends Controller
@@ -90,7 +92,6 @@ class TarjetaController extends Controller
       );
 
       $costoDirecto = $costoMaterial + $costoManoObra + $costoEquipo;
-      // $costoDirecto = 111.4891639653;
       // dd($costoDirecto);
 
       return [
@@ -157,14 +158,19 @@ class TarjetaController extends Controller
 
   private function calcularCostosAdicionales(array $costosBase, int $idPresupuesto): array
   {
-      $presupuesto = Presu::find($idPresupuesto);
-      $costoDirecto = $costosBase['costo_directo'];
 
-      $indirectos = ($presupuesto->porcent_indirecto / 100) * $costoDirecto;
-      $financiamiento = ($presupuesto->porcent_financiam / 100) * $costoDirecto;
-      $utilidad = ($presupuesto->porcent_utilidad / 100) * $costoDirecto;
-      $cargosAdicionales = ($presupuesto->porcent_costos_add / 100) * $costoDirecto;
-      $costoIndirecto = $indirectos + $financiamiento + $utilidad + $cargosAdicionales;
+    $porcentajes = Porcent::where('id_presup', $idPresupuesto)->first();
+
+
+    $costoDirecto = $costosBase['costo_directo'];
+    $indirectos = ($porcentajes->porcent_indirecto / 100) * $costoDirecto;
+    $financiamiento = ($porcentajes->porcent_financiam / 100) * $costoDirecto;
+    $utilidad = ($porcentajes->porcent_utilidad / 100) * $costoDirecto;
+    $cargosAdicionales = ($porcentajes->porcent_costos_add / 100) * $costoDirecto;
+    $costoIndirecto = $indirectos + $financiamiento + $utilidad + $cargosAdicionales;
+
+
+
 
       return [
           'indirectos' => $indirectos,
@@ -307,6 +313,11 @@ class TarjetaController extends Controller
   {
     $tarjeta = Tarjeta::with(['grupo', 'unidad'])->findOrFail($id);
     $idTarjeta = $id;
+    $idPresup = $tarjeta->id_presup;
+    // dd($idPresup);
+    $porcent = Porcent::where('id_presup', $idPresup)->first();
+    // dd($porcent);
+
 
     $conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
     ['id_auxiliar', 0]])->get();
@@ -392,6 +403,7 @@ class TarjetaController extends Controller
         'conceptosIns' => $conceptosIns, 
         'conceptosMO' => $conceptosMO,
         'conceptosEq' => $conceptosEq,
+        'porcent' => $porcent
     ]);
   }
 

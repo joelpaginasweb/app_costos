@@ -257,30 +257,31 @@
       <tbody>
         <tr>
           <td>INDIRECTOS</td>
-          <td>{{$tarjeta->presupuesto->porcent_indirecto}}</td>
+           <td>{{$porcent->porcent_indirecto}}</td>
+          {{-- <td>{{$tarjeta->presupuesto->porcent_indirecto}}</td> --}}
           <td>{{number_format($tarjeta->indirectos,2)}}</td>
-          {{-- <td>{{$tarjeta->indirectos}}</td> --}}
         </tr>
         <tr>
           <td>FINANCIAMIENTO</td>
-          <td>{{$tarjeta->presupuesto->porcent_financiam}}</td>
+           <td>{{$porcent->porcent_financiam}}</td>
+          {{-- <td>{{$tarjeta->presupuesto->porcent_financiam}}</td> --}}
           <td>{{number_format($tarjeta->financiam,2)}}</td>
-          {{-- <td>{{$tarjeta->financiam}}</td> --}}
         </tr>
         <tr>
           <td>UTILIDAD</td>
-          <td>{{$tarjeta->presupuesto->porcent_utilidad}}</td>
+           <td>{{$porcent->porcent_utilidad}}</td>
+          {{-- <td>{{$tarjeta->presupuesto->porcent_utilidad}}</td> --}}
           <td>{{number_format($tarjeta->utilidad,2)}}</td>
-          {{-- <td>{{$tarjeta->utilidad}}</td> --}}
         </tr>
         <tr>
           <td>CARGOS ADICIONALES</td>
-          <td>{{$tarjeta->presupuesto->porcent_costos_add}}</td>
+           <td>{{$porcent->porcent_costos_add}}</td>
+          {{-- <td>{{$tarjeta->presupuesto->porcent_costos_add}}</td> --}}
           <td>{{number_format($tarjeta->cargos_adicion,2)}}</td>
-          {{-- <td>{{$tarjeta->cargos_adicion}}</td> --}}
         </tr>
         <tr>
-          <td></td>
+          <td>costo indirecto = {{number_format($tarjeta->costo_indirecto,2)}}</td>
+          {{-- <td></td> --}}
           <th>PRECIO UNITARIO</th>
           <th>{{number_format($tarjeta->precio_unitario,2)}}</th>
           {{-- <th>{{$tarjeta->precio_unitario}}</th> --}}

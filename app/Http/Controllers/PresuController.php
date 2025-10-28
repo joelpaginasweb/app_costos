@@ -12,6 +12,7 @@ use App\Models\Ciudades;
 use App\Models\Presu;
 use App\Models\Tarjeta;
 use App\Models\Catalogo;
+use App\Models\Porcent;
 
 class PresuController extends Controller
 {
@@ -52,7 +53,7 @@ class PresuController extends Controller
     return redirect()->route('presus.index')->with('success', 'Nuevo Cliente Creado');
   }
 
-  /**     * Store a newly presupuesto created resource in storage.     */
+  /**  ------   * Store a newly presupuesto created resource in storage. -----    */
   public function store(Request $request): RedirectResponse
   {
       $validatedRequest = $request->validate([
@@ -73,12 +74,13 @@ class PresuController extends Controller
         $costoIndirecto = 0;
         $costoTotal = $costoDirecto + $costoIndirecto;
 
+        // --------------------------------------------
         $porcent_indirecto = $validatedRequest['porcent_indirecto'];
         $porcent_financiam = $validatedRequest['porcent_financiam'];
         $porcent_utilidad = $validatedRequest['porcent_utilidad'];
-        $porcent_costos_add = $validatedRequest['porcent_costos_add'];          
-    
+        $porcent_costos_add = $validatedRequest['porcent_costos_add'];       
         $porcentSuma = $porcent_indirecto + $porcent_financiam + $porcent_utilidad + $porcent_costos_add;
+        // ---------------------------------------------
 
         $newPresupuesto =  Presu::create([
         'proyecto'=>$validatedRequest['proyecto'],
@@ -90,17 +92,24 @@ class PresuController extends Controller
         'costo_indirecto' => $costoIndirecto,
         'costo_total' => $costoTotal,
 
-        'porcent_indirecto'=>$validatedRequest['porcent_indirecto'] ,
-        'porcent_financiam'=>$validatedRequest['porcent_financiam'] ,
-        'porcent_utilidad'=>$validatedRequest['porcent_utilidad'] ,
-        'porcent_costos_add'=>$validatedRequest['porcent_costos_add'] ,
-        'porcent_suma' => $porcentSuma,
-
         'indirectos' => 0,
         'financiam' => 0,
         'utilidad' => 0,
         'cargos_adicion' => 0
       ]);
+
+
+      /*-----------crea registro en tabla porcent_indirectos------------------*/
+        Porcent::create([
+          'id_presup' => $newPresupuesto->id,
+          // 'id_tarjeta' => 1,
+          'porcent_indirecto' => $porcent_indirecto,
+          'porcent_financiam' => $porcent_financiam,
+          'porcent_utilidad' => $porcent_utilidad,
+          'porcent_costos_add' => $porcent_costos_add,
+          'porcent_suma' => $porcentSuma
+        ]);
+      /*-----------------------------------*/
 
       $idPresup = $newPresupuesto->id;
 
@@ -120,6 +129,7 @@ class PresuController extends Controller
   {
     $presu = Presu::with(['cliente'])->findOrFail($idPresup);
     $tarjetas = Tarjeta::where('id_presup', $idPresup)->get();
+    $porcent = Porcent::where('id_presup', $idPresup)->first();
 
     foreach ($tarjetas as $tarjeta) {
       $idTarjeta = $tarjeta->id;
@@ -143,7 +153,8 @@ class PresuController extends Controller
       
     $conceptos = Catalogo::where('id_presup', $idPresup)->get();
     $costoTotal = 0;     
-    return view('tabs/editpresupuesto', [ 'presu' => $presu, 'conceptos' => $conceptos,  'costoTotal' => $costoTotal  ]);
+    return view('tabs/editpresupuesto', [ 'presu' => $presu, 'conceptos' => $conceptos,
+      'costoTotal' => $costoTotal, 'porcent' => $porcent ]);
   }  
 
   /**     * Update the specified resource in storage.     */
@@ -154,30 +165,39 @@ class PresuController extends Controller
           'proyecto'=>'required',
           'cliente'=>'required',
           'ubicacion'=>'required',
+          
           'porcent_indirecto'=>'required',
           'porcent_financiam'=>'required',
           'porcent_utilidad'=>'required',
           'porcent_costos_add'=>'required'
       ]);
 
-      // dd($validatedRequest);
-      // $ids = $this->getIdCliente($validatedRequest);
-      // $ids = $this->selectClientById($validatedRequest);
-      // Extraer el ID del cliente del request validado
-      // $clienteId = $validatedRequest['cliente'];
-      // Pasar el ID del cliente a la función selectClientById
-      //  $cliente = $this->selectClientById($clienteId);
-      //  dd($cliente);      
+      // --------------------------------------------
+      $porcent_indirecto = $validatedRequest['porcent_indirecto'];
+      $porcent_financiam = $validatedRequest['porcent_financiam'];
+      $porcent_utilidad = $validatedRequest['porcent_utilidad'];
+      $porcent_costos_add = $validatedRequest['porcent_costos_add'];       
+      $porcentSuma = $porcent_indirecto + $porcent_financiam + $porcent_utilidad + $porcent_costos_add;
+      // ---------------------------------------------   
 
       $presu->update([
-          'proyecto'=>$validatedRequest['proyecto'],
-          'id_cliente'=>$validatedRequest['cliente'] ,
-          'ubicacion'=>$validatedRequest['ubicacion'] ,
-          'porcent_indirecto'=>$validatedRequest['porcent_indirecto'] ,
-          'porcent_financiam'=>$validatedRequest['porcent_financiam'] ,
-          'porcent_utilidad'=>$validatedRequest['porcent_utilidad'] ,
-          'porcent_costos_add'=>$validatedRequest['porcent_costos_add'] 
+        'proyecto'=>$validatedRequest['proyecto'],
+        'id_cliente'=>$validatedRequest['cliente'] ,
+        'ubicacion'=>$validatedRequest['ubicacion'] 
+      ]);      
+
+
+      $porcentajes = Porcent::where('id_presup', $presu->id)->first();
+
+      //----------------------------------------
+      $porcentajes->update([
+          'porcent_indirecto'=>$porcent_indirecto ,
+          'porcent_financiam'=>$porcent_financiam ,
+          'porcent_utilidad'=>$porcent_utilidad ,
+          'porcent_costos_add'=>$porcent_costos_add, 
+          'porcent_suma' => $porcentSuma
       ]);
+      // ----------------------------------------
 
     return redirect()->back()->with('success', 'datos actualizados!');         
   }
@@ -340,13 +360,9 @@ class PresuController extends Controller
 
   /**     * Show the form for creating a new resource.     */
   public function create(): View
-  {        }
-
-  //*--------------------------------------------------*/
-  // public function calcularIndirectos ($id, Request $request )
-  // {
-  // } 
-
+  {        
+    
+  }
 
 
 }

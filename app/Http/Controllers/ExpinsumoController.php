@@ -307,14 +307,6 @@ public function deleteInsumos($idPresup, $rowInsumosDelete)
   }
 
 
-  
-
-
-
-
-
-
-
 }
 
 

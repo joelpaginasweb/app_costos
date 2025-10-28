@@ -43,6 +43,11 @@ class Tarjeta extends Model
       return $this->belongsTo(Presu::class, 'id_presup');
     }
 
+    // public function porcent()
+    // {
+    //   return $this->hasOne(Porcent::class, 'id_tarjeta');
+    // }
+
 }
 
 

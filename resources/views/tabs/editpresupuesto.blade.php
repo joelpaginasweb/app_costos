@@ -127,22 +127,22 @@
             <div class="container">
               <label for="porcent_indirecto" class="form__label">Indirectos</label>
               <input type="number" step="0" name="porcent_indirecto" class="form__input form__input--short"
-                value="{{$presu->porcent_indirecto}}">
+                value="{{$porcent->porcent_indirecto}}">
             </div>
             <div class="container">
               <label for="porcent_financiam" class="form__label">Financiamiento</label>
               <input type="number" step="0" name="porcent_financiam" class="form__input form__input--short"
-                value="{{$presu->porcent_financiam}}">
+                value="{{$porcent->porcent_financiam}}">
             </div>
             <div class="container">
               <label for="porcent_utilidad" class="form__label">Utilidad</label>
               <input type="number" step="0" name="porcent_utilidad" class="form__input form__input--short"
-                value="{{$presu->porcent_utilidad}}">
+                value="{{$porcent->porcent_utilidad}}">
             </div>
             <div class="container">
               <label for="porcent_costos_add" class="form__label">Costos adicionales</label>
               <input type="number" step="0" name="porcent_costos_add" class="form__input form__input--short"
-                value="{{$presu->porcent_costos_add}}">
+                value="{{$porcent->porcent_costos_add}}">
             </div>
             <button type="submit" class="form__boton">Editar</button>
           </div>
@@ -189,27 +189,27 @@
       <tbody>
         <tr>
           <td>INDIRECTOS</td>
-          <td>{{$presu->porcent_indirecto}}</td>
+          <td>{{$porcent->porcent_indirecto}}</td>
           <td>{{number_format($presu->indirectos, 2)}}</td>
         </tr>
         <tr>
           <td>FINANC.</td>
-          <td>{{$presu->porcent_financiam }}</td>
+          <td>{{$porcent->porcent_financiam }}</td>
           <td>{{number_format($presu->financiam, 2)}}</td>
         </tr>
         <tr>
           <td>UTILIDAD</td>
-          <td>{{$presu->porcent_utilidad}}</td>
+          <td>{{$porcent->porcent_utilidad}}</td>
           <td>{{number_format($presu->utilidad, 2)}}</td>
         </tr>
         <tr>
           <td>C.ADICIONALES</td>
-          <td>{{$presu->porcent_costos_add}}</td>
+          <td>{{$porcent->porcent_costos_add}}</td>
           <td>{{number_format($presu->cargos_adicion, 2)}}</td>
         </tr>
         <tr>
           <td>TOTAL COSTOS IND.</td>
-          <td>{{$presu-> porcent_suma}}</td>
+          <td>{{$porcent->porcent_suma}}</td>
           <td>{{number_format($presu->costo_indirecto, 2)}} </td>
         </tr>
         <tr>
