@@ -10,13 +10,10 @@ class Catalogo extends Model
     use HasFactory;
     protected $table = 'catalogo_conceptos';
     protected $fillable = [
-      'concepto',
-     'unidad', 
-     'cantidad', 
-     'precio_unitario', 
-     'importe', 
-     'id_tarjeta',
+      'id_tarjeta',
       'id_presup',
+      'cantidad', 
+      'importe', 
       'costo_directo',
       'costo_indirecto',
       'indirectos',
@@ -24,5 +21,15 @@ class Catalogo extends Model
       'utilidad',
       'cargos_adicion'    
     ];
-    // protected $casts = [ 'importe' => 'decimal:2', 'cantidad' => 'decimal:2' ]; // para que los datos se pasen con decimales 
+
+      //Relaciones a otros modelos
+  public function concepto()
+  {
+    return $this->belongsTo(Tarjeta::class, 'id_tarjeta');
+  }
+
+
+
+
+    
 }

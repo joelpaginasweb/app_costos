@@ -1,12 +1,18 @@
 
+//---------all views tabs--------------
+import './functions/display_element';
+import './functions/imp_data_table';
 
-// -------------edit.presupesto.blade--------------
+//---------edit.presupesto.blade------------
 import './functions/select_one_click';
 
-// -----------tarjetas.blade--------------
+//-----------tarjetas.blade--------------
 import './functions/crear_fila_material';
 import './functions/crear_fila_MO';
 import './functions/crear_fila_equipo';
+
+// --------edittarjetas.blade--------------
+import './functions/add_fila_edit_tarj';
 
 //----------cuadrillas.blade----------
 import './functions/add_fila_cuad';
@@ -14,7 +20,7 @@ import './functions/add_fila_cuad';
 //----------editcuadrillas.blade----------
 import './functions/add_fila_edit_cuad';
 
-// ------------auxilares.blade-----------------
+// ------------auxilares.blade---------------
 import './functions/crea_element_aux';
 import './functions/open_emergente';
 
@@ -33,3 +39,4 @@ import './functions/open_user';
 
 //funcion deprecada
 // import './functions/crear_fila_aux'; 
+//crear_fila_table

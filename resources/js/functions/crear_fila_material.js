@@ -10,6 +10,11 @@ if(botonCrearMat) {
     var container = document.createElement('div');
     container.setAttribute('class', 'container');
 
+    var spanFormSpan = document.createElement('span');
+    spanFormSpan.setAttribute('class', 'form__span');
+    spanFormSpan.setAttribute('onclick', 'eliminar(this)');
+    spanFormSpan.innerText ='x';
+
     var labelSelect = document.createElement('label');
     labelSelect.setAttribute('for', 'select');
     labelSelect.setAttribute('class', 'form__label');
@@ -53,6 +58,7 @@ if(botonCrearMat) {
     selectMat.appendChild(optionMat);
     selectMat.appendChild(optionAux);
 
+    container.appendChild(spanFormSpan);
     container.appendChild(labelSelect);
     container.appendChild(selectMat);
     container.appendChild(labelMaterial);

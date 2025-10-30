@@ -1,9 +1,20 @@
 * {
-  /* margin: 0px; */
-  /* padding: 0px; */
-  /* box-sizing: border-box; */
   font-family: Arial, sans-serif;
-  /* outline: 1px solid rgba(173, 97, 97, 0.2);  */
+  /* outline: 1px solid rgb(216, 148, 148);  */
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.overflow_hidden {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.element_display {
+  display: none;
 }
 
 /*------background------*/
@@ -102,15 +113,26 @@ body, main, footer, .mainAplication {
   min-width: 250px;
   position: relative;
   margin: 0 auto;
-  padding: 3px 0px;
   justify-content: center;
-  border: solid 1px rgba(138, 138, 138, 0.514); 
+  border: 1px solid #a1a1a1;
+
+  /* margin-top: 2px; */
+  /* margin-bottom: 2px; */  
+}
+
+.section--title {
+  border: 1px solid #f7f7f7;
+  background-color: #f7f7f7;
+}
+
+.section__title {
+  padding: 5px 0px;
 }
 
 .section__tablaBase {
   position: relative;
   margin: 0 auto;
-  margin-top: 6px;
+  margin-top: 1px;
   height: auto;
   width: 95%;
   min-width: 900px;
@@ -124,7 +146,6 @@ body, main, footer, .mainAplication {
   padding-bottom: 35px;
 }
 
-
 /*-------------border-------------------*/
 .border-bottom {
   border-bottom: solid 1px #bbbbbb;
@@ -134,9 +155,7 @@ body, main, footer, .mainAplication {
   border: solid 1px #bbbbbb;
 }
 
-
-
-/*-----------form formularios--------------------*/
+/*----------- formularios--------------------*/
 .section__form {
   min-height: auto;
   background: #ffffff;
@@ -144,15 +163,25 @@ body, main, footer, .mainAplication {
   min-width: 250px;
   position: relative;
   margin: 0 auto;
-  margin-top: 6px;
-  border: solid 1px rgba(138, 138, 138, 0.514);
-  border-radius: 3px;
-  padding: 7px;
+  margin-top: 1px;
+  border: 1px solid #7c7c7c;
+}
+
+.form__content {
+  padding: 5px 35px 5px 35px;
+  border-top: solid 1px #7c7c7c;  
+}
+
+.form__content--short {
+  padding: 5px 8% ;
 }
 
 .form__titulo {
-  width: 90%;
-  margin: 0.5em;
+  color: #fcf8f8;
+  background-color: #12577c;
+  font-size: 14px;
+  text-align: center;
+  padding: 4px 10%;
 }
 
 .form {
@@ -172,7 +201,6 @@ body, main, footer, .mainAplication {
 .form__input {
   border: none;
   border-bottom: 1px solid rgb(95, 95, 95);
-  font-size: small;
   justify-content: center;
   text-align: start;
   outline: 0px;
@@ -185,7 +213,7 @@ body, main, footer, .mainAplication {
 }
 
 .form__input--short {
-  width: 6em;
+  width: 70px;
   text-align: center;
   margin: 0px 0px;
 
@@ -201,12 +229,13 @@ body, main, footer, .mainAplication {
 .form__input--area::-webkit-scrollbar {
   display: none;
 }
-
 .form__input--area {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
+.form__alert {
+  padding: 0px 30%  0px 35%;
+}
 
 /*-----input dinamico en table-----*/
 .form__input--table {
@@ -284,9 +313,17 @@ input::-webkit-inner-spin-button {
   padding: 0px 5px;
 }
 
-.pointer {
-  cursor: pointer;
+.select_none{
+  border: solid 1px #5c5c5c;
+  background: #e7e7e7;
+  border-radius: 3px;
+
+  -webkit-appearance: none; /*  navegadores WebKit */
+  -moz-appearance: none;    /*  Firefox */
+  appearance: none;         /*  otros  */
 }
+
+
 
 /*-----------header------------*/
 header {

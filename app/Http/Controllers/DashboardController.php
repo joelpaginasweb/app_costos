@@ -46,17 +46,13 @@ class DashboardController extends Controller
         //Muestra los detalles de un registro específico.
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    /**      * Show the form for editing the specified resource.      */
     public function edit(Dashboard $dashboard)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    /**   * Update the specified resource in storage.   */
     public function update(Request $request, Dashboard $dashboard)
     {
         //

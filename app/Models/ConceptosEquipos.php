@@ -9,7 +9,17 @@ class ConceptosEquipos extends Model
 {
     use HasFactory;
     protected $table = 'conceptos_equipos';
-    protected $fillable = ['id_equipo','concepto', 'unidad', 'cantidad', 'precio_unitario', 'importe',  'id_tarjeta'];
+    protected $fillable = [
+      'id_equipo',
+      'id_tarjeta',
+      'cantidad',
+      'importe'
+    ];
+
+    public function equipo()
+    {
+      return $this->belongsTo(Herramienta::class, 'id_equipo');
+    }
 
 }
 

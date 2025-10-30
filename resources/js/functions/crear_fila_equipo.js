@@ -10,6 +10,11 @@ if(botonCrearEquipo){
       var container = document.createElement('div');
       container.setAttribute('class', 'container');
 
+      var spanFormSpan = document.createElement('span');
+      spanFormSpan.setAttribute('class', 'form__span');
+      spanFormSpan.setAttribute('onclick', 'eliminar(this)');
+      spanFormSpan.innerText ='x';
+
       var labelEquipo = document.createElement('label');
       labelEquipo.setAttribute('for', 'id_equipo');
       labelEquipo.setAttribute('class', 'form__label');
@@ -34,7 +39,7 @@ if(botonCrearEquipo){
       inputCantidad.setAttribute('class', 'form__input');
       inputCantidad.setAttribute('placeholder', 'cantidad equipo');
 
-
+      container.appendChild(spanFormSpan);
       container.appendChild(labelEquipo);
       container.appendChild(inputEquipo);
       container.appendChild(labelCantidad);

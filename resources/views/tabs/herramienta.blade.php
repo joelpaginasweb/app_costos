@@ -1,47 +1,42 @@
 @extends('layouts.aplication')
-
 @section('title', 'Herramienta y Eq')
-
 @section('content')
 
+<section class="section section--title">
+    <h3>HERRAMIENTA MAQUINARIA Y EQUIPO</h3>
+</section>
 
-
-<section class="section">
-  <div>
-    <h1>HERRAMIENTA EQUIPO Y MAQUINARIA</h1>
-    <h4>APLICACION EN CONSTRUCCION</h4>
+<section class="section__form">
+  <div class="form__titulo display_action pointer">
+    <h5>CREAR NUEVA HERRAMIENTA O EQUIPO</h5>
+  </div>
+  <div class="form__content element_display ">
+    <form action="{{route('herramientas.store')}}" method="POST" class="form">
+      @csrf
+      <div class="contenedorFlex">
+        <input type="text" name="grupo" class="form__input" placeholder="grupo">
+        <textarea class="form__textarea" name="herr_equipo"
+          placeholder="ingresar descripcion de la herramienta o equipo"></textarea>
+        <input type="text" name="marca" placeholder="marca" class="form__input">
+        <input type="text" name="proveedor" placeholder="proveedor" class="form__input">
+        <input type="text" name="unidad" placeholder="unidad" class="form__input">
+        <input type="number" step="0.01" name="precio_unitario" placeholder="precio unitario" class="form__input">
+        <button type="submit" class="form__boton">Crear</button>
+      </div>
+    </form>
+    
   </div>
 </section>
 
-
- <section class="section__form">
-  <div class="form__titulo">
-    <h4>CREAR NUEVA HERRAMIENTA EQUIPO O MAQUINARIA</h4>
-  </div>
-  <form action="{{route('herramientas.store')}}" method="POST" class="form">
-    @csrf
-    <div class="contenedorFlex">
-      <input type="text" name="grupo" class="form__input" placeholder="grupo">
-      <textarea class="form__textarea" name="equipo"
-        placeholder="descripcion de la  herramienta, maquinaria o equipo"></textarea>
-      <input type="text" name="modelo" placeholder="modelo" class="form__input">
-      <input type="text" name="marca" placeholder="marca" class="form__input">
-    </div>
-    <div class="contenedorFlex">
-      <input type="text" name="proveedor" placeholder="proveedor" class="form__input">
-      <input type="text" name="unidad" placeholder="unidad" class="form__input">
-      <input type="number" name="precio_unitario" placeholder="precio unitario" step="0.01" class="form__input">
-      <button type="submit" class="form__boton">Crear</button>
-    </div>
-  </form>
-  <div class="section">
+<section>
+  <div class="form__alert">
     @if (Session::get('success'))
     <div class="alert alert--success ">
       <strong>{{Session::get('success')}} <br>
     </div>
     @endif
   </div>
-  <div class="section">
+  <div class="form__alert">
     @if ($errors->any())
     <div class="alert alert-danger mt-3">
       <strong>¡Error al crear Herramienta o Equipo!</strong>
@@ -54,14 +49,14 @@
     </div>
     @endif
   </div>
- </section> 
 
 
+</section>
 
 <section class="section__tablaBase section--down">
   <div class="tablaBase__contain">
     <div class="tablaBase__title">
-      <h5>LISTADO DE HERRAMIENTAS EQUIPOS Y MAQUINARIA</h5>
+      <h5>LISTADO DE HERRAMIENTAS MAQUINARIA Y EQUIPO</h5>
     </div>
   </div>
   <div class="tablaBase__container">
@@ -70,8 +65,7 @@
         <tr class="tabla__titulos">
           <th>ID</th>
           <th>GRUPO</th>
-          <th>NOMBRE DE EQUIPO</th>
-          <th>MODELO</th>
+          <th>DESCRIPCION DE HERR. O EQUIPO</th>
           <th>MARCA</th>
           <th>PROVEEDOR</th>
           <th>UNIDAD</th>
@@ -84,12 +78,11 @@
         @foreach ($herramientas as $herramienta )
         <tr class="">
           <td>{{$herramienta->id}}</td>
-          <td>{{$herramienta->grupo}}</td>
-          <td>{{$herramienta->equipo}}</td>
-          <td>{{$herramienta->modelo}}</td>
-          <td>{{$herramienta->marca}}</td>
-          <td>{{$herramienta->proveedor}}</td>
-          <td>{{$herramienta->unidad}}</td>
+          <td>{{$herramienta->grupo->grupo}}</td>
+          <td>{{$herramienta->herramienta_equipo}}</td>
+          <td>{{$herramienta->marca->marca}}</td>
+          <td>{{$herramienta->proveedor->proveedor}}</td>
+          <td>{{$herramienta->unidad->unidad}}</td>
           <td>{{$herramienta->precio_unitario}}</td>
           <td>{{$herramienta->updated_at}}</td>
           <td>
@@ -97,6 +90,10 @@
               <div class="contain">
                 <a href="{{route('herramientas.edit', $herramienta->id)}}" class="tablaBase__boton">Ed</a>
               </div>
+               <div class="contain">
+                <a href="{{route('herramientasCopy', $herramienta->id)}}" class="tablaBase__boton">Cop</a>
+              </div>
+
               <div class="contain">
                 <form action="{{route('herramientas.destroy', $herramienta)}}" method="POST" class="">
                   @csrf
@@ -116,5 +113,5 @@
 {{-- esta funcion no se compila desde resources/js/functions/ --}}
 <script type="text/javascript" src="{{ asset('js/delete_elements.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-<script>let dataTableC = new simpleDatatables.DataTable("#tabla_base");</script>
+
 @endsection

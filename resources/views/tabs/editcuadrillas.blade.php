@@ -3,6 +3,29 @@
 @section('content')
 
   <!----------- ventana emergente  ---------------->
+  <section>
+  <div class=" form__alert ">
+    @if (Session::get('success'))
+    <div class="alert alert--success ">
+      <strong>{{Session::get('success')}} <br>
+    </div>
+    @endif
+  </div>
+  <div class=" form__alert ">
+    @if ($errors->any())
+    <div class="alert alert-danger ">
+      <strong>¡Error al crear cuadrilla de mano de obra!</strong>
+      <p>Los siguientes datos son necesarios: </p>
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+  </div>
+</section>
+
   <section class="section ">
   <div class="emergente__contain  emergente__contain-display" id="emergente">
     <div class="emergente__header ">
@@ -29,20 +52,20 @@
         <div class="datosEmer__contain">
           <div class="columna33">
             <div class="datosEmer__dato">              
-              <h4>CLAVE ID:</h4>                
+              <h4>ID CUADRILLA:</h4>                
                 <p>{{$cuadrilla->id}}</p>                
             </div>
           </div>
           <div class="columna50">
             <div class=" datosEmer__dato">
               <h4>GRUPO:</h4>
-              <input type="text" name="grupo" class="form__input select_auto pointer" value="{{$cuadrilla->grupo}}">
+              <input type="text" name="grupo" class="form__input select_auto pointer" value="{{$cuadrilla->grupo->grupo}}">
             </div>
           </div>
           <div class="columna50">
             <div class=" datosEmer__dato ">
               <h4>UNIDAD:</h4>
-              <input type="text" name="unidad" class="form__input select_auto pointer" value="{{$cuadrilla->unidad}}">
+              <input type="text" name="unidad" class="form__input select_auto pointer" value="{{$cuadrilla->unidad->unidad}}">
             </div>
           </div>
         </div>
@@ -53,8 +76,8 @@
           <thead class="tablaEmergent__thead">
             <tr>
               <th><input type="button" class="form__boton form__boton--short" id="boton_crear_fila" value="+ Fila"></th>
-              <th>CLAVE ID</th>
-              <th>CATEGORIA</th>
+              <th>ID CATEG.</th>
+              <th>CATEGORIA MANO DE OBRA</th>
               <th>UNIDAD</th>
               <th>CANTIDAD</th>
               <th>SALARIO REAL</th>
@@ -68,12 +91,13 @@
               <td> <a href="{{route('conceptoDeleteCuad', $concepto->id)}}" class="form__span">X</a> </td>
               <td><input type="number" step="0" name="id_categoria[]" class="form__input  form__input--short select_auto pointer"
                   value="{{$concepto->id_categoria}}"></td>
-              <td>{{$concepto->categoria}}</td>
-              <td>{{$concepto->unidad}}</td>
+              <td>{{$concepto->categoriaData->categoria}}</td>
+              <td>{{$concepto->categoriaData->unidad->unidad}}</td>
               <td> <input type="number" step="0.0001" name="cantidad_mo[]" class="form__input form__input--short pointer select_auto "
                   value="{{$concepto->cantidad}}"></td>
-              <td>{{$concepto->salario}}</td>
+              <td>{{$concepto->categoriaData->salario_real}}</td>
               <td>{{number_format($concepto->importe, 2)}}</td>
+              {{-- <td>{{$concepto->importe}}</td> --}}
             </tr>
             @endforeach
           </tbody>
@@ -86,14 +110,18 @@
               <td></td>
               <td>TOTAL</td>
               <td>{{number_format($cuadrilla->total, 2)}}</td>
+              {{-- <td>{{$cuadrilla->total}}</td> --}}
             </tr>
           </tfoot>
         </table>
         <div class="tablaEmergent__divFooter">
-          <button type="submit" id="formBoton" class="form__boton">Editar Cuadrilla</button>    
+          <button type="submit" id="formBoton" class="form__boton">Editar</button>    
+    </form>
+        <form action="{{route('cuadrillas.index')}}">
+      <button type="submit" class="form__boton">Cuadrillas</button>
+    </form>
         </div>
       </div>
-    </form>
   </div>
 </section>
 

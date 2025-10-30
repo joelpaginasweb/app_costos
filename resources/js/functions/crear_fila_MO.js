@@ -5,12 +5,16 @@ if(botonCrearMO) {
 
   botonCrearMO.addEventListener('click', function() { 
 
-    const containerMO = document.querySelector('#container_mo');//
+    const containerMO = document.querySelector('#container_mo');
 
-    var container = document.createElement('div');//
-    container.setAttribute('class', 'container');//
+    var container = document.createElement('div');
+    container.setAttribute('class', 'container');
 
-// ------------------------------------------------
+    var spanFormSpan = document.createElement('span');
+    spanFormSpan.setAttribute('class', 'form__span');
+    spanFormSpan.setAttribute('onclick', 'eliminar(this)');
+    spanFormSpan.innerText ='x';
+
     var labelSelect = document.createElement('label');
     labelSelect.setAttribute('for', 'select');
     labelSelect.setAttribute('class', 'form__label');
@@ -55,6 +59,7 @@ if(botonCrearMO) {
     selectMat.appendChild(optionMat);
     selectMat.appendChild(optionAux);
 
+    container.appendChild(spanFormSpan);
     container.appendChild(labelSelect);
     container.appendChild(selectMat);
     container.appendChild(labelMO);//

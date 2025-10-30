@@ -9,14 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Presu extends Model
 {
     use HasFactory;
-    protected $table = 'presus';
+    protected $table = 'presupuestos';
     protected $fillable = [
-      'obra', 
-      'cliente',
-      'direccion',
-      'colonia',
-      'municipio', 
-      'estado', 
+      'proyecto', 
+      'id_cliente',
+      'ubicacion',      
       'estatus',
       'costo_directo',
       'costo_indirecto',
@@ -31,6 +28,13 @@ class Presu extends Model
       'utilidad',
       'cargos_adicion'
     ];
+
+      //Relaciones a otros modelos
+  public function cliente()
+  {
+    return $this->belongsTo(Clientes::class, 'id_cliente');
+  }
+
 
 
 }

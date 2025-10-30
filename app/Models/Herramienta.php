@@ -8,5 +8,36 @@ use Illuminate\Database\Eloquent\Model;
 class Herramienta extends Model
 {
     use HasFactory;
-    protected $fillable = ['grupo', 'equipo', 'modelo', 'marca', 'proveedor', 'unidad', 'precio_unitario'];
+    protected $table = 'herramientas_equipos';
+
+    protected $fillable = [
+      'id_grupo',
+      'herramienta_equipo',
+      'id_marca',
+      'id_proveedor',
+      'id_unidad',
+      'precio_unitario'
+    ];
+
+    //Relaciones a otros modelos
+    public function grupo()
+    {
+      return $this->belongsTo(Grupos::class, 'id_grupo');
+    }
+    
+    public function marca()
+    {
+      return $this->belongsTo(Marcas::class, 'id_marca');
+    }
+
+    public function proveedor()
+    {
+      return $this->belongsTo(Proveedores::class, 'id_proveedor');
+    }
+
+    public function unidad()
+    {
+      return $this->belongsTo(Unidades::class, 'id_unidad');
+    }
+
 }

@@ -9,274 +9,525 @@ use App\Models\Auxi;
 use App\Models\Cuadrillas;
 use App\Models\Tarjeta;
 use App\Models\Materiales;
+use App\Models\Grupos;
 use App\Models\Manodeobra;
 use App\Models\Herramienta;
 use App\Models\Presu;
+use App\Models\Unidades;
 use App\Models\ConceptosMateriales;
 use App\Models\ConceptosManoObras;
 use App\Models\ConceptosEquipos;
+use App\Models\Porcent;
+
+
 
 class TarjetaController extends Controller
-{ 
+{    
+  private const VALIDATION_RULES = [
+      'grupo' => 'required',
+      'concepto' => 'required',
+      'unidad' => 'required',
+      'id_presupuesto' => 'required',
+      'cantidad_mater' => 'required',
+      'cant_mano_obra' => 'required',
+      'cant_equipo' => 'required'
+  ];
+
   /**      * Display a listing of the resource.      */
   public function index(): View
   {
-    $tarjetas = Tarjeta::all();
-    return view('tabs/tarjetas',['tarjetas'=>$tarjetas]);              
-  } 
-  
-  //---------------------------------------------------------
-  /**  * Store a newly created resource in storage. */ //---optimizado------//
-  public function store(Request $request): RedirectResponse
-  {
-    $dataRequest = $request->validate([
-        'partida' => 'required',
-        'concepto' => 'required',
-        'unidad' => 'required',
-        'id_presupuesto' => 'required'
-    ]);
-
-    $tipoMaterial = $request->input('tipo_material');
-    $tipoManoObra = $request->input('tipo_mano_obra');
-
-    DB::transaction(function () use ($request, $dataRequest) {
-        $idTarjeta = $this->crearTarjeta($dataRequest, $request);
-
-        // Recalcular costos con el id de la nueva tarjeta
-        $this->calcularCostos($idTarjeta, $request);
-    });
-
-    return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Creada con Éxito');
+      $tarjetas = Tarjeta::with(['grupo'])->get();
+      return view('tabs/tarjetas', ['tarjetas' => $tarjetas]);
   }
 
-  /**--------new crearTarjeta---------- */
-  private function crearTarjeta(array $dataRequest, Request $request)
+  /**     * Store a newly created resource in storage.     */ 
+  public function store(Request $request): RedirectResponse
   {
-      $costoMaterial = $this->calcularConceptos(
-          null,
+    $validatedData = $request->validate(self::VALIDATION_RULES);
+    
+      try {
+        DB::transaction(function () use ($request, $validatedData) {
+
+          $costos = $this->calcularCostos($request);
+          // dd($costos);
+          $tarjeta = $this->guardarOActualizarTarjeta($validatedData, $costos);
+          $this->guardarConceptosDetallados($tarjeta->id, $request);
+
+        });
+
+          return redirect()->route('tarjetas.index')
+              ->with('success', 'Tarjeta de costos Creada con Éxito');
+      } catch (\Exception $e) {
+          return redirect()->route('tarjetas.index')
+              ->with('error', 'Error al crear la tarjeta: ' . $e->getMessage());
+      }
+  }
+
+  private function calcularCostos(Request $request): array
+  {
+      $costosBase = $this->calcularCostosBase($request);
+      return array_merge(
+          $costosBase,
+          $this->calcularCostosAdicionales($costosBase, $request->input('id_presupuesto'))
+      );
+  }
+
+  private function calcularCostosBase(Request $request): array
+  {
+      $costoMaterial = $this->calcularCostoMaterial(
           $request->input('tipo_material'),
           $request->input('id_material'),
-          $request->input('cantidad_mater'),
-          [], [], [],
-          [], []
+          $request->input('cantidad_mater')
       );
 
-      $costoManoObra = $this->calcularConceptos(
-          null, [], [], [],
+      $costoManoObra = $this->calcularCostoManoObra(
           $request->input('tipo_mano_obra'),
           $request->input('id_mano_obra'),
-          $request->input('cant_mano_obra'),
-          [], []
+          $request->input('cant_mano_obra')
       );
 
-      $costoEquipo = $this->calcularConceptos(
-          null, [], [], [],
-          [], [], [],
+      $costoEquipo = $this->calcularCostoEquipo(
           $request->input('id_equipo'),
           $request->input('cant_equipo')
       );
 
-      $tarjetaData = [
-          'partida' => $dataRequest['partida'],
-          'concepto' => $dataRequest['concepto'],
-          'unidad' => $dataRequest['unidad'],
-          'costo_material' => $costoMaterial[0],
-          'costo_mano_obra' => $costoManoObra[1],
-          'costo_equipo' => $costoEquipo[2],
-          'costo_directo' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[0],
-          'indirectos' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[1],
-          'financiam' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[2],
-          'utilidad' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[3],
-          'cargos_adicion' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[4],
-          'costo_indirecto' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[5],
-          'precio_unitario' => $this->calcularTarjeta($costoMaterial, $costoManoObra, $costoEquipo, $request)[6],
-          'id_presup' => $dataRequest['id_presupuesto']
-      ];
+      $costoDirecto = $costoMaterial + $costoManoObra + $costoEquipo;
+      // dd($costoDirecto);
 
-      return Tarjeta::create($tarjetaData)->id;
+      return [
+          'costo_material' => $costoMaterial,
+          'costo_mano_obra' => $costoManoObra,
+          'costo_equipo' => $costoEquipo,
+          'costo_directo' => $costoDirecto
+      ];
   }
 
-  /**------new calcularCostos ---------- */
-  private function calcularCostos($idTarjeta, Request $request)
+  private function calcularCostoMaterial(array $tipos, array $ids, array $cantidades): float
   {
-      $this->calcularConceptos(
+      $costo = 0;
+      foreach ($ids as $key => $id) {
+          $tipo = $tipos[$key];
+          $cantidad = $cantidades[$key];
+          
+          $registro = $tipo === 'material' 
+              ? Materiales::find($id) 
+              : Auxi::find($id);
+              
+          $costo += $cantidad * $registro->precio_unitario;
+      }
+      return $costo;
+  }
+
+  private function calcularCostoManoObra(array $tipos, array $ids, array $cantidades): float
+  {
+      $costo = 0;
+      $importes = [];
+      foreach ($ids as $key => $id) {
+          $tipo = $tipos[$key];
+          $cantidad = $cantidades[$key];
+          
+          $registro = $tipo === 'categoria' 
+              ? Manodeobra::find($id) 
+              : Cuadrillas::find($id);
+              
+          $precioUnitario = $tipo === 'categoria' 
+              ? $registro->salario_real 
+              : $registro->total;
+
+              $importe = $cantidad * $precioUnitario;
+              //$importes = // resultados de $cantidad * $precioUnitario de todos los items del array
+              $importes[] = $importe;
+              // dd($importes);
+
+          $costo += $importe;
+
+          // dd($importe);
+      }
+      return $costo;
+  }
+
+  private function calcularCostoEquipo(array $ids, array $cantidades): float
+  {
+      $costo = 0;
+      foreach ($ids as $key => $id) {
+          $registro = Herramienta::find($id);
+          $costo += $cantidades[$key] * $registro->precio_unitario;
+      }
+      return $costo;
+  }
+
+  private function calcularCostosAdicionales(array $costosBase, int $idPresupuesto): array
+  {
+
+    $porcentajes = Porcent::where('id_presup', $idPresupuesto)->first();
+
+
+    $costoDirecto = $costosBase['costo_directo'];
+    $indirectos = ($porcentajes->porcent_indirecto / 100) * $costoDirecto;
+    $financiamiento = ($porcentajes->porcent_financiam / 100) * $costoDirecto;
+    $utilidad = ($porcentajes->porcent_utilidad / 100) * $costoDirecto;
+    $cargosAdicionales = ($porcentajes->porcent_costos_add / 100) * $costoDirecto;
+    $costoIndirecto = $indirectos + $financiamiento + $utilidad + $cargosAdicionales;
+
+
+
+
+      return [
+          'indirectos' => $indirectos,
+          'financiam' => $financiamiento,
+          'utilidad' => $utilidad,
+          'cargos_adicion' => $cargosAdicionales,
+          'costo_indirecto' => $costoIndirecto,
+          'precio_unitario' => $costoDirecto + $costoIndirecto
+      ];
+  }
+
+  /**--------------------------------------------------------------------------------------*/
+  private function guardarOActualizarTarjeta(array $validatedData, array $costos): Tarjeta  
+  {
+      $ids = $this->getOrCreateIds($validatedData);
+      return Tarjeta::updateOrCreate(
+          ['id' => $validatedData['id'] ?? null], 
+          [
+              'id_grupo' => $ids['grupo'],
+              'concepto' => $validatedData['concepto'],
+              'id_unidad' => $ids['unidad'],
+              'id_presup' => $validatedData['id_presupuesto'],
+              ...$costos
+          ]
+      );
+  }
+
+  private function guardarConceptosDetallados(int $idTarjeta, Request $request): void
+  {
+      $this->guardarOActualizarConceptosMaterial
+      (
           $idTarjeta,
           $request->input('tipo_material'),
           $request->input('id_material'),
-          $request->input('cantidad_mater'),
-          [], [], [],
-          [], []
+          $request->input('cantidad_mater')
       );
 
-      $this->calcularConceptos(
-          $idTarjeta, [], [], [],
+      $this->guardarOActualizarConceptosManoObra
+      (
+          $idTarjeta,
           $request->input('tipo_mano_obra'),
           $request->input('id_mano_obra'),
-          $request->input('cant_mano_obra'),
-          [], []
+          $request->input('cant_mano_obra')
       );
 
-      $this->calcularConceptos(
-          $idTarjeta, [], [], [],
-          [], [], [],
+      $this->guardarOActualizarConceptosEquipo
+      (
+          $idTarjeta,
           $request->input('id_equipo'),
           $request->input('cant_equipo')
       );
   }
-  //---------------------------------------------------------
 
-
-  //---------------------------------------------------------
-  /** ---------calcularConceptos-------------- */ 
-  private function calcularConceptos($idTarjeta, $tipoMateriales, $idMateriales, $cantidadesMateriales, $tipoManoObras, $idManoObras, $cantidadesManoObras, $idEquipos, $cantidadesEquipos)
+  /**----------------- ----------------------------------------------------------------*/
+  private function guardarOActualizarConceptosMaterial(int $idTarjeta, array $tipos, array $ids, array $cantidades): void
   {
-      $costoMaterial = $this->calcularCostoConcepto($idTarjeta, $tipoMateriales, $idMateriales, $cantidadesMateriales, 'material');
-      $costoManoObra = $this->calcularCostoConcepto($idTarjeta, $tipoManoObras, $idManoObras, $cantidadesManoObras, 'manoObra');
-      $costoEquipo = $this->calcularCostoConcepto($idTarjeta, [], $idEquipos, $cantidadesEquipos, 'equipo');
-
-      return [$costoMaterial, $costoManoObra, $costoEquipo];
-  }
-
-  /**---------new----------- */
-  private function calcularCostoConcepto($idTarjeta, $tipos, $ids, $cantidades, $tipoConcepto)
-  {
-      $costoTotal = 0;
+      // First, delete existing concepts to avoid duplicates during update
+      ConceptosMateriales::where('id_tarjeta', $idTarjeta)->delete();
 
       foreach ($ids as $key => $id) {
-          $tipo = $tipos[$key] ?? null;
+          $tipo = $tipos[$key];
           $cantidad = $cantidades[$key];
-
-          switch ($tipoConcepto) {
-              case 'material':
-                  $registro = $tipo === 'auxiliar' ? Auxi::find($id) : Materiales::find($id);
-                  $precioUnitario = $registro->precio_unitario;
-                  break;
-
-              case 'manoObra':
-                  if ($tipo === 'categoria') {
-                      $registro = Manodeobra::find($id);
-                      $precioUnitario = $registro->salario_real;
-                      $concepto = $registro->categoria;
-                  } else {
-                      $registro = Cuadrillas::find($id);
-                      $precioUnitario = $registro->total;
-                      $concepto = $registro->descripcion;
-                  }
-                  break;
-
-              case 'equipo':
-                  $registro = Herramienta::find($id);
-                  $precioUnitario = $registro->precio_unitario;
-                  break;
-          }
-
-          $importe = $cantidad * $precioUnitario;
-          $costoTotal += $importe;
-
-          if ($idTarjeta !== null) {
-              $this->guardarConcepto($registro, $precioUnitario, $cantidad, $importe, $id, $idTarjeta, $tipo, $tipoConcepto, $concepto ?? null);
-          }
+          
+          ConceptosMateriales::updateOrCreate(
+              [
+                  'id_tarjeta' => $idTarjeta,
+                  'id_material' => $tipo === 'material' ? $id : 0,
+                  'id_auxiliar' => $tipo === 'auxiliar' ? $id : 0
+              ],
+              [
+                  'cantidad' => $cantidad,
+                  'importe' => $cantidad * ($tipo === 'material' 
+                      ? Materiales::find($id)->precio_unitario 
+                      : Auxi::find($id)->precio_unitario)
+              ]
+          );
       }
-
-      return $costoTotal;
   }
 
-  /**---------new--------- */
-  private function guardarConcepto($registro, $precioUnitario, $cantidad, $importe, $id, $idTarjeta, $tipo, $tipoConcepto, $concepto = null)
+  /** -----------------------------------------------------------------------------------*/
+  private function guardarOActualizarConceptosManoObra(int $idTarjeta, array $tipos, array $ids, array $cantidades): void
   {
-      switch ($tipoConcepto) {
-          case 'material':
-              $this->guardarConceptosMateriales($registro, $precioUnitario, $cantidad, $importe, $id, $idTarjeta, $tipo);
-              break;
+      // First, delete existing concepts to avoid duplicates during update
+      ConceptosManoObras::where('id_tarjeta', $idTarjeta)->delete();
 
-          case 'manoObra':
-              $this->guardarConceptosManoObras($registro, $concepto, $precioUnitario, $cantidad, $importe, $id, $idTarjeta);
-              break;
-
-          case 'equipo':
-              $this->guardarConceptosEquipos($registro, $precioUnitario, $cantidad, $importe, $id, $idTarjeta);
-              break;
+      foreach ($ids as $key => $id) {
+          $tipo = $tipos[$key];
+          $cantidad = $cantidades[$key];
+          
+          ConceptosManoObras::updateOrCreate(
+              [
+                  'id_tarjeta' => $idTarjeta,
+                  'id_categoria' => $tipo === 'categoria' ? $id : 0,
+                  'id_cuadrilla' => $tipo === 'cuadrilla' ? $id : 0
+              ],
+              [
+                  'cantidad' => $cantidad,
+                  'importe' => $cantidad * ($tipo === 'categoria'
+                      ? Manodeobra::find($id)->salario_real
+                      : Cuadrillas::find($id)->total)
+              ]
+          );
       }
-  }  
-  //---------------------------------------------
-
-
-  /** -----calcularTarjeta--------- */
-  private function calcularTarjeta ($costoMaterial, $costoManoObra, $costoEquipo, $request)
-  {    
-    $idPresupuesto = $request->input('id_presupuesto');      
-    $presupuesto = Presu::find($idPresupuesto);  
-
-    $porcentIndirecto = $presupuesto->porcent_indirecto;
-    $porcentFinanciam = $presupuesto->porcent_financiam;
-    $porcentUtilidad = $presupuesto->porcent_utilidad;
-    $porcentCostosAdd = $presupuesto->porcent_costos_add;
-
-    $costoDirecto = $costoMaterial[0] + $costoManoObra[1] + $costoEquipo[2]; 
-
-    $indirecto = ($porcentIndirecto/100) * $costoDirecto; 
-    $financiam = ($porcentFinanciam/100) * $costoDirecto;
-    $utilidad = ($porcentUtilidad/100) * $costoDirecto;
-    $cargosAdicion = ($porcentCostosAdd/100) * $costoDirecto;
-
-    $costoIndirecto = $indirecto + $financiam + $utilidad + $cargosAdicion;
-    $precioUnitario = $costoDirecto + $costoIndirecto; 
-
-    return [$costoDirecto, $indirecto, $financiam, $utilidad, $cargosAdicion, $costoIndirecto, $precioUnitario ]; 
-  }    
-    
-  /**---------- guardarConceptosMateriales--------- */
-  private function guardarConceptosMateriales ($registroMaterial, $PUMaterial, $cantidadMaterial, $importeMaterial, $idMaterial, $idTarjeta, $tipoMaterial )
+  }
+  
+  /**--------------------------------------------------------------------------------------- */
+  private function guardarOActualizarConceptosEquipo(int $idTarjeta, array $ids, array $cantidades): void
   {
-    ConceptosMateriales::create([
-        'id_material' => $idMaterial,
-        'concepto' => $registroMaterial->material,
-        'unidad' => $registroMaterial->unidad,
-        'cantidad' => $cantidadMaterial,
-        'precio_unitario' => $PUMaterial,
-        'importe' => $importeMaterial,
-        'id_tarjeta' => $idTarjeta,
-        'tipo' => $tipoMaterial
-    ]);
-  }  
+      // First, delete existing concepts to avoid duplicates during update
+      ConceptosEquipos::where('id_tarjeta', $idTarjeta)->delete();
 
-  /** ---------guardarConceptosManoObras----------- */
-  private function guardarConceptosManoObras ($registroManoObra, $conceptoMO, $PUManoObra, $cantidadManoObra, $importeManoObra, $idManoObra, $idTarjeta )
-  {           
-    ConceptosManoObras::create([
-      'id_mano_obra' => $idManoObra,
-      'concepto' => $conceptoMO,
-      'unidad' => $registroManoObra->unidad,
-      'cantidad' => $cantidadManoObra,
-      'precio_unitario' => $PUManoObra,
-      'importe' => $importeManoObra,
-      'id_tarjeta' => $idTarjeta
-    ]);
-  } 
+      foreach ($ids as $key => $id) {
+          $cantidad = $cantidades[$key];
+          $registro = Herramienta::find($id);
+          
+          ConceptosEquipos::updateOrCreate(
+              [
+                  'id_tarjeta' => $idTarjeta,
+                  'id_equipo' => $id
+              ],
+              [
+                  'cantidad' => $cantidad,
+                  'importe' => $cantidad * $registro->precio_unitario
+              ]
+          );
+      }
+  }
 
-  /** --------guardarConceptosEquipos---------- */
-  private function guardarConceptosEquipos ($registroEquipo, $PUEquipo, $cantidadEquipo, $importeEquipo, $idEquipo, $idTarjeta )
-  {           
-    ConceptosEquipos::create([
-      'id_equipo' => $idEquipo,
-      'concepto' => $registroEquipo->equipo,
-      'unidad' => $registroEquipo->unidad,
-      'cantidad' => $cantidadEquipo,
-      'precio_unitario' => $PUEquipo,
-      'importe' => $importeEquipo,
-      'id_tarjeta' => $idTarjeta
+  /** Helper function to get or create related model IDs. */
+  private function getOrCreateIds(array $data): array
+  {
+      return [
+          'grupo' => Grupos::firstOrCreate(['grupo' => $data['grupo']])->id,
+          'unidad' => Unidades::firstOrCreate(['unidad' => $data['unidad']])->id
+      ];
+  }
+
+  /**      * Show the form for editing the specified resource.      */
+  public function edit($id): View
+  {
+    $tarjeta = Tarjeta::with(['grupo', 'unidad'])->findOrFail($id);
+    $idTarjeta = $id;
+    $idPresup = $tarjeta->id_presup;
+    // dd($idPresup);
+    $porcent = Porcent::where('id_presup', $idPresup)->first();
+    // dd($porcent);
+
+
+    $conceptosMat = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
+    ['id_auxiliar', 0]])->get();
+
+    $conceptosAux = ConceptosMateriales::where([['id_tarjeta', $idTarjeta],
+    ['id_material', 0]])->get();
+
+    $conceptosIns = collect();
+
+    foreach ($conceptosMat as $conceptoMat) {
+        if ($conceptoMat->id_material != 0) {
+            $conceptosIns->push([
+                'id_reg' => $conceptoMat->id,
+                'id_insumo' => $conceptoMat->id_material,
+                'material' => $conceptoMat->material->material,
+                'unidad' => $conceptoMat->material->unidad->unidad,
+                'cantidad' => $conceptoMat->cantidad ?? 0,
+                'precio_unitario' => $conceptoMat->material->precio_unitario,
+                'importe' => $conceptoMat->importe ?? 0,
+                'tipo' => 'material', // Indica que es un material
+            ]);
+        }
+    }
+
+    foreach ($conceptosAux as $conceptoAux) {
+        if ($conceptoAux->id_auxiliar != 0) {
+            $conceptosIns->push([
+                'id_reg' => $conceptoAux->id,
+                'id_insumo' => $conceptoAux->id_auxiliar,
+                'material' => $conceptoAux->auxiliar->material,
+                'unidad' => $conceptoAux->auxiliar->unidad->unidad,
+                'cantidad' => $conceptoAux->cantidad ?? 0,
+                'precio_unitario' => $conceptoAux->auxiliar->precio_unitario,
+                'importe' => $conceptoAux->importe ?? 0,
+                'tipo' => 'auxiliar', // Indica que es un auxiliar
+
+            ]);
+        }
+    }
+
+    $conceptosCat = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
+        ['id_cuadrilla', 0]])->get();
+
+    $conceptosCuad = ConceptosManoObras::where([['id_tarjeta', $idTarjeta],
+        ['id_categoria', 0]])->get();
+
+    $conceptosMO = collect();
+
+    foreach ($conceptosCat as $conceptoCat) {
+      if($conceptoCat->id_categoria !=0) {
+        $conceptosMO->push([
+          'id_reg' => $conceptoCat->id,
+          'id_MO' => $conceptoCat->id_categoria,
+          'concepto_MO' => $conceptoCat->categoria->categoria,
+          'unidad' => $conceptoCat->categoria->unidad->unidad,
+          'cantidad' => $conceptoCat->cantidad,
+          'precio_unitario' => $conceptoCat->categoria->salario_real,
+          'importe' => $conceptoCat->importe,
+          'tipo' => 'categoria'
+        ]);
+      }
+    }  
+
+    foreach ($conceptosCuad as $conceptoCuad) {
+      if($conceptoCuad->id_cuadrilla !=0) {
+        $conceptosMO->push([
+          'id_reg' => $conceptoCuad->id,
+          'id_MO' => $conceptoCuad->id_cuadrilla,
+          'concepto_MO' => $conceptoCuad->cuadrilla->descripcion,
+          'unidad' => $conceptoCuad->cuadrilla->unidad->unidad,
+          'cantidad' => $conceptoCuad->cantidad,
+          'precio_unitario' => $conceptoCuad->cuadrilla->total,
+          'importe' => $conceptoCuad->importe,
+          'tipo' => 'cuadrilla'
+        ]);
+      }
+    } 
+
+    $conceptosEq = ConceptosEquipos::where('id_tarjeta', $idTarjeta)->get();
+
+    return view('tabs/edittarjetas', [
+        'tarjeta' => $tarjeta,
+        'conceptosIns' => $conceptosIns, 
+        'conceptosMO' => $conceptosMO,
+        'conceptosEq' => $conceptosEq,
+        'porcent' => $porcent
     ]);
-  }    
+  }
+
+  /**   * Update the specified resource in storage.   */
+  public function update(Request $request, Tarjeta $tarjeta): RedirectResponse
+  {
+      $validatedData = $request->validate(self::VALIDATION_RULES);
+      $validatedData['id'] = $tarjeta->id;
+
+      try {
+          DB::transaction(function () use ($request, $validatedData, $tarjeta) {
+              $costos = $this->calcularCostos($request);  
+
+            // dd($costos, $validatedData );
+                
+              $tarjeta = $this->guardarOActualizarTarjeta($validatedData, $costos);
+              $this->guardarConceptosDetallados($tarjeta->id, $request);
+          });
+
+          return redirect()->back()
+              ->with('success', 'Tarjeta de costos Editada con Éxito');
+      } catch (\Exception $e) {
+          return redirect()->route('tarjetas.index')
+              ->with('error', 'Error al crear la tarjeta: ' . $e->getMessage());
+      }   
+  }
+
+  /** *borra conceptos de ConceptosMateriales */
+  public function deleteConcepto($idReg, $type = null)
+  {  
+    switch($type) {
+      case 'ins':
+          $conceptoDelete = ConceptosMateriales::where('id', $idReg)->first(); 
+          break;
+      case 'mo':
+          $conceptoDelete = ConceptosManoObras::where('id', $idReg)->first(); 
+          break;
+      case 'eq':
+          $conceptoDelete = ConceptosEquipos::where('id', $idReg)->first(); 
+          break;
+      default:
+          return redirect()->back()->with('error', 'Tipo de concepto no válido');
+    }
+
+    $idTarjeta = $conceptoDelete->id_tarjeta;
+    $conceptoDelete->delete();
+    return redirect()->route('tarjetas.edit', ['tarjeta' => $idTarjeta]);
+  }
+
+
+  /** *copy the specified resource  */
+  public function copy($id)
+  {    
+    $tarjetaBase = Tarjeta::findOrFail($id);
+    $tarjetaNew = $tarjetaBase->replicate();
+    $tarjetaNew->save();
+
+    $idTarjetaNew = $tarjetaNew->id;
+
+    $conceptosTypes = [
+        'materiales' => ConceptosMateriales::class,
+        'manoObras' => ConceptosManoObras::class,
+        'equipos' => ConceptosEquipos::class
+    ];
+
+    foreach ($conceptosTypes as $key => $className) {
+        $this->duplicateConceptos($id, $tarjetaNew->id, $className);
+    }
+
+
+    return redirect()->route('tarjetas.edit', ['tarjeta' => $idTarjetaNew])->with('success', 'Tarjeta de costos Duplicada ');
+
+    // return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Duplicada con Éxito');
+  }
+
+  public function copyTarjeta($idTarjeta, $idPresuNew)
+  {
+    $tarjetaBase = Tarjeta::findOrFail($idTarjeta);
+
+    $tarjetaNew = $tarjetaBase->replicate();
+    $tarjetaNew->id_presup = $idPresuNew; 
+    $tarjetaNew->save();    
+   
+    $conceptosTypes = [
+      'materiales' => ConceptosMateriales::class,
+      'manoObras' => ConceptosManoObras::class,
+      'equipos' => ConceptosEquipos::class
+    ];
     
-  /**  * --------Remove the specified resource from storage.-------   */
+    foreach ($conceptosTypes as $key => $className) {
+      $this->duplicateConceptos($idTarjeta, $tarjetaNew->id, $className);
+    }
+    
+    return $tarjetaNew;
+  }
+
+  private function duplicateConceptos($oldId, $newId, $className)
+  {
+      $conceptosBase = $className::where('id_tarjeta', $oldId)->get();
+      
+      $conceptosBase->each(function ($conceptoBase) use ($newId) {
+          $conceptoNew = $conceptoBase->replicate();
+          $conceptoNew->id_tarjeta = $newId;
+          $conceptoNew->save();
+      });
+  }
+
+
   public function destroy(Tarjeta $tarjeta): RedirectResponse
   {
-    $tarjeta->delete();
-    return redirect()->route('tarjetas.index')->with('success', 'Tarjeta de costos Eliminada!');
-  }   
-
+      try {
+          $tarjeta->delete();
+          return redirect()->route('tarjetas.index')
+              ->with('success', 'Tarjeta de costos Eliminada!');
+      } catch (\Exception $e) {
+          return redirect()->route('tarjetas.index')
+              ->with('error', 'Error al eliminar la tarjeta: ' . $e->getMessage());
+      }
+  }
+    
 }
-  
+
+
+
 
 
 

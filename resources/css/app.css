@@ -20,10 +20,11 @@
 @import url('styles/manodeo.css');
 @import url('styles/materiales.css');
 @import url('styles/presupuesto.css');
-@import url('styles/tarjetaemerge.css');
+@import url('styles/clientes.css');
 
+@import url('styles/exp_insumos.css');
 @import url('styles/tarjetas.css');
-@import url('styles/modal_expins.css');
+@import url('styles/tarjeta_edit_emer.css');
 
 
 

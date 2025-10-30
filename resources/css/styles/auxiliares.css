@@ -1,7 +1,4 @@
-* {
-  margin: 0px;
-  /* outline: 1px solid rgba(197, 113, 113, 0.541) */
-}
+
 
 .form__span {
   cursor: pointer;
@@ -11,20 +8,6 @@
   font-weight: 700;
   font-size: smaller;
 }
-
-/*--------seccion tarjetas auxiliares----*/
-/* .section__tablaAux {
-  position: relative;
-  margin: 0 auto;
-  margin-top: 6px;
-  height: auto;
-  width: 95%;
-  min-width: 900px;
-  background: #ffffff; */
-  
-  /* margin-bottom: 40px; */
-  /* margin-bottom: 1230px; */
-/* } */
 
 /*--------- tabla -------------*/
 
