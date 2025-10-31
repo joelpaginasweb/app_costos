@@ -38,12 +38,11 @@
     <br>
     {{-- ----------actualizaciones---------- --}}
     <div>
-      <h4>DEV BRANCH</h4>
+      <h4>MAIN BRANCH</h4>
       <ul>
-        <li>3 nov - bd normalizada, materiales mano de obra herram. auxiliares </li>    
-        <li>28 oct- claves foranes en tablas de Bd triggers en tablas bd de auxiliares</li>    
-        <li>28 oct- explosion insumos parcial, no concluido</li>
-        <li>11 oct- Se agrego cuadrillas en Mano de Obra</li>
+        <li>30 oct 25 - bd triggers  </li>    
+        <li>3 nov 24 - bd normalizada, materiales mano de obra herram. auxiliares </li>    
+        <li>28 oct 24- claves foranes en tablas de Bd triggers en tablas bd de auxiliares</li>    
         
       </ul>
     </div>
